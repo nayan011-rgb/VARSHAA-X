@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VARSHAA-X | Explainable Rainfall Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--bg:#07111f;--panel:#0c1928;--panel2:#101f31;--line:#1c3045;--text:#e9f1f8;--muted:#7890a7;--teal:#2dd4bf;--teal2:#18a999;--red:#ff4d67;--amber:#f5b63d;--green:#39d98a;--blue:#58a6ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#12334a55,transparent 34%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;font-size:13px}button,input,select{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:flex}.sidebar{width:260px;position:fixed;inset:0 auto 0 0;background:#091522;border-right:1px solid var(--line);padding:18px 13px;z-index:100;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 18px}.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#21c9b5,#176d9e);display:grid;place-items:center;font-size:21px;box-shadow:0 10px 30px #16a89a33}.brand b{display:block;font-size:15px;letter-spacing:.12em}.brand small{color:#6f879f;font-size:9px}.prototype{margin:0 6px 22px;padding:9px 10px;border:1px solid #23524f;background:#0b2528;border-radius:9px;color:#6de1d0;font-size:10px;font-weight:700}.navtitle{color:#5f748a;font-size:9px;font-weight:800;letter-spacing:.14em;padding:0 10px 7px}.nav button{width:100%;border:1px solid transparent;background:transparent;color:#8196ab;padding:10px 11px;border-radius:9px;text-align:left;display:flex;align-items:center;gap:10px;margin:2px 0;font-weight:600}.nav button:hover{background:#0e2031;color:#dce8f3}.nav button.active{background:#10323b;border-color:#1d4e54;color:#dffdfa}.badge{margin-left:auto;background:#6e2030;color:#ffb5c0;padding:2px 7px;border-radius:99px;font-size:9px}.sidebottom{margin-top:auto;border-top:1px solid var(--line);padding:14px 7px;color:#627a91;font-size:10px}.online{color:#55d6a4;margin-top:9px}.dot{width:7px;height:7px;border-radius:50%;display:inline-block;background:var(--green);box-shadow:0 0 0 4px #39d98a15;margin-right:6px}.main{margin-left:260px;min-width:0;flex:1}.top{height:74px;border-bottom:1px solid var(--line);background:#081420e8;backdrop-filter:blur(12px);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 28px}.crumb{color:#5e758c;font-size:9px;letter-spacing:.12em;font-weight:800}.top h1{font-size:17px;margin:5px 0 0}.topright{display:flex;gap:9px;align-items:center}.status{border:1px solid #23524a;background:#0b2422;color:#63d9c4;border-radius:99px;padding:7px 10px;font-size:9px;font-weight:800}.menubtn{display:none}.notice{margin:16px 28px 0;border:1px solid #253b51;background:#0b1827;border-radius:9px;padding:9px 12px;color:#8296aa;font-size:10px}.notice b{color:#c5d3df}.page{max-width:1500px;margin:auto;padding:20px 28px 55px}.view{display:none}.view.active{display:block}.intro{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin-bottom:17px}.eyebrow{font-size:9px;letter-spacing:.15em;font-weight:900;color:#6c849b}.intro h2{font-size:25px;margin:5px 0 4px;letter-spacing:-.03em}.intro p{color:#71869d;margin:0;font-size:11px}.panel{background:linear-gradient(145deg,#0d1a2a,#0a1624);border:1px solid var(--line);border-radius:14px;padding:18px}.hero{display:grid;grid-template-columns:1.45fr .8fr;gap:15px}.heroMain{padding:23px;position:relative;overflow:hidden}.heroMain:after{content:"";position:absolute;right:-130px;top:-150px;width:330px;height:330px;border-radius:50%;background:#ff4d670b}.heroLabel{font-size:9px;letter-spacing:.15em;color:#ff788b;font-weight:900}.heroRow{display:flex;justify-content:space-between;align-items:center;margin:20px 0}.heroRow h2{font-size:43px;margin:0;letter-spacing:-.06em}.heroRow p{color:#71869d;margin:4px 0}.confidence{text-align:right}.confidence b{display:block;color:#ffd477;font-size:28px}.confidence small{color:#6d8399;font-size:9px}.heroStats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;margin-bottom:16px}.heroStats span,.stat span{display:block;color:#6d8399;font-size:9px}.heroStats b{font-size:16px}.heroStats small{color:#71869d;font-size:9px}.btn{border:0;border-radius:8px;padding:10px 13px;font-weight:800;font-size:10px;display:inline-flex;align-items:center;gap:7px}.primary{background:var(--teal);color:#031513}.secondary{background:#102235;border:1px solid #263d53;color:#b8c9d8}.heroXai h3{margin:5px 0 18px}.factor{margin:15px 0}.factorTop{display:flex;justify-content:space-between;font-size:10px;color:#a6b7c7}.factorTop b{color:#6de0d0}.track{height:6px;background:#182a3d;border-radius:99px;overflow:hidden;margin-top:6px}.track i{height:100%;display:block;background:linear-gradient(90deg,#197b79,var(--teal));border-radius:99px}.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:15px 0}.stat{min-width:0}.statValue{font-size:23px;font-weight:900;margin:8px 0 3px}.statFoot{color:#5e748a;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}.sectionHead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}.sectionHead h3{font-size:14px;margin:3px 0}.sectionHead p{font-size:9px;color:#6f849a;margin:0}.linkbtn{border:0;background:none;color:#5bd7c5;font-size:9px;font-weight:800}.chart{height:270px}.alertList{display:grid;gap:8px}.alert{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid #1d3145;background:#0a1725;border-radius:10px}.alertIcon{width:29px;height:29px;border-radius:8px;display:grid;place-items:center}.critical .alertIcon{color:#ff7285;background:#ff4d6715}.high .alertIcon{color:#f7c25a;background:#f5b63d15}.watch .alertIcon{color:#60dfcf;background:#2dd4bf15}.alertMain{flex:1}.alertTitle{display:flex;justify-content:space-between;font-size:9px}.critical .alertTitle b{color:#ff7285}.high .alertTitle b{color:#f7c25a}.watch .alertTitle b{color:#60dfcf}.alertMain h4{margin:4px 0;font-size:11px}.alertMain p,.alertMain small{color:#637a91;font-size:9px;margin:0}.mapPanel{margin-top:15px}.map{height:410px;border-radius:10px;overflow:hidden}.leaflet-container{background:#0d1b2a}.mapLegend{position:absolute;z-index:500;left:12px;bottom:12px;background:#07111eea;border:1px solid #253a50;border-radius:8px;padding:8px 10px;font-size:9px;display:flex;gap:10px}.mapLegend span{display:flex;align-items:center;gap:4px}.rdot{width:8px;height:8px;border-radius:50%}.red{background:var(--red)}.orange{background:var(--amber)}.green{background:var(--green)}.controls{display:flex;gap:13px;align-items:end;margin-bottom:15px}.controls label{color:#6f849a;font-size:9px;display:flex;flex-direction:column;gap:6px;min-width:190px}.controls select{background:#0a1725;color:#dbe7f1;border:1px solid #24384e;border-radius:8px;padding:9px}.predictionGrid{display:grid;grid-template-columns:.6fr 1.4fr;gap:15px}.score{text-align:center;display:flex;flex-direction:column;justify-content:center}.scoreRisk{color:#ff7185;letter-spacing:.2em;font-weight:900;font-size:11px}.scoreNum{font-size:68px;font-weight:900;letter-spacing:-.07em;margin:7px}.scoreNum small{font-size:25px;color:#72889d}.score p{color:#6f849a;font-size:10px}.riskbar{height:8px;background:#172a3c;border-radius:99px;overflow:hidden}.riskbar i{height:100%;display:block;width:91.4%;background:linear-gradient(90deg,#39d98a,#f5b63d,#ff4d67)}.xaiTop{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}.xaiCard{display:flex;align-items:center;gap:18px}.ring{width:120px;height:120px;border-radius:50%;border:8px solid #1d4648;display:grid;place-items:center;flex:none}.ring div{text-align:center}.ring b{display:block;color:#6de0d0;font-size:22px}.ring small{color:#6d839a;font-size:8px}.explain{background:#0a2228;border:1px solid #1d3d45;border-radius:10px;padding:18px;margin-top:14px;color:#a6b7c5;line-height:1.7;font-size:11px}.note{font-size:9px;color:#657b90;margin-top:10px;display:flex;gap:7px}.flow{display:flex;align-items:center;gap:10px}.flow div{flex:1;padding:13px;border:1px solid #1c3045;background:#0a1725;border-radius:9px}.flow b{display:block;color:#2dd4bf;font-size:9px}.flow span{font-size:9px;color:#9eb0c1}.flow i{color:#456076}.mapLayout{display:grid;grid-template-columns:235px 1fr;gap:14px}.layers button{width:100%;border:0;background:none;color:#8397aa;padding:9px 4px;display:flex;gap:8px;align-items:center;text-align:left;border-radius:7px;font-size:9px}.layers button:hover{background:#0d2031}.switch{margin-left:auto;width:20px;height:11px;border-radius:99px;background:#26394d;position:relative}.switch:after{content:"";position:absolute;width:9px;height:9px;border-radius:50%;left:1px;top:1px;background:#718398}.layers button.on{color:#dce8f1}.layers button.on .switch{background:#1e756f}.layers button.on .switch:after{left:10px;background:#6de0d0}.segment{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:8px}.segment button{background:#0a1725;border:1px solid #21364b;color:#70869c;border-radius:6px;padding:6px 2px;font-size:8px}.segment button.sel{background:#113d43;color:#68dbcb}.selectedZone{border-top:1px solid var(--line);margin-top:12px;padding-top:12px}.selectedZone h3{margin:5px 0;font-size:12px}.selectedZone p{font-size:9px;color:#71869b;line-height:1.5}.simGrid{display:grid;grid-template-columns:.7fr 1.3fr;gap:15px}.sliderBlock{margin:20px 0}.sliderBlock label{display:flex;justify-content:space-between;color:#8aa0b3;font-size:10px}.sliderBlock strong{color:#e2edf5}.sliderBlock input{width:100%;accent-color:var(--teal);margin-top:12px}.rangeLabels{display:flex;justify-content:space-between;color:#556d84;font-size:8px}.simRisk{font-size:38px;font-weight:900;margin:17px 0 3px}.scenarioCards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.scenarioBar{margin-top:18px}.scenarioBar div{height:9px;border-radius:99px;background:linear-gradient(90deg,#2dd4bf,#f5b63d,#ff4d67);width:var(--w)}.events{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:15px 0}.event h3{font-size:11px;line-height:1.4}.eventStats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;border-top:1px solid var(--line);padding-top:11px}.eventStats span{display:block;color:#5e748b;font-size:8px}.eventStats b{font-size:10px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{padding:14px;border:1px solid #1b3045;background:#0a1725;border-radius:9px}.metric b{display:block;color:#8da2b5;font-size:9px}.metric strong{display:block;font-size:23px;margin:6px 0}.metric span{color:#60778e;font-size:8px}.alertSummary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}.summary{padding:15px;border:1px solid var(--line);background:#0d1a29;border-radius:11px}.summary b{display:block;font-size:11px}.summary span{color:#657c92;font-size:9px}.logic{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.logic .metric strong{font-size:11px}.regionQuick{margin:15px 0}.metrics .metric input{margin-top:8px;width:100%;background:#0a1725;color:#dbe7f1;border:1px solid #24384e;border-radius:7px;padding:7px}.metrics .metric input:focus{outline:none;border-color:#2dd4bf}.controls select:disabled{opacity:.55;cursor:not-allowed}.globalLoading{color:#f5b63d}.regionQuick input,.controls input{outline:none}.regionQuick input:focus,.controls input:focus{border-color:#2dd4bf}.regionQuick .controls{margin-top:12px}.regionQuick .btn{align-self:flex-end}.regionTag{position:absolute;top:12px;right:12px;z-index:500;background:#07111ee8;border:1px solid #263b51;border-radius:8px;padding:7px 9px;color:#d8e5ef;font-size:9px;font-weight:800}.mobileClose{display:none}
+@media(max-width:1200px){.stats{grid-template-columns:repeat(3,1fr)}.hero,.predictionGrid,.xaiTop,.simGrid{grid-template-columns:1fr}.events{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.2s}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.menubtn{display:block;background:none;border:1px solid #24384e;color:#9db0c2;border-radius:8px;padding:7px}.top{padding:0 15px}.topright .status{display:none}.page{padding:16px}.notice{margin:12px 15px 0}.grid2,.mapLayout,.alertSummary,.logic{grid-template-columns:1fr}.mapLayout .layers{order:2}.intro{flex-direction:column}.flow{flex-direction:column;align-items:stretch}.flow i{transform:rotate(90deg)}}
+@media(max-width:520px){.stats,.metrics,.scenarioCards{grid-template-columns:1fr}.heroStats{grid-template-columns:1fr;gap:9px}.xaiCard{flex-direction:column;align-items:flex-start}.scoreNum{font-size:55px}}
+
+/* VARSHAA-X differentiation layer */
+.uniqueGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:15px}
+.uniqueGrid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:15px}
+.featureCard{padding:18px;border:1px solid #1c3248;background:linear-gradient(145deg,#0b1b2c,#091522);border-radius:12px}
+.featureCard h3{margin:4px 0 7px;font-size:16px}.featureCard p{color:#7890a8;font-size:10px;line-height:1.65}
+.bigMetric{font-size:32px;font-weight:800;letter-spacing:-1px;margin:5px 0}.bigMetric small{font-size:12px;color:#6f879f;font-weight:500}
+.miniBar{height:7px;background:#152a3e;border-radius:20px;overflow:hidden;margin:8px 0}.miniBar i{display:block;height:100%;border-radius:20px;background:#2dd4bf}
+.cascade{display:grid;grid-template-columns:repeat(7,minmax(90px,1fr));gap:6px;align-items:center;margin-top:15px}
+.cascadeNode{padding:12px 8px;border:1px solid #20384f;border-radius:10px;text-align:center;background:#0a1725;min-height:75px;display:flex;flex-direction:column;justify-content:center}
+.cascadeNode b{font-size:16px}.cascadeNode span{font-size:8px;color:#7890a8;margin-top:4px}.cascadeArrow{text-align:center;color:#2dd4bf;font-size:18px}
+.timeline{position:relative;padding:8px 0 4px;margin-top:10px}.timelineRow{display:flex;gap:10px;align-items:center;margin:9px 0}.timelineDot{width:10px;height:10px;border-radius:50%;background:#2dd4bf;box-shadow:0 0 0 4px #2dd4bf18}.timelineRow b{min-width:62px;font-size:10px}.timelineRow span{font-size:9px;color:#7c93a9}
+.reliabilityRing{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2dd4bf var(--p),#172c40 0);margin:auto}.reliabilityRing>div{width:72px;height:72px;border-radius:50%;background:#091725;display:grid;place-items:center;text-align:center}.reliabilityRing b{font-size:18px}.reliabilityRing span{font-size:7px;color:#71869d}
+.consensusRow{display:grid;grid-template-columns:95px 1fr 50px;gap:8px;align-items:center;margin:9px 0;font-size:9px}.consensusRow .bar{height:7px;background:#14283b;border-radius:20px;overflow:hidden}.consensusRow .bar i{display:block;height:100%;background:#2dd4bf}
+.fingerprint{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.fingerprintItem{padding:10px;border:1px solid #1b3045;border-radius:8px}.fingerprintItem span{font-size:8px;color:#7890a8}.fingerprintItem b{display:block;margin-top:4px}
+.actionList{display:grid;gap:8px;margin-top:10px}.actionItem{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid #1b3045;border-radius:8px}.actionItem .num{font-weight:800;color:#2dd4bf}.actionItem span{font-size:9px;color:#91a5b9;line-height:1.5}
+.modeToggle{display:flex;gap:6px;margin:10px 0}.modeToggle button{flex:1}.modeToggle button.sel{border-color:#2dd4bf;color:#2dd4bf;background:#0b2630}
+.commandBox{display:flex;gap:8px;margin-top:10px}.commandBox input{flex:1;background:#091725;color:#dbe7f1;border:1px solid #223a50;border-radius:8px;padding:10px;font-size:10px}.commandAnswer{margin-top:10px;padding:12px;border-radius:9px;background:#091725;border:1px solid #1c3349;color:#a6b8c8;font-size:10px;line-height:1.6}
+.impactScore{display:flex;align-items:center;gap:18px}.impactScore .scoreCircle{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;border:7px solid #2dd4bf;font-size:22px;font-weight:800}.impactScore small{font-size:9px;color:#71869d}
+.exposureTable{width:100%;border-collapse:collapse;font-size:9px;margin-top:8px}.exposureTable th,.exposureTable td{padding:7px;border-bottom:1px solid #182d41;text-align:left}.exposureTable th{color:#71869d;font-weight:500}
+@media(max-width:900px){.uniqueGrid,.uniqueGrid3{grid-template-columns:1fr}.cascade{grid-template-columns:1fr}.cascadeArrow{transform:rotate(90deg)}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="logo">⌁</div><div><b>VARSHAA-X</b><small>Explainable Rainfall Intelligence</small></div></div>
+  <div class="prototype">✦ FULL PROTOTYPE · DEMO DATA MODE</div>
+  <div class="navtitle">MONITORING</div>
+  <nav class="nav">
+    <button type="button" data-view="dashboard" onclick="go(\'dashboard\'); return false;" class="active">▦ <span>Command Center</span></button>
+    <button type="button" data-view="prediction" onclick="go(\'prediction\'); return false;">☁ <span>Rainfall Prediction</span></button>
+    <button type="button" data-view="xai" onclick="go(\'xai\'); return false;">◉ <span>Explainable AI</span></button>
+    <button type="button" data-view="map" onclick="go(\'map\'); return false;">⌖ <span>Impact & Risk Map</span></button>
+    <button type="button" data-view="simulation" onclick="go(\'simulation\'); return false;">⌘ <span>What-if Simulation</span></button>
+    <button type="button" data-view="historical" onclick="go(\'historical\'); return false;">◷ <span>Historical Events</span></button>
+    <button type="button" data-view="alerts" onclick="go(\'alerts\'); return false;">⚠ <span>Alert Center</span><span class="badge">6</span></button>
+  </nav>
+  <div class="sidebottom">Satellite pipeline<br><span>Ready for real-data integration</span><div class="online"><span class="dot"></span>Model service online</div></div>
+</aside>
+<main class="main">
+<header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="menubtn" id="menu">☰</button><div><div class="crumb">VARSHAA-X / <span id="crumb">COMMAND CENTER</span></div><h1 id="title">Command Center</h1></div></div><div class="topright"><div class="status"><span class="dot"></span>SYSTEM ONLINE</div></div></header>
+<div class="page">
+
+<section id="dashboard" class="view active">
+<div class="hero">
+  <div class="panel heroMain"><div class="heroLabel" id="heroRiskLabel">● RAINFALL RISK</div><div class="heroRow"><div><h2>HIGH</h2><p id="heroLocation">Bengaluru Urban, Karnataka, India</p></div><div class="confidence"><b id="heroConfidence">91.4%</b><small>model confidence</small></div></div><div class="heroStats"><div><span>Expected rainfall</span><b><span id="heroRain">82</span> <small>mm/h</small></b></div><div><span>Forecast window</span><b>+1–3 <small>hours</small></b></div><div><span>Model reliability</span><b>HIGH</b></div></div><button class="btn primary" onclick="go('prediction')">Open prediction ↗</button></div>
+  <div class="panel heroXai"><div class="eyebrow">AI EXPLANATION</div><h3 id="heroXaiTitle">Why is risk elevated?</h3><div class="factor"><div class="factorTop"><span>Atmospheric moisture</span><b>31%</b></div><div class="track"><i style="width:31%"></i></div></div><div class="factor"><div class="factorTop"><span>Cloud characteristics</span><b>27%</b></div><div class="track"><i style="width:27%"></i></div></div><div class="factor"><div class="factorTop"><span>Temperature profile</span><b>18%</b></div><div class="track"><i style="width:18%"></i></div></div><button class="btn secondary" onclick="go('xai')">View full explanation ↗</button></div>
+</div>
+<div class="panel regionQuick" style="margin-top:15px">
+<div class="sectionHead">
+  <div>
+    <div class="eyebrow">GLOBAL REGION EXPLORER</div>
+    <h3>Select any country → state/region → place</h3>
+    <p>Worldwide cascading location selector. Choose a country first, then its available states/regions, then a city/place.</p>
+  </div>
+</div>
+<div class="controls" style="margin-bottom:0;flex-wrap:wrap">
+  <label style="min-width:220px">Country
+    <select id="globalCountry"><option value="">Select a country</option><option value="AF">Afghanistan</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AD">Andorra</option><option value="AO">Angola</option><option value="AG">Antigua and Barbuda</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BS">Bahamas</option><option value="BH">Bahrain</option><option value="BD">Bangladesh</option><option value="BB">Barbados</option><option value="BY">Belarus</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BJ">Benin</option><option value="BT">Bhutan</option><option value="BO">Bolivia</option><option value="BA">Bosnia and Herzegovina</option><option value="BW">Botswana</option><option value="BR">Brazil</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="BF">Burkina Faso</option><option value="BI">Burundi</option><option value="CV">Cabo Verde</option><option value="KH">Cambodia</option><option value="CM">Cameroon</option><option value="CA">Canada</option><option value="CF">Central African Republic</option><option value="TD">Chad</option><option value="CL">Chile</option><option value="CN">China</option><option value="CO">Colombia</option><option value="KM">Comoros</option><option value="CG">Congo</option><option value="CR">Costa Rica</option><option value="HR">Croatia</option><option value="CU">Cuba</option><option value="CY">Cyprus</option><option value="CZ">Czechia</option><option value="DK">Denmark</option><option value="DJ">Djibouti</option><option value="DM">Dominica</option><option value="DO">Dominican Republic</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="SV">El Salvador</option><option value="GQ">Equatorial Guinea</option><option value="ER">Eritrea</option><option value="EE">Estonia</option><option value="SZ">Eswatini</option><option value="ET">Ethiopia</option><option value="FJ">Fiji</option><option value="FI">Finland</option><option value="FR">France</option><option value="GA">Gabon</option><option value="GM">Gambia</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GR">Greece</option><option value="GD">Grenada</option><option value="GT">Guatemala</option><option value="GN">Guinea</option><option value="GW">Guinea-Bissau</option><option value="GY">Guyana</option><option value="HT">Haiti</option><option value="HN">Honduras</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IR">Iran</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="KI">Kiribati</option><option value="KW">Kuwait</option><option value="KG">Kyrgyzstan</option><option value="LA">Laos</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LS">Lesotho</option><option value="LR">Liberia</option><option value="LY">Libya</option><option value="LI">Liechtenstein</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MG">Madagascar</option><option value="MW">Malawi</option><option value="MY">Malaysia</option><option value="MV">Maldives</option><option value="ML">Mali</option><option value="MT">Malta</option><option value="MH">Marshall Islands</option><option value="MR">Mauritania</option><option value="MU">Mauritius</option><option value="MX">Mexico</option><option value="FM">Micronesia</option><option value="MD">Moldova</option><option value="MC">Monaco</option><option value="MN">Mongolia</option><option value="ME">Montenegro</option><option value="MA">Morocco</option><option value="MZ">Mozambique</option><option value="MM">Myanmar</option><option value="NA">Namibia</option><option value="NR">Nauru</option><option value="NP">Nepal</option><option value="NL">Netherlands</option><option value="NZ">New Zealand</option><option value="NI">Nicaragua</option><option value="NE">Niger</option><option value="NG">Nigeria</option><option value="KP">North Korea</option><option value="MK">North Macedonia</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PW">Palau</option><option value="PS">Palestine</option><option value="PA">Panama</option><option value="PG">Papua New Guinea</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="QA">Qatar</option><option value="RO">Romania</option><option value="RU">Russia</option><option value="RW">Rwanda</option><option value="KN">Saint Kitts and Nevis</option><option value="LC">Saint Lucia</option><option value="VC">Saint Vincent and the Grenadines</option><option value="WS">Samoa</option><option value="SM">San Marino</option><option value="ST">Sao Tome and Principe</option><option value="SA">Saudi Arabia</option><option value="SN">Senegal</option><option value="RS">Serbia</option><option value="SC">Seychelles</option><option value="SL">Sierra Leone</option><option value="SG">Singapore</option><option value="SK">Slovakia</option><option value="SI">Slovenia</option><option value="SB">Solomon Islands</option><option value="SO">Somalia</option><option value="ZA">South Africa</option><option value="KR">South Korea</option><option value="SS">South Sudan</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="SD">Sudan</option><option value="SR">Suriname</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="TW">Taiwan</option><option value="TJ">Tajikistan</option><option value="TZ">Tanzania</option><option value="TH">Thailand</option><option value="TL">Timor-Leste</option><option value="TG">Togo</option><option value="TO">Tonga</option><option value="TT">Trinidad and Tobago</option><option value="TN">Tunisia</option><option value="TR">Turkey</option><option value="TM">Turkmenistan</option><option value="TV">Tuvalu</option><option value="UG">Uganda</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option><option value="US">United States</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VU">Vanuatu</option><option value="VA">Vatican City</option><option value="VE">Venezuela</option><option value="VN">Vietnam</option><option value="YE">Yemen</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option></select>
+  </label>
+  <label style="min-width:220px">State / Region
+    <select id="globalState" disabled><option>Select country first</option></select>
+  </label>
+  <label style="min-width:250px">City / Place
+    <select id="globalCity" disabled><option>Select state/region first</option></select>
+  </label>
+  <button class="btn primary" id="globalView">View condition</button>
+</div>
+<div class="note" id="globalLocationStatus">Loading worldwide location database…</div>
+</div>
+<div class="stats">
+  <div class="panel stat"><span>Rainfall intensity</span><div class="statValue">82 <small>mm/h</small></div><div class="statFoot">+34% from previous hour</div></div>
+  <div class="panel stat"><span>Affected zones</span><div class="statValue" id="dashZones">14</div><div class="statFoot">6 critical zones</div></div>
+  <div class="panel stat"><span>Population exposure</span><div class="statValue" id="dashPop">48.2K</div><div class="statFoot">Scenario estimate</div></div>
+  <div class="panel stat"><span>Road segments</span><div class="statValue" id="dashRoads">19</div><div class="statFoot">Potentially affected</div></div>
+  <div class="panel stat"><span>Critical facilities</span><div class="statValue">3</div><div class="statFoot">Within risk zones</div></div>
+  <div class="panel stat"><span>Active alerts</span><div class="statValue">6</div><div class="statFoot">2 critical · 3 high · 1 watch</div></div>
+</div>
+<div class="grid2">
+<section class="panel"><div class="sectionHead"><div><div class="eyebrow">FORECAST</div><h3>Rainfall outlook</h3><p>Simulated next 5 hours</p></div><button class="linkbtn" onclick="go('prediction')">Prediction →</button></div><div id="forecastChart" class="chart"></div></section>
+<section class="panel"><div class="sectionHead"><div><div class="eyebrow">EARLY WARNING</div><h3>Alert center</h3><p>Latest high-impact signals</p></div><button class="linkbtn" onclick="go('alerts')">View all →</button></div><div class="alertList" id="dashAlerts"></div></section>
+</div>
+<section class="panel mapPanel"><div class="sectionHead"><div><div class="eyebrow">GEO-SPATIAL INTELLIGENCE</div><h3>Regional impact map</h3><p>Rainfall + hazard zones</p></div><button class="linkbtn" onclick="go('map')">Open full map →</button></div><div id="dashMap" class="map"></div></section>
+
+<div class="uniqueGrid3">
+  <div class="featureCard">
+    <div class="eyebrow">VARSHAA IMPACT INDEX</div>
+    <div class="impactScore"><div class="scoreCircle" id="impactIndex">--</div><div><h3 id="impactLabel">Waiting for location</h3><small>Rainfall + terrain + exposure + historical susceptibility + uncertainty</small></div></div>
+  </div>
+  <div class="featureCard">
+    <div class="eyebrow">ESTIMATED LEAD TIME</div>
+    <div class="bigMetric" id="leadTime">-- <small>min</small></div>
+    <p>Estimated time until the high-impact threshold is crossed.</p>
+  </div>
+  <div class="featureCard">
+    <div class="eyebrow">MODEL FAILURE RADAR</div>
+    <div class="bigMetric" id="failureRadar">LOW <small>risk</small></div>
+    <p id="failureReason">Waiting for prediction inputs.</p>
+  </div>
+</div>
+<div class="panel" style="margin-top:15px">
+  <div class="eyebrow">RAIN → IMPACT CASCADE</div><h3>What the rainfall can trigger here</h3>
+  <div class="cascade" id="cascadeEngine">
+    <div class="cascadeNode"><b>🌧️</b><span>Heavy rain</span></div><div class="cascadeArrow">→</div>
+    <div class="cascadeNode"><b>💧</b><span>Soil saturation</span></div><div class="cascadeArrow">→</div>
+    <div class="cascadeNode"><b>🌊</b><span>Runoff</span></div><div class="cascadeArrow">→</div>
+    <div class="cascadeNode"><b>🛣️</b><span>Road impact</span></div>
+  </div>
+  <div class="uniqueGrid3" style="margin-top:10px">
+    <div class="stat"><span>Drainage stress</span><div class="statValue" id="drainStress">--</div></div>
+    <div class="stat"><span>Road disruption</span><div class="statValue" id="roadImpact">--</div></div>
+    <div class="stat"><span>Population exposure</span><div class="statValue" id="popImpact">--</div></div>
+  </div>
+</div>
+<div class="uniqueGrid">
+  <div class="featureCard">
+    <div class="eyebrow">EMERGENCY COMMANDER · ASK VARSHAA</div>
+    <h3>Decision assistant</h3>
+    <p>Ask a scenario question and get an answer grounded in the current prototype outputs.</p>
+    <div class="commandBox"><input id="commanderInput" placeholder="What happens if rainfall reaches 120 mm/h?"><button type="button" class="btn primary" id="commanderAsk" onclick="window.varshaaAsk()">Ask</button></div>
+    <div class="commandAnswer" id="commanderAnswer">Select a location and ask VARSHAA for a decision brief.</div>
+  </div>
+  <div class="featureCard">
+    <div class="eyebrow">GOVERNANCE / CITIZEN MODE</div><h3 id="modeTitle">Government mode</h3>
+    <div class="modeToggle"><button type="button" class="btn secondary sel" data-mode="government" onclick="window.varshaaMode('government',this)">Government</button><button type="button" class="btn secondary" data-mode="citizen" onclick="window.varshaaMode('citizen',this)">Citizen</button></div>
+    <div id="modeContent" class="commandAnswer">Priority: drainage team deployment, road monitoring and critical-facility readiness.</div>
+  </div>
+</div>
+<div class="panel" style="margin-top:15px">
+  <div class="eyebrow">ACTION ENGINE</div><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>What should happen next?</h3><button class="btn secondary" id="refreshActions" type="button">Refresh analysis</button></div>
+  <div class="actionList" id="actionList"></div>
+</div>
+
+</section>
+
+<section id="prediction" class="view">
+<div class="intro"><div><div class="eyebrow">PREDICTIVE INTELLIGENCE</div><h2>Heavy rainfall prediction</h2><p>Explore a selected region and view its rainfall-risk scenario, prediction confidence and impact indicators.</p></div><div class="status">✓ Prediction pipeline ready</div></div>
+<div class="panel controls" style="flex-wrap:wrap">
+<label style="min-width:220px">Country
+  <select id="predCountry"><option value="">Select a country</option><option value="AF">Afghanistan</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AD">Andorra</option><option value="AO">Angola</option><option value="AG">Antigua and Barbuda</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BS">Bahamas</option><option value="BH">Bahrain</option><option value="BD">Bangladesh</option><option value="BB">Barbados</option><option value="BY">Belarus</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BJ">Benin</option><option value="BT">Bhutan</option><option value="BO">Bolivia</option><option value="BA">Bosnia and Herzegovina</option><option value="BW">Botswana</option><option value="BR">Brazil</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="BF">Burkina Faso</option><option value="BI">Burundi</option><option value="CV">Cabo Verde</option><option value="KH">Cambodia</option><option value="CM">Cameroon</option><option value="CA">Canada</option><option value="CF">Central African Republic</option><option value="TD">Chad</option><option value="CL">Chile</option><option value="CN">China</option><option value="CO">Colombia</option><option value="KM">Comoros</option><option value="CG">Congo</option><option value="CR">Costa Rica</option><option value="HR">Croatia</option><option value="CU">Cuba</option><option value="CY">Cyprus</option><option value="CZ">Czechia</option><option value="DK">Denmark</option><option value="DJ">Djibouti</option><option value="DM">Dominica</option><option value="DO">Dominican Republic</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="SV">El Salvador</option><option value="GQ">Equatorial Guinea</option><option value="ER">Eritrea</option><option value="EE">Estonia</option><option value="SZ">Eswatini</option><option value="ET">Ethiopia</option><option value="FJ">Fiji</option><option value="FI">Finland</option><option value="FR">France</option><option value="GA">Gabon</option><option value="GM">Gambia</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GR">Greece</option><option value="GD">Grenada</option><option value="GT">Guatemala</option><option value="GN">Guinea</option><option value="GW">Guinea-Bissau</option><option value="GY">Guyana</option><option value="HT">Haiti</option><option value="HN">Honduras</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IR">Iran</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="KI">Kiribati</option><option value="KW">Kuwait</option><option value="KG">Kyrgyzstan</option><option value="LA">Laos</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LS">Lesotho</option><option value="LR">Liberia</option><option value="LY">Libya</option><option value="LI">Liechtenstein</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MG">Madagascar</option><option value="MW">Malawi</option><option value="MY">Malaysia</option><option value="MV">Maldives</option><option value="ML">Mali</option><option value="MT">Malta</option><option value="MH">Marshall Islands</option><option value="MR">Mauritania</option><option value="MU">Mauritius</option><option value="MX">Mexico</option><option value="FM">Micronesia</option><option value="MD">Moldova</option><option value="MC">Monaco</option><option value="MN">Mongolia</option><option value="ME">Montenegro</option><option value="MA">Morocco</option><option value="MZ">Mozambique</option><option value="MM">Myanmar</option><option value="NA">Namibia</option><option value="NR">Nauru</option><option value="NP">Nepal</option><option value="NL">Netherlands</option><option value="NZ">New Zealand</option><option value="NI">Nicaragua</option><option value="NE">Niger</option><option value="NG">Nigeria</option><option value="KP">North Korea</option><option value="MK">North Macedonia</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PW">Palau</option><option value="PS">Palestine</option><option value="PA">Panama</option><option value="PG">Papua New Guinea</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="QA">Qatar</option><option value="RO">Romania</option><option value="RU">Russia</option><option value="RW">Rwanda</option><option value="KN">Saint Kitts and Nevis</option><option value="LC">Saint Lucia</option><option value="VC">Saint Vincent and the Grenadines</option><option value="WS">Samoa</option><option value="SM">San Marino</option><option value="ST">Sao Tome and Principe</option><option value="SA">Saudi Arabia</option><option value="SN">Senegal</option><option value="RS">Serbia</option><option value="SC">Seychelles</option><option value="SL">Sierra Leone</option><option value="SG">Singapore</option><option value="SK">Slovakia</option><option value="SI">Slovenia</option><option value="SB">Solomon Islands</option><option value="SO">Somalia</option><option value="ZA">South Africa</option><option value="KR">South Korea</option><option value="SS">South Sudan</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="SD">Sudan</option><option value="SR">Suriname</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="TW">Taiwan</option><option value="TJ">Tajikistan</option><option value="TZ">Tanzania</option><option value="TH">Thailand</option><option value="TL">Timor-Leste</option><option value="TG">Togo</option><option value="TO">Tonga</option><option value="TT">Trinidad and Tobago</option><option value="TN">Tunisia</option><option value="TR">Turkey</option><option value="TM">Turkmenistan</option><option value="TV">Tuvalu</option><option value="UG">Uganda</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option><option value="US">United States</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VU">Vanuatu</option><option value="VA">Vatican City</option><option value="VE">Venezuela</option><option value="VN">Vietnam</option><option value="YE">Yemen</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option></select>
+</label>
+<label style="min-width:220px">State / Region
+  <select id="predState" disabled><option>Select country first</option></select>
+</label>
+<label style="min-width:250px">City / Place
+  <select id="predCity" disabled><option>Select state/region first</option></select>
+</label>
+<label>Forecast window
+  <select id="window"><option>Next 1 Hour</option><option selected>Next 3 Hours</option><option>Next 6 Hours</option></select>
+</label>
+<div style="margin-left:auto;color:#73899e;font-size:9px">Selected: <b style="color:#dce8f1" id="selectedLocation">Bengaluru, Karnataka, India</b></div>
+</div>
+<div class="panel" id="regionConditionCard" style="margin-bottom:15px">
+<div class="sectionHead"><div><div class="eyebrow">REGION CONDITION</div><h3 id="conditionTitle">Bengaluru Urban · Karnataka</h3><p id="conditionText">Select a state and district above. Odisha includes Bhubaneswar/Khordha, Cuttack, Puri, Balasore, Mayurbhanj and Ganjam in this prototype.</p></div><span id="conditionBadge" class="status">HIGH RISK</span></div>
+</div>
+<div class="predictionGrid"><div class="panel score"><div class="eyebrow">MODEL OUTPUT</div><div class="scoreRisk">HIGH-IMPACT RAINFALL</div><div class="scoreNum">91.4<small>%</small></div><p>Probability during the selected forecast window.</p><div class="riskbar"><i></i></div></div><div class="panel"><div class="sectionHead"><div><div class="eyebrow">FORECAST CURVE</div><h3>Rainfall intensity</h3></div></div><div id="predChart" class="chart"></div></div></div>
+<div class="panel" id="predictionInputs">
+<div class="sectionHead"><div><div class="eyebrow">PREDICTION INPUTS</div><h3>Atmospheric & terrain signals</h3><p>Adjust the inputs and run the prototype model. These are demo inputs until the satellite/ML pipeline is connected.</p></div><button class="btn primary" id="runPrediction">Run Prediction</button></div>
+<div class="metrics" style="grid-template-columns:repeat(3,1fr)">
+<label class="metric"><b>Current rainfall</b><input id="inRain" type="number" min="0" max="250" step="1" value="42"><span>mm/h</span></label>
+<label class="metric"><b>Relative humidity</b><input id="inHumidity" type="number" min="0" max="100" step="1" value="82"><span>%</span></label>
+<label class="metric"><b>Cloud cover</b><input id="inCloud" type="number" min="0" max="100" step="1" value="78"><span>%</span></label>
+<label class="metric"><b>Temperature</b><input id="inTemp" type="number" min="-10" max="55" step="0.5" value="25"><span>°C</span></label>
+<label class="metric"><b>Wind speed</b><input id="inWind" type="number" min="0" max="150" step="1" value="24"><span>km/h</span></label>
+<label class="metric"><b>Elevation</b><input id="inElevation" type="number" min="0" max="9000" step="10" value="900"><span>m</span></label>
+</div>
+<div class="note" id="formulaNote">Prototype scoring: rainfall 45% + humidity 18% + cloud 14% + wind 8% + elevation 7% + temperature 8%, followed by a calibrated probability transform.</div>
+</div>
+<div class="stats" style="grid-template-columns:repeat(4,1fr)">
+<div class="panel stat"><span>Current rainfall</span><div class="statValue"><span id="calcCurrent">42</span> <small>mm/h</small></div></div>
+<div class="panel stat"><span>Peak forecast</span><div class="statValue"><span id="calcPeak">82</span> <small>mm/h</small></div></div>
+<div class="panel stat"><span>Peak probability</span><div class="statValue"><span id="calcProb">91.4</span> <small>%</small></div></div>
+<div class="panel stat"><span>Confidence</span><div class="statValue" id="calcConfidence" style="font-size:19px;color:#63d9c4">HIGH</div></div>
+</div>
+<div class="panel"><div class="sectionHead"><div><div class="eyebrow">VALIDATION</div><h3>Model performance</h3><p>These metrics are placeholders for the real held-out test set; they are not calculated from the selected location.</p></div></div><div class="metrics"><div class="metric"><b>Accuracy</b><strong>91.2%</strong><span>Demo benchmark</span></div><div class="metric"><b>Precision</b><strong>88.7%</strong><span>Demo benchmark</span></div><div class="metric"><b>Recall</b><strong>92.4%</strong><span>Demo benchmark</span></div><div class="metric"><b>F1 Score</b><strong>90.5%</strong><span>Demo benchmark</span></div></div></div>
+
+<div class="uniqueGrid">
+  <div class="featureCard">
+    <div class="eyebrow">MODEL CONSENSUS</div><h3>Four-model agreement</h3>
+    <div class="consensusRow"><b>CNN</b><div class="bar"><i id="cnnBar" style="width:82%"></i></div><span id="cnnVal">82%</span></div>
+    <div class="consensusRow"><b>XGBoost</b><div class="bar"><i id="xgbBar" style="width:76%"></i></div><span id="xgbVal">76%</span></div>
+    <div class="consensusRow"><b>LSTM</b><div class="bar"><i id="lstmBar" style="width:88%"></i></div><span id="lstmVal">88%</span></div>
+    <div class="consensusRow"><b>Transformer</b><div class="bar"><i id="trBar" style="width:81%"></i></div><span id="trVal">81%</span></div>
+    <div class="note" id="disagreementNote">Model spread is within the normal prototype range.</div>
+  </div>
+  <div class="featureCard">
+    <div class="eyebrow">PREDICTION FAILURE RADAR</div>
+    <div class="impactScore"><div class="scoreCircle" id="reliabilityScore">--</div><div><h3 id="reliabilityLabel">Reliability</h3><small id="reliabilityReason">Checks data completeness, model disagreement and unusual conditions.</small></div></div>
+    <div class="fingerprint" id="failureSignals"></div>
+  </div>
+</div>
+<div class="panel" style="margin-top:15px">
+  <div class="eyebrow">RAINFALL FINGERPRINT</div><h3>Which historical event does this resemble?</h3>
+  <div class="fingerprint" id="rainFingerprint"></div>
+  <div class="commandAnswer" id="historicalMatch">Closest-event matching will update after a prediction is run.</div>
+</div>
+
+</section>
+
+<section id="xai" class="view">
+<div class="intro"><div><div class="eyebrow">XAI ENGINE</div><h2>Why did the model predict high risk?</h2><p>Make every prediction interpretable and auditable.</p></div><div class="status">◉ SHAP-ready architecture</div></div>
+<div class="xaiTop"><div class="panel xaiCard"><div class="ring"><div><b id="xaiConfidence">91.4%</b><small>confidence</small></div></div><div><div class="eyebrow">PREDICTION</div><h3 id="xaiPredictionTitle">HIGH-IMPACT RAINFALL</h3><p id="xaiLocation" style="color:#70869d;font-size:10px">Bengaluru Urban · Next 1–3 hours</p></div></div><div class="panel"><div class="eyebrow">MODEL RELIABILITY</div><h3 id="xaiReliabilityTitle">High confidence</h3><p style="color:#71869d;font-size:10px;line-height:1.6">Reliability depends on complete satellite and atmospheric inputs remaining within the model's training distribution.</p><div class="track"><i id="xaiReliabilityBar" style="width:88%"></i></div><small id="xaiReliabilityFoot" style="color:#60768d;font-size:8px">88% input-quality score · simulated</small></div></div>
+<div class="grid2"><div class="panel"><div class="eyebrow">FEATURE ATTRIBUTION</div><h3>Contributing factors</h3><div id="xaiFactors"></div></div><div class="panel"><div class="eyebrow">AI INTERPRETATION</div><h3>Human-readable explanation</h3><div class="explain" id="xaiExplanation">The model identified <b>elevated atmospheric moisture</b> and <b>rapidly developing cloud characteristics</b> as the strongest contributors to the predicted event. Temperature and wind patterns provide additional support for convective development.</div><div class="note">⚠ This is prototype explanation text. Production will display actual SHAP values from the trained model.</div></div></div>
+<div class="panel"><div class="eyebrow">PRODUCTION XAI PIPELINE</div><h3>How the explanation is generated</h3><div class="flow"><div><b>01</b><span>Satellite + atmospheric inputs</span></div><i>→</i><div><b>02</b><span>Trained rainfall model</span></div><i>→</i><div><b>03</b><span>SHAP attribution</span></div><i>→</i><div><b>04</b><span>Human-readable explanation</span></div></div></div>
+
+<div class="uniqueGrid">
+  <div class="featureCard">
+    <div class="eyebrow">WHY HERE?</div><h3>Rainfall vs local impact</h3>
+    <div class="factor"><div class="factorTop"><span>Rainfall severity</span><b id="xRain">--</b></div><div class="track"><i id="xRainBar"></i></div></div>
+    <div class="factor"><div class="factorTop"><span>Terrain vulnerability</span><b id="xTerrain">--</b></div><div class="track"><i id="xTerrainBar"></i></div></div>
+    <div class="factor"><div class="factorTop"><span>Infrastructure exposure</span><b id="xInfra">--</b></div><div class="track"><i id="xInfraBar"></i></div></div>
+    <div class="factor"><div class="factorTop"><span>Population exposure</span><b id="xPop">--</b></div><div class="track"><i id="xPopBar"></i></div></div>
+  </div>
+  <div class="featureCard">
+    <div class="eyebrow">UNCERTAINTY-AWARE AI</div><h3>Confidence is not certainty</h3>
+    <p id="uncertaintyText">The system reports both prediction probability and reliability so operators know when the model may fail.</p>
+    <div class="reliabilityRing" id="uncertaintyRing" style="--p:0%"><div><b id="uncertaintyValue">--</b><span>reliability</span></div></div>
+  </div>
+</div>
+
+</section>
+
+<section id="map" class="view">
+<div class="intro"><div><div class="eyebrow">GEO-SPATIAL INTELLIGENCE</div><h2>Impact & risk map</h2><p>Combine rainfall risk with exposure and critical infrastructure.</p></div></div>
+<div class="mapLayout"><div class="panel layers"><div class="eyebrow">MAP LAYERS</div><div id="layers"></div><hr style="border-color:#1b2d42;border-width:1px 0 0;margin:12px 0"><div class="eyebrow">RISK FILTER</div><div class="segment" id="riskFilter"></div><div id="selectedZone" class="selectedZone"></div></div><div class="panel" style="padding:8px"><div id="fullMap" class="map"></div></div></div>
+<div class="stats" style="grid-template-columns:repeat(4,1fr)"><div class="panel stat"><span>High-risk zones</span><div class="statValue">6</div><div class="statFoot">Priority monitoring</div></div><div class="panel stat"><span>Population exposure</span><div class="statValue">48.2K</div><div class="statFoot">Scenario estimate</div></div><div class="panel stat"><span>Road segments</span><div class="statValue">19</div><div class="statFoot">Potentially affected</div></div><div class="panel stat"><span>Critical facilities</span><div class="statValue">3</div><div class="statFoot">Within high-risk zones</div></div></div>
+
+<div class="panel" style="margin-top:15px">
+  <div class="sectionHead"><div><div class="eyebrow">IMPACT-FIRST MAPPING</div><h3>Rainfall is only the first layer</h3><p>Switch between hazard, vulnerability and consequence layers to find where the same rain becomes dangerous.</p></div></div>
+  <div class="uniqueGrid3">
+    <div class="stat"><span>Rainfall severity</span><div class="statValue" id="mapRainRisk">--</div></div>
+    <div class="stat"><span>Local impact index</span><div class="statValue" id="mapImpactRisk">--</div></div>
+    <div class="stat"><span>Model reliability</span><div class="statValue" id="mapReliability">--</div></div>
+  </div>
+</div>
+
+</section>
+
+<section id="simulation" class="view">
+<div class="intro"><div><div class="eyebrow">SCENARIO ENGINE</div><h2>What-if impact simulation</h2><p>Explore how changing rainfall conditions can alter estimated exposure and priority zones.</p></div><button class="btn secondary" id="resetSim">↻ Reset</button></div>
+<div class="simGrid"><div class="panel"><div class="eyebrow">SCENARIO INPUTS</div><h3>Adjust conditions</h3>
+<div class="sliderBlock"><label>Rainfall intensity <strong><span id="rainVal">82</span> mm/h</strong></label><input id="rainSlider" type="range" min="20" max="150" value="82"><div class="rangeLabels"><span>20</span><span>150</span></div></div>
+<div class="sliderBlock"><label>Duration <strong><span id="durationVal">3</span> hours</strong></label><input id="durationSlider" type="range" min="1" max="6" value="3"><div class="rangeLabels"><span>1h</span><span>6h</span></div></div>
+<div class="sliderBlock"><label>Terrain sensitivity <strong><span id="elevVal">50</span>%</strong></label><input id="elevSlider" type="range" min="0" max="100" value="50"><div class="rangeLabels"><span>Higher impact</span><span>Lower impact</span></div></div>
+<div class="note">ⓘ Scenario simulation only. It is not a validated hydrological or flood forecast.</div></div>
+<div class="panel"><div class="eyebrow">SIMULATION OUTPUT</div><div class="simRisk" id="simRisk">HIGH</div><p style="color:#71869d;font-size:10px">Estimated exposure under the selected scenario.</p><div class="scenarioCards"><div class="panel stat"><span>Affected zones</span><div class="statValue" id="simZones">14</div></div><div class="panel stat"><span>Population exposure</span><div class="statValue" id="simPop">48.2K</div></div><div class="panel stat"><span>Road segments</span><div class="statValue" id="simRoads">19</div></div><div class="panel stat"><span>Priority level</span><div class="statValue" id="simPriority" style="font-size:17px">HIGH</div></div></div><div class="scenarioBar"><div id="scenarioBar" style="--w:69%"></div></div></div></div>
+
+<div class="panel" style="margin-top:15px">
+  <div class="eyebrow">CASCADE SIMULATION</div><h3>See the consequences, not just the rain</h3>
+  <div class="cascade">
+    <div class="cascadeNode"><b id="simRainNode">82</b><span>mm/h rain</span></div><div class="cascadeArrow">→</div>
+    <div class="cascadeNode"><b id="simSoil">--</b><span>soil saturation</span></div><div class="cascadeArrow">→</div>
+    <div class="cascadeNode"><b id="simDrain">--</b><span>drainage stress</span></div><div class="cascadeArrow">→</div>
+    <div class="cascadeNode"><b id="simAccess">--</b><span>accessibility risk</span></div>
+  </div>
+</div>
+
+</section>
+
+<section id="historical" class="view">
+<div class="intro"><div><div class="eyebrow">MODEL VALIDATION</div><h2>Historical event analysis</h2><p>Compare observed and predicted signals and inspect detection lead time.</p></div></div>
+<div class="panel"><div class="sectionHead"><div><div class="eyebrow">DEMO EVENT</div><h3>Observed vs predicted rainfall</h3></div></div><div id="historyChart" class="chart"></div><div style="text-align:center;color:#71869d;font-size:9px">● Observed &nbsp;&nbsp; <span style="color:#2dd4bf">●</span> Predicted</div></div>
+<div class="events" id="historyEvents"><div class="panel event"><div class="eyebrow">12 AUG 2025</div><h3>Demo monsoon event — Bengaluru</h3><div class="eventStats"><div><span>Observed</span><b>96 mm/h</b></div><div><span>Predicted</span><b>91 mm/h</b></div><div><span>Lead</span><b>2.3 h</b></div></div></div><div class="panel event"><div class="eyebrow">24 JUL 2025</div><h3>Demo high-impact event — Mysuru</h3><div class="eventStats"><div><span>Observed</span><b>84 mm/h</b></div><div><span>Predicted</span><b>80 mm/h</b></div><div><span>Lead</span><b>1.8 h</b></div></div></div><div class="panel event"><div class="eyebrow">03 AUG 2025</div><h3>Demo heavy rainfall — Shivamogga</h3><div class="eventStats"><div><span>Observed</span><b>112 mm/h</b></div><div><span>Predicted</span><b>105 mm/h</b></div><div><span>Lead</span><b>2.7 h</b></div></div></div></div>
+<div class="panel"><div class="eyebrow">EVALUATION</div><h3>Confusion-matrix metrics</h3><div class="metrics"><div class="metric"><b>True positive</b><strong>128</strong><span>Detected high-risk events</span></div><div class="metric"><b>False positive</b><strong>17</strong><span>False alarms</span></div><div class="metric"><b>True negative</b><strong>244</strong><span>Normal conditions</span></div><div class="metric"><b>False negative</b><strong>11</strong><span>Missed high-risk events</span></div></div><div class="note">All event and metric values are placeholders and must be replaced by real validation results before being presented as research findings.</div></div>
+
+<div class="panel" style="margin-top:15px">
+  <div class="eyebrow">CLIMATE MEMORY</div><h3>Has this happened here before?</h3>
+  <div class="uniqueGrid3">
+    <div class="stat"><span>Historical maximum</span><div class="statValue" id="histMax">--</div><div class="statFoot">Prototype analogue</div></div>
+    <div class="stat"><span>Similar events</span><div class="statValue" id="histSimilar">--</div><div class="statFoot">Pattern matches</div></div>
+    <div class="stat"><span>Return-period context</span><div class="statValue" id="histReturn">--</div><div class="statFoot">Scenario estimate</div></div>
+  </div>
+  <div class="commandAnswer" id="climateMemoryText">Select a location to load its climate-memory summary.</div>
+</div>
+
+</section>
+
+<section id="alerts" class="view">
+<div class="intro"><div><div class="eyebrow">EARLY WARNING</div><h2>Alert center</h2><p>Prioritized rainfall warnings generated from model risk outputs.</p></div></div>
+<div class="alertSummary"><div class="summary"><b>⚠ 6 active signals</b><span>2 critical · 3 high · 1 watch</span></div><div class="summary"><b>♧ Notification engine</b><span>Ready for SMS / email / app integration</span></div></div>
+<div class="alertList" id="allAlerts"></div>
+<div class="panel" style="margin-top:15px"><div class="eyebrow">ALERT LOGIC</div><h3>Prototype thresholds</h3><div class="logic"><div class="metric"><b style="color:#ff7185">CRITICAL</b><strong>≥ 90% probability</strong><span>Immediate priority monitoring</span></div><div class="metric"><b style="color:#f7c25a">HIGH</b><strong>75–89% probability</strong><span>Escalated preparedness</span></div><div class="metric"><b style="color:#60dfcf">WATCH</b><strong>55–74% probability</strong><span>Continue monitoring</span></div></div></div>
+</section>
+<div class="panel" style="margin-top:15px">
+  <div class="eyebrow">ACTIONABLE ALERT</div><h3>Alert → action plan</h3>
+  <div class="actionList" id="alertActionList"></div>
+</div>
+
+</div></main></div>
+
+<script>
+(function(){
+function q(id){return document.getElementById(id)}
+function num(id,f){var e=q(id),v=e?parseFloat(e.value):NaN;return isFinite(v)?v:f}
+window.varshaaAsk=function(){var input=q('commanderInput'),out=q('commanderAnswer');if(!input||!out)return;var text=input.value.trim();if(!text){out.innerHTML='<b>Ask VARSHAA</b><br>Try: <b>What happens if rainfall reaches 120 mm/h?</b> or <b>What happens if it rains for 20 minutes?</b>';return}var rain=num('inRain',42),humidity=num('inHumidity',82),cloud=num('inCloud',78);var dm=text.match(/(\d+(?:\.\d+)?)\s*(?:min|mins|minutes)/i),rm=text.match(/(\d+(?:\.\d+)?)\s*(?:mm\/?h|mm per hour|mm)/i);var duration=dm?parseFloat(dm[1]):60;if(rm)rain=parseFloat(rm[1]);var prob=parseFloat((q('calcProb')||{}).textContent)||55;var impact=Math.min(99,Math.round(prob*.45+Math.min(40,duration*.45)+humidity*.08+cloud*.05));var drainage=Math.min(99,Math.round(rain*.55+humidity*.25+duration*.18));var risk=impact>=80?'HIGH':impact>=60?'MODERATE':'LOW';var lead=Math.max(10,Math.round(125-prob*1.08));var loc=(q('selectedLocation')||{}).textContent||'selected location';out.innerHTML='<b>VARSHAA decision brief</b><br><b>'+loc+'</b><br><br>Scenario: <b>'+Math.round(rain)+' mm/h for '+Math.round(duration)+' minutes</b>.<br>Estimated rainfall impact: <b>'+impact+'/100 ('+risk+')</b>.<br>Estimated drainage stress: <b>'+drainage+'%</b>.<br>Available warning lead time: <b>'+lead+' minutes</b>.<br><br>'+(risk==='HIGH'?'🚨 Escalate localized warning, pre-position drainage teams and inspect vulnerable roads.':risk==='MODERATE'?'⚠️ Increase monitoring of drainage and road segments; prepare a localized advisory.':'🟢 Continue monitoring; no immediate high-impact action is indicated by this scenario.')+'<br><small>Prototype scenario analysis — replace with the trained ML model before operational use.</small>'}
+window.varshaaMode=function(mode,btn){document.querySelectorAll('[data-mode]').forEach(function(b){b.classList.remove('sel')});if(btn)btn.classList.add('sel');var title=q('modeTitle'),content=q('modeContent'),loc=(q('selectedLocation')||{}).textContent||'selected location',prob=(q('calcProb')||{}).textContent||'--';if(mode==='citizen'){if(title)title.textContent='Citizen mode';if(content)content.innerHTML='<b>'+loc+'</b><br>Current rainfall-risk probability: <b>'+prob+'%</b>.<br>Follow local authority warnings. Avoid low-lying roads, underpasses and river-edge areas during high-impact rainfall.'}else{if(title)title.textContent='Government mode';if(content)content.innerHTML='<b>Operational priority</b><br>Use the predicted risk to prioritize drainage response, road monitoring and critical-facility readiness for <b>'+loc+'</b>.'}}
+window.varshaaRefreshActions=function(){var p=parseFloat((q('calcProb')||{}).textContent)||55,loc=(q('selectedLocation')||{}).textContent||'selected location',lead=parseFloat((q('leadTime')||{}).textContent)||44,a;if(p>=80)a=['🚨 Escalate a localized high-impact rainfall alert for '+loc+'.','💧 Pre-position drainage teams and pumps at predicted stress zones.','🛣️ Inspect vulnerable underpasses and prepare road diversion messaging.','🏥 Check readiness of hospitals, schools and other critical facilities.','⏱️ Use the '+Math.round(lead)+'-minute warning window for response preparation.'];else if(p>=60)a=['⚠️ Increase rainfall and drainage monitoring for '+loc+'.','💧 Inspect known low-lying points and drainage bottlenecks.','🛣️ Monitor vulnerable road segments and underpasses.','🏥 Keep critical facilities on watch.','⏱️ Reassess within the '+Math.round(lead)+'-minute lead-time window.'];else a=['🟢 Continue rainfall and drainage monitoring for '+loc+'.','💧 Inspect known low-lying points as a precaution.','🛣️ Keep vulnerable road segments under observation.','🏥 Maintain critical-facility readiness.','⏱️ Recheck the prediction before the '+Math.round(lead)+'-minute window expires.'];['actionList','alertActionList'].forEach(function(id){var box=q(id);if(box)box.innerHTML=a.map(function(x,i){return '<div class="actionItem"><div class="num">0'+(i+1)+'</div><span>'+x+'</span></div>'}).join('')})}
+})();
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+let forecast=[42,61,82,74,58,46], labels=["Now","+1h","+2h","+3h","+4h","+5h"];
+
+const VIEW_NAMES={
+ dashboard:"Command Center",
+ prediction:"Rainfall Prediction",
+ xai:"Explainable AI",
+ map:"Impact & Risk Map",
+ simulation:"What-if Simulation",
+ historical:"Historical Events",
+ alerts:"Alert Center"
+};
+
+function go(view){
+  const target=document.getElementById(view);
+  if(!target)return;
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  target.classList.add("active");
+  document.querySelectorAll(".nav button").forEach(b=>{
+    b.classList.toggle("active",b.getAttribute("data-view")===view);
+  });
+  const name=VIEW_NAMES[view]||view;
+  const title=document.getElementById("title");
+  const crumb=document.getElementById("crumb");
+  if(title)title.textContent=name;
+  if(crumb)crumb.textContent=name.toUpperCase();
+  if(view==="map"){
+    setTimeout(()=>{if(typeof initFullMap==="function")initFullMap();},80);
+  }
+  if(view==="dashboard"){
+    setTimeout(()=>{if(typeof initDashMap==="function")initDashMap();},80);
+  }
+  if(view==="historical"){
+    setTimeout(()=>{if(typeof drawHistory==="function")drawHistory();},80);
+  }
+  const sidebar=document.getElementById("sidebar");
+  if(sidebar)sidebar.classList.remove("open");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* Direct listeners + event delegation as a fallback. */
+window.go=go;
+
+function wireNavigation(){
+  document.querySelectorAll(".nav button[data-view]").forEach(button=>{
+    button.onclick=function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      go(this.getAttribute("data-view"));
+      return false;
+    };
+  });
+  document.addEventListener("click",function(event){
+    const button=event.target.closest?.(".nav button[data-view]");
+    if(button){
+      event.preventDefault();
+      event.stopPropagation();
+      go(button.getAttribute("data-view"));
+    }
+  },false);
+}
+wireNavigation();
+
+
+function openHashView(){
+  const v=(location.hash||"").replace("#","");
+  if(v && document.getElementById(v) && VIEW_NAMES[v]) go(v);
+}
+window.addEventListener("hashchange",openHashView);
+
+const menuButton=document.getElementById("menu");
+if(menuButton){
+  menuButton.onclick=function(event){
+    event.preventDefault();
+    document.getElementById("sidebar")?.classList.toggle("open");
+  };
+}
+
+const alerts=[
+ {s:"CRITICAL",area:"North Bengaluru",p:91,win:"Next 1–3 hours",msg:"High-impact rainfall probability is elevated."},
+ {s:"HIGH",area:"East Bengaluru",p:82,win:"Next 2–4 hours",msg:"Rapid rainfall intensification detected."},
+ {s:"WATCH",area:"Central Bengaluru",p:68,win:"Next 3–6 hours",msg:"Rainfall conditions are developing."}
+];
+const factors=[["Atmospheric moisture",31,"High precipitable water signal"],["Cloud characteristics",27,"Rapid cloud-top cooling / development"],["Temperature profile",18,"Convective instability signal"],["Wind pattern",14,"Convergent moisture transport"],["Elevation",7,"Local terrain influence"],["Historical rainfall",3,"Recent antecedent rainfall"]];
+const zones=[
+ {id:"Z-01",name:"North Bengaluru",risk:"HIGH",rain:88,people:12400,roads:5,lat:13.08,lng:77.59},
+ {id:"Z-02",name:"East Bengaluru",risk:"HIGH",rain:82,people:9700,roads:4,lat:12.99,lng:77.68},
+ {id:"Z-03",name:"Central Bengaluru",risk:"MODERATE",rain:67,people:11800,roads:3,lat:12.97,lng:77.59},
+ {id:"Z-04",name:"South Bengaluru",risk:"LOW",rain:41,people:6200,roads:2,lat:12.89,lng:77.59},
+ {id:"Z-05",name:"West Bengaluru",risk:"MODERATE",rain:59,people:8100,roads:3,lat:12.98,lng:77.52}
+];
+const colors={HIGH:"#ff4d67",MODERATE:"#f5b63d",LOW:"#39d98a"};
+
+
+
+const WORLD_COUNTRIES=[{"name": "Afghanistan", "code": "AF"}, {"name": "Albania", "code": "AL"}, {"name": "Algeria", "code": "DZ"}, {"name": "Andorra", "code": "AD"}, {"name": "Angola", "code": "AO"}, {"name": "Antigua and Barbuda", "code": "AG"}, {"name": "Argentina", "code": "AR"}, {"name": "Armenia", "code": "AM"}, {"name": "Australia", "code": "AU"}, {"name": "Austria", "code": "AT"}, {"name": "Azerbaijan", "code": "AZ"}, {"name": "Bahamas", "code": "BS"}, {"name": "Bahrain", "code": "BH"}, {"name": "Bangladesh", "code": "BD"}, {"name": "Barbados", "code": "BB"}, {"name": "Belarus", "code": "BY"}, {"name": "Belgium", "code": "BE"}, {"name": "Belize", "code": "BZ"}, {"name": "Benin", "code": "BJ"}, {"name": "Bhutan", "code": "BT"}, {"name": "Bolivia", "code": "BO"}, {"name": "Bosnia and Herzegovina", "code": "BA"}, {"name": "Botswana", "code": "BW"}, {"name": "Brazil", "code": "BR"}, {"name": "Brunei", "code": "BN"}, {"name": "Bulgaria", "code": "BG"}, {"name": "Burkina Faso", "code": "BF"}, {"name": "Burundi", "code": "BI"}, {"name": "Cabo Verde", "code": "CV"}, {"name": "Cambodia", "code": "KH"}, {"name": "Cameroon", "code": "CM"}, {"name": "Canada", "code": "CA"}, {"name": "Central African Republic", "code": "CF"}, {"name": "Chad", "code": "TD"}, {"name": "Chile", "code": "CL"}, {"name": "China", "code": "CN"}, {"name": "Colombia", "code": "CO"}, {"name": "Comoros", "code": "KM"}, {"name": "Congo", "code": "CG"}, {"name": "Costa Rica", "code": "CR"}, {"name": "Croatia", "code": "HR"}, {"name": "Cuba", "code": "CU"}, {"name": "Cyprus", "code": "CY"}, {"name": "Czechia", "code": "CZ"}, {"name": "Denmark", "code": "DK"}, {"name": "Djibouti", "code": "DJ"}, {"name": "Dominica", "code": "DM"}, {"name": "Dominican Republic", "code": "DO"}, {"name": "Ecuador", "code": "EC"}, {"name": "Egypt", "code": "EG"}, {"name": "El Salvador", "code": "SV"}, {"name": "Equatorial Guinea", "code": "GQ"}, {"name": "Eritrea", "code": "ER"}, {"name": "Estonia", "code": "EE"}, {"name": "Eswatini", "code": "SZ"}, {"name": "Ethiopia", "code": "ET"}, {"name": "Fiji", "code": "FJ"}, {"name": "Finland", "code": "FI"}, {"name": "France", "code": "FR"}, {"name": "Gabon", "code": "GA"}, {"name": "Gambia", "code": "GM"}, {"name": "Georgia", "code": "GE"}, {"name": "Germany", "code": "DE"}, {"name": "Ghana", "code": "GH"}, {"name": "Greece", "code": "GR"}, {"name": "Grenada", "code": "GD"}, {"name": "Guatemala", "code": "GT"}, {"name": "Guinea", "code": "GN"}, {"name": "Guinea-Bissau", "code": "GW"}, {"name": "Guyana", "code": "GY"}, {"name": "Haiti", "code": "HT"}, {"name": "Honduras", "code": "HN"}, {"name": "Hungary", "code": "HU"}, {"name": "Iceland", "code": "IS"}, {"name": "India", "code": "IN"}, {"name": "Indonesia", "code": "ID"}, {"name": "Iran", "code": "IR"}, {"name": "Iraq", "code": "IQ"}, {"name": "Ireland", "code": "IE"}, {"name": "Israel", "code": "IL"}, {"name": "Italy", "code": "IT"}, {"name": "Jamaica", "code": "JM"}, {"name": "Japan", "code": "JP"}, {"name": "Jordan", "code": "JO"}, {"name": "Kazakhstan", "code": "KZ"}, {"name": "Kenya", "code": "KE"}, {"name": "Kiribati", "code": "KI"}, {"name": "Kuwait", "code": "KW"}, {"name": "Kyrgyzstan", "code": "KG"}, {"name": "Laos", "code": "LA"}, {"name": "Latvia", "code": "LV"}, {"name": "Lebanon", "code": "LB"}, {"name": "Lesotho", "code": "LS"}, {"name": "Liberia", "code": "LR"}, {"name": "Libya", "code": "LY"}, {"name": "Liechtenstein", "code": "LI"}, {"name": "Lithuania", "code": "LT"}, {"name": "Luxembourg", "code": "LU"}, {"name": "Madagascar", "code": "MG"}, {"name": "Malawi", "code": "MW"}, {"name": "Malaysia", "code": "MY"}, {"name": "Maldives", "code": "MV"}, {"name": "Mali", "code": "ML"}, {"name": "Malta", "code": "MT"}, {"name": "Marshall Islands", "code": "MH"}, {"name": "Mauritania", "code": "MR"}, {"name": "Mauritius", "code": "MU"}, {"name": "Mexico", "code": "MX"}, {"name": "Micronesia", "code": "FM"}, {"name": "Moldova", "code": "MD"}, {"name": "Monaco", "code": "MC"}, {"name": "Mongolia", "code": "MN"}, {"name": "Montenegro", "code": "ME"}, {"name": "Morocco", "code": "MA"}, {"name": "Mozambique", "code": "MZ"}, {"name": "Myanmar", "code": "MM"}, {"name": "Namibia", "code": "NA"}, {"name": "Nauru", "code": "NR"}, {"name": "Nepal", "code": "NP"}, {"name": "Netherlands", "code": "NL"}, {"name": "New Zealand", "code": "NZ"}, {"name": "Nicaragua", "code": "NI"}, {"name": "Niger", "code": "NE"}, {"name": "Nigeria", "code": "NG"}, {"name": "North Korea", "code": "KP"}, {"name": "North Macedonia", "code": "MK"}, {"name": "Norway", "code": "NO"}, {"name": "Oman", "code": "OM"}, {"name": "Pakistan", "code": "PK"}, {"name": "Palau", "code": "PW"}, {"name": "Palestine", "code": "PS"}, {"name": "Panama", "code": "PA"}, {"name": "Papua New Guinea", "code": "PG"}, {"name": "Paraguay", "code": "PY"}, {"name": "Peru", "code": "PE"}, {"name": "Philippines", "code": "PH"}, {"name": "Poland", "code": "PL"}, {"name": "Portugal", "code": "PT"}, {"name": "Qatar", "code": "QA"}, {"name": "Romania", "code": "RO"}, {"name": "Russia", "code": "RU"}, {"name": "Rwanda", "code": "RW"}, {"name": "Saint Kitts and Nevis", "code": "KN"}, {"name": "Saint Lucia", "code": "LC"}, {"name": "Saint Vincent and the Grenadines", "code": "VC"}, {"name": "Samoa", "code": "WS"}, {"name": "San Marino", "code": "SM"}, {"name": "Sao Tome and Principe", "code": "ST"}, {"name": "Saudi Arabia", "code": "SA"}, {"name": "Senegal", "code": "SN"}, {"name": "Serbia", "code": "RS"}, {"name": "Seychelles", "code": "SC"}, {"name": "Sierra Leone", "code": "SL"}, {"name": "Singapore", "code": "SG"}, {"name": "Slovakia", "code": "SK"}, {"name": "Slovenia", "code": "SI"}, {"name": "Solomon Islands", "code": "SB"}, {"name": "Somalia", "code": "SO"}, {"name": "South Africa", "code": "ZA"}, {"name": "South Korea", "code": "KR"}, {"name": "South Sudan", "code": "SS"}, {"name": "Spain", "code": "ES"}, {"name": "Sri Lanka", "code": "LK"}, {"name": "Sudan", "code": "SD"}, {"name": "Suriname", "code": "SR"}, {"name": "Sweden", "code": "SE"}, {"name": "Switzerland", "code": "CH"}, {"name": "Syria", "code": "SY"}, {"name": "Taiwan", "code": "TW"}, {"name": "Tajikistan", "code": "TJ"}, {"name": "Tanzania", "code": "TZ"}, {"name": "Thailand", "code": "TH"}, {"name": "Timor-Leste", "code": "TL"}, {"name": "Togo", "code": "TG"}, {"name": "Tonga", "code": "TO"}, {"name": "Trinidad and Tobago", "code": "TT"}, {"name": "Tunisia", "code": "TN"}, {"name": "Turkey", "code": "TR"}, {"name": "Turkmenistan", "code": "TM"}, {"name": "Tuvalu", "code": "TV"}, {"name": "Uganda", "code": "UG"}, {"name": "Ukraine", "code": "UA"}, {"name": "United Arab Emirates", "code": "AE"}, {"name": "United Kingdom", "code": "GB"}, {"name": "United States", "code": "US"}, {"name": "Uruguay", "code": "UY"}, {"name": "Uzbekistan", "code": "UZ"}, {"name": "Vanuatu", "code": "VU"}, {"name": "Vatican City", "code": "VA"}, {"name": "Venezuela", "code": "VE"}, {"name": "Vietnam", "code": "VN"}, {"name": "Yemen", "code": "YE"}, {"name": "Zambia", "code": "ZM"}, {"name": "Zimbabwe", "code": "ZW"}];
+
+let selectedRegion={country:"India",state:"Karnataka",city:"Bengaluru"};
+
+function optionize(select,items,placeholder){
+  select.innerHTML="";
+  const p=document.createElement("option");
+  p.value="";p.textContent=placeholder;p.selected=true;
+  select.appendChild(p);
+  items.forEach(x=>{
+    const o=document.createElement("option");
+    o.value=x.value??x.name;o.textContent=x.name??x;
+    if(x.lat!==undefined)o.dataset.lat=x.lat;
+    if(x.lng!==undefined)o.dataset.lng=x.lng;
+    select.appendChild(o);
+  });
+}
+function countryNameFromCode(code){
+  return (WORLD_COUNTRIES.find(x=>x.code===code)||{name:code}).name;
+}
+function initCountryLists(){
+  const items=WORLD_COUNTRIES.map(x=>({name:x.name,value:x.code}));
+  const global=document.getElementById("globalCountry");
+  const pred=document.getElementById("predCountry");
+  optionize(global,items,"Select a country");
+  optionize(pred,items,"Select a country");
+  const status=document.getElementById("globalLocationStatus");
+  if(status) status.textContent="✓ Select a country to continue.";
+}
+async function countriesNow(path,body){
+  const response=await fetch("https://countriesnow.space/api/v0.1/"+path,{
+    method:"POST",
+    headers:{"Content-Type":"application/json","Accept":"application/json"},
+    body:JSON.stringify(body)
+  });
+  if(!response.ok)throw new Error("CountriesNow HTTP "+response.status);
+  const json=await response.json();
+  if(json.error)throw new Error(json.msg||"CountriesNow error");
+  return json.data;
+}
+async function loadStates(prefix){
+  const country=document.getElementById(prefix+"Country");
+  const state=document.getElementById(prefix+"State");
+  const city=document.getElementById(prefix+"City");
+  const countryName=countryNameFromCode(country.value);
+  state.disabled=true;city.disabled=true;
+  optionize(state,[],"Loading states / regions…");
+  optionize(city,[],"Select state / region first");
+  if(!country.value)return;
+  try{
+    const data=await countriesNow("countries/states",{country:countryName});
+    const states=(data.states||data||[]).map(x=>({
+      name:typeof x==="string"?x:x.name,
+      value:typeof x==="string"?x:x.name
+    })).filter(x=>x.name).sort((a,b)=>a.name.localeCompare(b.name));
+    optionize(state,states,states.length?"Select a state / region":"No states / regions returned");
+    state.disabled=states.length===0;
+    if(states.length)document.getElementById("globalLocationStatus").textContent=`✓ ${countryName} selected. ${states.length} states / regions available.`;
+  }catch(err){
+    // Keep the selector usable and explain the actual issue.
+    optionize(state,[],"Unable to load states — retry");
+    state.disabled=true;
+    const status=document.getElementById("globalLocationStatus");
+    if(status) status.textContent="⚠ State list could not be loaded. Check internet access and retry.";
+    console.error("State loading failed:",err);
+  }
+}
+async function loadCities(prefix){
+  const country=document.getElementById(prefix+"Country");
+  const state=document.getElementById(prefix+"State");
+  const city=document.getElementById(prefix+"City");
+  const countryName=countryNameFromCode(country.value);
+  const stateName=state.options[state.selectedIndex]?.textContent||"";
+  city.disabled=true;optionize(city,[],"Loading cities / places…");
+  if(!country.value||!state.value)return;
+  try{
+    const data=await countriesNow("countries/state/cities",{country:countryName,state:stateName});
+    const names=(data||[]).map(x=>typeof x==="string"?x:(x.name||x.city)).filter(Boolean);
+    const places=[...new Set(names)].sort((a,b)=>a.localeCompare(b)).map(name=>({name,value:name}));
+    optionize(city,places,places.length?"Select a city / place":"No cities returned");
+    city.disabled=places.length===0;
+  }catch(err){
+    optionize(city,[],"Unable to load cities — retry");
+    city.disabled=true;
+    console.error("City loading failed:",err);
+  }
+}
+async function geocodePlace(city,state,country){
+  const query=encodeURIComponent(`${city}, ${state}, ${country}`);
+  const r=await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q="+query,{
+    headers:{"Accept":"application/json"}
+  });
+  if(!r.ok)throw new Error("Geocoding failed");
+  const data=await r.json();
+  if(!data.length)throw new Error("Coordinates not found");
+  return {lat:+data[0].lat,lng:+data[0].lon,display:data[0].display_name};
+}
+function getRiskForPlace(lat,lng){
+  const n=Math.abs(lat*7.31+lng*3.17);
+  const rain=Math.round(35+(n%65));
+  const humidity=Math.round(65+(n%30));
+  const cloud=Math.round(55+(n%40));
+  const temp=Math.round((22+(n%10))*10)/10;
+  const wind=Math.round(10+(n%35));
+  const elevation=Math.round(100+(n%1800));
+  return {rain,humidity,cloud,temp,wind,elevation};
+}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function sigmoid(x){return 1/(1+Math.exp(-x));}
+function runPrediction(){
+  const rain=clamp(Number(document.getElementById("inRain").value)||0,0,250);
+  const humidity=clamp(Number(document.getElementById("inHumidity").value)||0,0,100);
+  const cloud=clamp(Number(document.getElementById("inCloud").value)||0,0,100);
+  const temp=clamp(Number(document.getElementById("inTemp").value)||0,-10,55);
+  const wind=clamp(Number(document.getElementById("inWind").value)||0,0,150);
+  const elevation=clamp(Number(document.getElementById("inElevation").value)||0,0,9000);
+
+  // Transparent prototype score: each feature is normalized to 0–1 and weighted.
+  const rainN=clamp(rain/120,0,1);
+  const humidityN=humidity/100;
+  const cloudN=cloud/100;
+  const windN=clamp(wind/80,0,1);
+  const elevationN=clamp(elevation/3000,0,1);
+  // Rainfall risk is generally highest in a broad warm/moist band; this is only a demo proxy.
+  const tempN=1-Math.min(1,Math.abs(temp-25)/20);
+  const score=100*(.45*rainN+.18*humidityN+.14*cloudN+.08*windN+.07*elevationN+.08*tempN);
+  const probability=100*sigmoid((score-52)/10);
+  const prob=Math.round(clamp(probability,1,99)*10)/10;
+  const risk=prob>=80?"HIGH":prob>=60?"MODERATE":"LOW";
+  const confidence=Math.round(clamp(70+Math.abs(score-50)*.45+humidityN*6,70,96)*10)/10;
+
+  const windowValue=document.getElementById("window")?.value||"Next 3 Hours";
+  const hours=windowValue.includes("1")?1:windowValue.includes("6")?6:3;
+  const points=6;
+  labels=["Now"];
+  for(let i=1;i<points;i++)labels.push("+"+Math.round(i*hours/5*10)/10+"h");
+  const trend=1+(cloudN*.12+humidityN*.08+windN*.04);
+  forecast=[];
+  for(let i=0;i<points;i++){
+    const decay=Math.max(.72,1-(i*(.045+(1-humidityN)*.03)));
+    const wave=1+Math.sin(i*1.15+rainN*3)*.055;
+    forecast.push(Math.max(0,Math.round(rain*trend*decay*wave)));
+  }
+  forecast[0]=Math.round(rain);
+  const peak=Math.max(...forecast);
+
+  document.getElementById("calcCurrent").textContent=Math.round(rain);
+  document.getElementById("calcPeak").textContent=peak;
+  document.getElementById("calcProb").textContent=prob;
+  const conf=document.getElementById("calcConfidence");
+  conf.textContent=confidence>=85?"HIGH":confidence>=75?"MEDIUM":"LOW";
+  conf.style.color=confidence>=85?"#63d9c4":confidence>=75?"#f5b63d":"#ff7185";
+
+  const scoreEl=document.querySelector("#prediction .scoreRisk");
+  const num=document.querySelector("#prediction .scoreNum");
+  const bar=document.querySelector("#prediction .riskbar i");
+  if(scoreEl){scoreEl.textContent=risk==="HIGH"?"HIGH-IMPACT RAINFALL":risk+" RAINFALL RISK";scoreEl.style.color=colors[risk];}
+  if(num)num.innerHTML=`${prob}<small>%</small>`;
+  if(bar)bar.style.width=prob+"%";
+  const badge=document.getElementById("conditionBadge");
+  if(badge){badge.textContent=risk+" RISK";badge.style.color=colors[risk];badge.style.borderColor=colors[risk]+"66";badge.style.background=colors[risk]+"14";}
+  const hero=document.querySelector(".heroRow h2");
+  if(hero){hero.textContent=risk;hero.style.color=colors[risk];}
+  const heroRiskLabel=document.getElementById("heroRiskLabel");
+  if(heroRiskLabel) heroRiskLabel.textContent=`● ${risk==="HIGH"?"HIGH-IMPACT":risk} RAINFALL RISK`;
+  const heroXaiTitle=document.getElementById("heroXaiTitle");
+  if(heroXaiTitle) heroXaiTitle.textContent=`Why is risk ${risk==="LOW"?"low":"elevated"}?`;
+  document.getElementById("heroRain").textContent=Math.round(rain);
+  document.getElementById("heroConfidence").textContent=confidence+"%";
+
+  svgChart("predChart",forecast);
+  svgChart("forecastChart",forecast);
+  const result={rain,humidity,cloud,temp,wind,elevation,score,prob,risk,confidence,peak,forecast};
+  window.VARSHAA_CURRENT_SCENARIO = result;
+  updateUniqueFeatures(result);
+  return result;
+}
+function setPredictionInputs(data){
+  if(!data)return;
+  document.getElementById("inRain").value=Math.round(data.rain);
+  document.getElementById("inHumidity").value=Math.round(data.humidity);
+  document.getElementById("inCloud").value=Math.round(data.cloud);
+  document.getElementById("inTemp").value=data.temp;
+  document.getElementById("inWind").value=Math.round(data.wind);
+  document.getElementById("inElevation").value=Math.round(data.elevation);
+  runPrediction();
+}
+
+async function applySelected(prefix){
+  const country=document.getElementById(prefix+"Country");
+  const state=document.getElementById(prefix+"State");
+  const city=document.getElementById(prefix+"City");
+  if(!country || !state || !city || !country.value || !state.value || !city.value){
+    return;
+  }
+
+  const countryName=countryNameFromCode(country.value);
+  const stateName=state.options[state.selectedIndex]?.textContent || state.value;
+  const cityName=city.options[city.selectedIndex]?.textContent || city.value;
+  const label=`${cityName}, ${stateName}, ${countryName}`;
+
+  // IMPORTANT: update the selected location immediately.
+  // The prediction page must never keep showing the previous Bengaluru location.
+  document.getElementById("selectedLocation").textContent=label;
+  document.getElementById("heroLocation").textContent=label;
+  const title=document.getElementById("conditionTitle");
+  if(title) title.textContent=`${cityName} · ${stateName}`;
+  const text=document.getElementById("conditionText");
+  if(text) text.textContent=`Selected location: ${label}. Running the rainfall-risk scenario for this location.`;
+
+  // Create deterministic demo inputs from the selected location so every place
+  // produces a different prototype result even when map geocoding is unavailable.
+  let seed=0;
+  for(const ch of label) seed=((seed*31)+ch.charCodeAt(0))>>>0;
+  const demo={
+    rain: 20 + (seed % 81),
+    humidity: 55 + ((seed>>>7) % 41),
+    cloud: 45 + ((seed>>>13) % 51),
+    temp: Math.round((18 + ((seed>>>19)%160)/10)*10)/10,
+    wind: 8 + ((seed>>>5)%58),
+    elevation: 20 + ((seed>>>11)%1981)
+  };
+  setPredictionInputs(demo);
+
+  // Try to obtain real coordinates for map movement, but DO NOT block prediction
+  // if geocoding fails.
+  try{
+    const geo=await geocodePlace(cityName,stateName,countryName);
+    selectedRegion={country:countryName,state:stateName,city:cityName,lat:geo.lat,lng:geo.lng};
+    Object.values(maps).forEach(map=>{
+      if(!map || !map.setView) return;
+      map.setView([geo.lat,geo.lng],10);
+      if(map._varshaaSearchMarker)map.removeLayer(map._varshaaSearchMarker);
+      const risk=document.querySelector("#prediction .scoreRisk")?.textContent?.includes("HIGH")?"HIGH":
+                 document.querySelector("#prediction .scoreRisk")?.textContent?.includes("MODERATE")?"MODERATE":"LOW";
+      map._varshaaSearchMarker=L.circle([geo.lat,geo.lng],{
+        radius:15000,color:colors[risk],fillColor:colors[risk],fillOpacity:.18,weight:2
+      }).addTo(map);
+      map._varshaaSearchMarker.bindPopup(
+        `<b>${cityName}</b><br>${stateName}, ${countryName}<br>Selected location`
+      ).openPopup();
+    });
+  }catch(err){
+    // Prediction still works without geocoding.
+    console.warn("Map geocoding unavailable; prediction remains active.",err);
+  }
+}
+function applyUniversalLocation(country,state,city,lat,lng,display){
+  const r=getRiskForPlace(lat,lng);
+  selectedRegion={country,state,city,lat,lng};
+  const label=`${city}, ${state}, ${country}`;
+  document.getElementById("selectedLocation").textContent=label;
+  document.getElementById("heroLocation").textContent=label;
+  const title=document.getElementById("conditionTitle");
+  if(title) title.textContent=`${city} · ${state}`;
+
+  // IMPORTANT: feed this location into the SAME prediction engine used everywhere else.
+  setPredictionInputs(r);
+
+  const scenario=window.VARSHAA_CURRENT_SCENARIO;
+  if(scenario){
+    const text=document.getElementById("conditionText");
+    if(text) text.textContent=`Selected location: ${label}. Running the same rainfall-risk scenario used by Prediction, Map, Simulation, Historical Events, XAI and Alerts.`;
+  }
+
+  // Move any available map to the selected coordinates.
+  Object.values(maps).forEach(map=>{
+    if(!map || !map.setView) return;
+    map.setView([lat,lng],10);
+    if(map._varshaaSearchMarker)map.removeLayer(map._varshaaSearchMarker);
+    const s=window.VARSHAA_CURRENT_SCENARIO || {};
+    const risk=s.risk||"LOW";
+    if(typeof L!=="undefined"){
+      map._varshaaSearchMarker=L.circle([lat,lng],{
+        radius:15000,color:colors[risk],fillColor:colors[risk],fillOpacity:.18,weight:2
+      }).addTo(map);
+      map._varshaaSearchMarker.bindPopup(`<b>${city}</b><br>${state}, ${country}<br>Current scenario: ${risk} risk`).openPopup();
+    }
+  });
+}
+function svgChart(containerId,data,series2=false){
+ const el=document.getElementById(containerId); if(!el)return;
+ const w=el.clientWidth||700,h=260,p=30,max=Math.max(...data)*1.18;
+ const pts=data.map((v,i)=>[p+i*(w-2*p)/(data.length-1),h-p-(v/max)*(h-2*p)]);
+ let d=pts.map((a,i)=>(i?"L":"M")+a[0]+" "+a[1]).join(" ");
+ let area=d+" L "+pts.at(-1)[0]+" "+(h-p)+" L "+pts[0][0]+" "+(h-p)+" Z";
+ el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%" preserveAspectRatio="none">
+ <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2dd4bf" stop-opacity=".32"/><stop offset="1" stop-color="#2dd4bf" stop-opacity="0"/></linearGradient></defs>
+ <g stroke="#1c3045" stroke-dasharray="3 4">${[.25,.5,.75,1].map(y=>`<line x1="${p}" x2="${w-p}" y1="${h-p-(h-2*p)*y}" y2="${h-p-(h-2*p)*y}"/>`).join("")}</g>
+ <path d="${area}" fill="url(#g)"/><path d="${d}" fill="none" stroke="#2dd4bf" stroke-width="3"/>
+ ${pts.map((a,i)=>`<circle cx="${a[0]}" cy="${a[1]}" r="4" fill="#07111f" stroke="#2dd4bf" stroke-width="2"><title>${labels[i]}: ${data[i]} mm/h</title></circle>`).join("")}
+ ${labels.map((x,i)=>`<text x="${pts[i][0]}" y="${h-7}" text-anchor="middle" fill="#6f849a" font-size="10">${x}</text>`).join("")}
+ </svg>`;
+}
+function renderAlerts(id){document.getElementById(id).innerHTML=alerts.map(a=>`<div class="alert ${a.s.toLowerCase()}"><div class="alertIcon">⚠</div><div class="alertMain"><div class="alertTitle"><b>${a.s}</b><span>${a.p}% probability</span></div><h4>${a.area}</h4><p>${a.msg}</p><small>${a.win}</small></div></div>`).join("")}
+function renderXai(){document.getElementById("xaiFactors").innerHTML=factors.map(f=>`<div class="factor"><div class="factorTop"><span>${f[0]}</span><b>${f[1]}%</b></div><div class="track"><i style="width:${f[1]}%"></i></div><div style="font-size:8px;color:#5e748a;margin-top:4px">${f[2]}</div></div>`).join("")}
+
+function makeMap(id){
+ if(maps[id]){maps[id].invalidateSize();return maps[id]}
+ const map=L.map(id,{zoomControl:true}).setView([12.97,77.60],10);
+ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"© OpenStreetMap contributors"}).addTo(map);
+ regionData.karnataka.districts.forEach(z=>{
+  const c=L.circle([z.lat,z.lng],{radius:16000,color:colors[z.risk],fillColor:colors[z.risk],fillOpacity:.24,weight:2}).addTo(map);
+  c.bindPopup(`<b>${z.name}</b><br>Region: Karnataka<br>Risk: <b>${z.risk}</b><br>Demo rainfall: ${z.rain} mm/h<br>Demo probability: ${z.prob}%<br>Population exposure: ${z.people.toLocaleString()}<br>Road segments: ${z.roads}`);
+  c.on("click",()=>selectZone(z));
+ });
+ maps[id]=map;return map;
+}
+function initDashMap(){makeMap("dashMap")}
+function initFullMap(){const m=makeMap("fullMap");m.invalidateSize()}
+function selectZone(z){const e=document.getElementById("selectedZone");if(e)e.innerHTML=`<div class="eyebrow">SELECTED ZONE</div><h3>${z.name}</h3><b style="color:${colors[z.risk]}">${z.risk} RISK</b><p>${z.rain} mm/h · ${z.people.toLocaleString()} exposed · ${z.roads} road segments</p>`}
+
+const layerNames=[["rain","Rainfall intensity"],["hazard","Hazard zones"],["elev","Elevation"],["population","Population"],["roads","Road network"],["hospitals","Hospitals"],["schools","Schools"]];
+function renderLayers(){document.getElementById("layers").innerHTML=layerNames.map(x=>`<button class="on" data-layer="${x[0]}" onclick="this.classList.toggle('on')">◉ <span>${x[1]}</span><i class="switch"></i></button>`).join("");document.getElementById("riskFilter").innerHTML=["ALL","HIGH","MODERATE","LOW"].map(x=>`<button class="${x==="ALL"?"sel":""}" onclick="filterRisk(this,'${x}')">${x}</button>`).join("")}
+function filterRisk(btn,risk){
+ document.querySelectorAll("#riskFilter button").forEach(x=>x.classList.remove("sel"));
+ btn.classList.add("sel");
+ const m=maps.fullMap;if(!m)return;
+ m.eachLayer(l=>{
+   if(l instanceof L.Circle && l!==m._varshaaSearchMarker){
+     const popup=l.getPopup()?.getContent()||"";
+     const show=risk==="ALL" || popup.includes("Risk: <b>"+risk+"</b>");
+     l.setStyle({opacity:show?1:0,fillOpacity:show?.24:0});
+   }
+ });
+}
+function getRegion(state,district){
+  return regionData[state].districts.find(d=>d.name===district) || regionData[state].districts[0];
+}
+function updateRegionUI(state,district){
+  const r=getRegion(state,district);
+  const full=`${r.name}, ${regionData[state].label}`;
+  selectedRegion={state,district:r.name};
+  selectedLocation.textContent=full;
+  document.getElementById("heroLocation").textContent=full;
+  const conditionTitle=document.getElementById("conditionTitle");
+  if(conditionTitle) conditionTitle.textContent=full;
+
+  // Convert the regional demo record into the common prediction input format.
+  setPredictionInputs({
+    rain:r.rain,
+    humidity:r.humidity ?? 70,
+    cloud:r.cloud ?? 70,
+    temp:r.temp ?? 25,
+    wind:r.wind ?? 20,
+    elevation:r.elevation ?? 200
+  });
+
+  const s=window.VARSHAA_CURRENT_SCENARIO;
+  if(s){
+    const conditionText=document.getElementById("conditionText");
+    if(conditionText) conditionText.textContent=`Selected: ${full}. Risk: ${s.risk}. All downstream modules now use the same scenario.`;
+  }
+}
+function renderRegionCircles(map,state){
+  if(!map) return;
+  map.eachLayer(l=>{if(l instanceof L.Circle){map.removeLayer(l)}});
+  regionData[state].districts.forEach(z=>{
+    const c=L.circle([z.lat,z.lng],{radius:state==="odisha"?19000:16000,color:colors[z.risk],fillColor:colors[z.risk],fillOpacity:.24,weight:2}).addTo(map);
+    c.bindPopup(`<b>${z.name}</b><br>Region: ${regionData[state].label}<br>Risk: <b>${z.risk}</b><br>Demo rainfall: ${z.rain} mm/h<br>Demo probability: ${z.prob}%<br>Population exposure: ${z.people.toLocaleString()}<br>Road segments: ${z.roads}`);
+    c.on("click",()=>selectZone(z));
+  });
+}
+
+
+
+
+
+function drawHistory(){
+ const el=document.getElementById("historyChart");if(!el)return;
+ const obs=[18,31,55,72,96,78,52,36],pred=[16,29,49,68,91,74,56,39],w=el.clientWidth||700,h=260,p=30,max=110;
+ const pts=a=>a.map((v,i)=>[p+i*(w-2*p)/(a.length-1),h-p-v/max*(h-2*p)]);
+ const po=pts(obs),pp=pts(pred),path=a=>a.map((q,i)=>(i?"L":"M")+q[0]+" "+q[1]).join(" ");
+ el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%" preserveAspectRatio="none"><g stroke="#1c3045" stroke-dasharray="3 4">${[25,50,75,100].map(v=>`<line x1="${p}" x2="${w-p}" y1="${h-p-v/max*(h-2*p)}" y2="${h-p-v/max*(h-2*p)}"/>`).join("")}</g><path d="${path(po)}" fill="none" stroke="#ff4d67" stroke-width="3"/><path d="${path(pp)}" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-dasharray="7 4"/>${po.map((q,i)=>`<circle cx="${q[0]}" cy="${q[1]}" r="3" fill="#ff4d67"/>`).join("")}</svg>`;
+}
+window.addEventListener("resize",()=>{svgChart("forecastChart",forecast);svgChart("predChart",forecast);if(maps.dashMap)maps.dashMap.invalidateSize();if(maps.fullMap)maps.fullMap.invalidateSize()});
+
+/* ===== LOCATION-AWARE FEATURE REPAIR ===== */
+let currentPredictionResult=null;
+let currentPlace={country:"India",state:"Karnataka",city:"Bengaluru",lat:12.9716,lng:77.5946,label:"Bengaluru, Karnataka, India"};
+
+function setCurrentPlaceFromSelection(){
+  const text=(document.getElementById("selectedLocation")?.textContent||"").trim();
+  if(text && !/select a location|select a state/i.test(text)) currentPlace.label=text;
+  const pc=document.getElementById("predCountry"),ps=document.getElementById("predState"),py=document.getElementById("predCity");
+  if(pc?.value && ps?.value && py?.value){
+    currentPlace.country=countryNameFromCode(pc.value);
+    currentPlace.state=ps.options[ps.selectedIndex]?.textContent||ps.value;
+    currentPlace.city=py.options[py.selectedIndex]?.textContent||py.value;
+    currentPlace.label=`${currentPlace.city}, ${currentPlace.state}, ${currentPlace.country}`;
+  }
+}
+
+function simUpdate(){
+  const rain=Math.max(20,Math.min(150,Number(document.getElementById("rainSlider")?.value)||82));
+  const duration=Math.max(1,Number(document.getElementById("durationSlider")?.value)||3);
+  const terrain=Math.max(0,Math.min(100,Number(document.getElementById("elevSlider")?.value)||50));
+  const base=currentPredictionResult||{prob:55};
+  const prob=Math.max(1,Math.min(99,base.prob + (rain-(base.rain||rain))*.42 + (duration-3)*4 + (terrain-50)*.10));
+  const zones=Math.max(1,Math.round(3+prob/8));
+  const pop=Math.max(1,Math.round((18+prob*.37+duration*2.2)*10)/10);
+  const roads=Math.max(1,Math.round(4+prob*.18+terrain*.04));
+  const priority=prob>=80?"HIGH":prob>=60?"MODERATE":"LOW";
+  const soil=Math.round(Math.min(99,terrain*.28+rain*.42+duration*3));
+  const drain=Math.round(Math.min(99,rain*.48+terrain*.18+duration*5));
+  const access=Math.round(Math.min(99,drain*.62+prob*.25));
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
+  set("rainVal",Math.round(rain));set("durationVal",duration);set("elevVal",Math.round(terrain));
+  set("simRisk",priority);set("simZones",zones);set("simPop",pop.toFixed(1)+"K");set("simRoads",roads);set("simPriority",priority);
+  const bar=document.getElementById("scenarioBar");if(bar)bar.style.setProperty("--w",Math.round(prob)+"%");
+  set("simRainNode",Math.round(rain));set("simSoil",soil);set("simDrain",drain+"%");set("simAccess",access+"%");
+}
+function resetSimulation(){
+  const r=currentPredictionResult||{rain:82};
+  const rs=document.getElementById("rainSlider"),ds=document.getElementById("durationSlider"),es=document.getElementById("elevSlider");
+  if(rs)rs.value=Math.max(20,Math.min(150,Math.round(r.rain||82)));
+  if(ds)ds.value=3;
+  if(es)es.value=50;
+  simUpdate();
+}
+["rainSlider","durationSlider","elevSlider"].forEach(id=>document.getElementById(id)?.addEventListener("input",simUpdate));
+document.getElementById("resetSim")?.addEventListener("click",resetSimulation);
+
+function renderVisualMap(id){
+  const el=document.getElementById(id);if(!el)return;
+  const r=currentPredictionResult||{rain:42,prob:55,risk:"LOW",confidence:80,impact:45};
+  const riskColor=r.risk==="HIGH"?"#ff4d67":r.risk==="MODERATE"?"#f5b63d":"#39d98a";
+  const safe=(currentPlace.city||"Selected location").replace(/[<&>]/g,"");
+  const label=(currentPlace.label||safe).replace(/[<&>]/g,"");
+  el.innerHTML=`<div style="position:relative;width:100%;height:100%;overflow:hidden;background:radial-gradient(circle at 52% 48%,#17344a 0 7%,#0e2435 8% 23%,#0b1a29 24% 100%);">
+    <svg viewBox="0 0 1000 410" width="100%" height="100%" preserveAspectRatio="none" aria-label="VARSHAA impact map">
+      <g stroke="#274257" stroke-width="1" opacity=".55">${[80,180,280,380].map(y=>`<path d="M0 ${y} Q250 ${y-35} 500 ${y} T1000 ${y}" fill="none"/>`).join("")}${[120,300,500,700,880].map(x=>`<path d="M${x} 0 Q${x-40} 205 ${x} 410" fill="none"/>`).join("")}</g>
+      <path d="M120 300 C210 190 300 260 370 150 S540 80 620 170 S770 260 900 110" fill="none" stroke="#31566d" stroke-width="16" opacity=".42"/>
+      <path d="M100 90 C260 120 310 40 470 110 S730 170 910 80" fill="none" stroke="#1e4359" stroke-width="26" opacity=".38"/>
+      <circle cx="500" cy="205" r="88" fill="${riskColor}" opacity=".10"/><circle cx="500" cy="205" r="54" fill="${riskColor}" opacity=".17"/><circle cx="500" cy="205" r="10" fill="${riskColor}"/><circle cx="500" cy="205" r="17" fill="none" stroke="${riskColor}" opacity=".65"/>
+      <text x="520" y="194" fill="#e8f1f7" font-size="18" font-weight="700">${safe}</text><text x="520" y="216" fill="#7f97aa" font-size="12">${Math.round(r.rain)} mm/h · ${Math.round(r.prob)}% risk</text>
+      ${[[180,145,"Zone A"],[770,135,"Zone B"],[240,300,"Zone C"],[760,300,"Zone D"]].map((z,i)=>`<circle cx="${z[0]}" cy="${z[1]}" r="${18+i*3}" fill="${riskColor}" opacity=".08" stroke="${riskColor}"/><text x="${z[0]+24}" y="${z[1]+4}" fill="#698198" font-size="10">${z[2]}</text>`).join("")}
+    </svg>
+    <div style="position:absolute;left:12px;top:12px;background:#07111ee8;border:1px solid #263b51;border-radius:8px;padding:8px 10px;font-size:9px;color:#d8e5ef"><b>IMPACT MAP</b><br>${label}<br><span style="color:${riskColor}">${r.risk} RISK</span> · Impact ${Math.round(r.impact||45)}/100</div>
+    <div style="position:absolute;right:12px;bottom:12px;background:#07111ee8;border:1px solid #263b51;border-radius:8px;padding:8px 10px;font-size:9px;color:#71879b">Rainfall · Hazard · Exposure · Infrastructure</div>
+  </div>`;
+}
+function refreshMapsForPlace(){
+  // Always render a visible location-aware prototype map. If Leaflet is available,
+  // it is additionally updated below; the SVG layer guarantees the map never appears blank.
+  renderVisualMap("dashMap");renderVisualMap("fullMap");
+  if(typeof L!=="undefined" && Object.keys(maps).length){
+    const r=currentPredictionResult||{risk:"LOW",rain:42,prob:55};
+    Object.entries(maps).forEach(([id,map])=>{
+      if(!map||!map.setView)return;
+      if(currentPlace.lat&&currentPlace.lng)map.setView([currentPlace.lat,currentPlace.lng],10);
+      if(map._varshaaSearchMarker)map.removeLayer(map._varshaaSearchMarker);
+      if(currentPlace.lat&&currentPlace.lng){
+        map._varshaaSearchMarker=L.circle([currentPlace.lat,currentPlace.lng],{radius:15000,color:colors[r.risk],fillColor:colors[r.risk],fillOpacity:.18,weight:2}).addTo(map);
+        map._varshaaSearchMarker.bindPopup(`<b>${currentPlace.city}</b><br>${currentPlace.state}, ${currentPlace.country}<br>Risk: <b>${r.risk}</b><br>Rainfall: ${r.rain} mm/h<br>Probability: ${r.prob}%`);
+      }
+    });
+  }
+}
+
+function refreshLocationAlerts(r){
+  const p=Math.round(r.prob||55),loc=currentPlace.city||"Selected location",risk=r.risk||"LOW";
+  const arr=risk==="HIGH"?[
+    {s:"CRITICAL",area:loc,p:Math.min(99,p+4),win:"Next 1–3 hours",msg:"High-impact rainfall probability is elevated at the selected location."},
+    {s:"HIGH",area:loc+" — drainage",p:Math.max(75,p-5),win:"Next 2–4 hours",msg:"Drainage and road stress may increase under the current scenario."},
+    {s:"WATCH",area:loc+" — critical facilities",p:Math.max(55,p-12),win:"Next 3–6 hours",msg:"Keep vulnerable facilities and access routes under observation."}
+  ]:risk==="MODERATE"?[
+    {s:"HIGH",area:loc,p:Math.min(89,p+2),win:"Next 2–4 hours",msg:"Rainfall conditions require increased local monitoring."},
+    {s:"WATCH",area:loc+" — roads",p:Math.max(55,p-4),win:"Next 3–6 hours",msg:"Watch low-lying road segments and drainage bottlenecks."},
+    {s:"WATCH",area:loc+" — facilities",p:Math.max(50,p-10),win:"Next 3–6 hours",msg:"Maintain readiness for changing rainfall conditions."}
+  ]:[
+    {s:"WATCH",area:loc,p:Math.max(45,p),win:"Next 3–6 hours",msg:"Rainfall conditions are currently within a lower-risk prototype range."},
+    {s:"WATCH",area:loc+" — drainage",p:Math.max(40,p-8),win:"Next 6 hours",msg:"Continue routine monitoring of low-lying points."},
+    {s:"WATCH",area:loc+" — roads",p:Math.max(35,p-14),win:"Next 6 hours",msg:"No immediate high-impact signal in the prototype scenario."}
+  ];
+  ["dashAlerts","allAlerts"].forEach(id=>{const box=document.getElementById(id);if(box)box.innerHTML=arr.map(a=>`<div class="alert ${a.s.toLowerCase()}"><div class="alertIcon">⚠</div><div class="alertMain"><div class="alertTitle"><b>${a.s}</b><span>${a.p}% probability</span></div><h4>${a.area}</h4><p>${a.msg}</p><small>${a.win}</small></div></div>`).join("")});
+}
+
+function refreshHistorical(r){
+  const rain=Math.round(r.rain||60),prob=Math.round(r.prob||55),lead=Math.max(0.8,Math.round((125-prob*1.08)/6*10)/10),obs1=Math.round(rain*1.08),obs2=Math.round(rain*.92),obs3=Math.round(rain*1.18);
+  const pred1=Math.round(rain*.97),pred2=Math.round(rain*.9),pred3=Math.round(rain*1.03);
+  const el=document.getElementById("historyChart");
+  if(el){
+    const obs=[Math.round(rain*.35),Math.round(rain*.58),Math.round(rain*.82),obs1,Math.round(rain*.9),obs2,obs3],pred=[Math.round(rain*.32),Math.round(rain*.55),Math.round(rain*.76),pred1,Math.round(rain*.84),pred2,pred3];
+    const w=el.clientWidth||700,h=260,pad=30,max=Math.max(...obs,...pred,100)*1.15,pts=a=>a.map((v,i)=>[pad+i*(w-2*pad)/(a.length-1),h-pad-v/max*(h-2*pad)]),po=pts(obs),pp=pts(pred),path=a=>a.map((q,i)=>(i?"L":"M")+q[0]+" "+q[1]).join(" ");
+    el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%" preserveAspectRatio="none"><g stroke="#1c3045" stroke-dasharray="3 4">${[25,50,75,100].map(v=>`<line x1="${pad}" x2="${w-pad}" y1="${h-pad-v/max*(h-2*pad)}" y2="${h-pad-v/max*(h-2*pad)}"/>`).join("")}</g><path d="${path(po)}" fill="none" stroke="#ff4d67" stroke-width="3"/><path d="${path(pp)}" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-dasharray="7 4"/></svg>`;
+  }
+  const cards=[
+    ["Recent analogue",obs1,pred1,lead],
+    ["High-impact analogue",obs2,pred2,Math.max(.6,lead*.8)],
+    ["Heavy-rain analogue",obs3,pred3,Math.max(1,lead*1.15)]
+  ];
+  const box=document.getElementById("historyEvents");
+  if(box)box.innerHTML=cards.map((c,i)=>`<div class="panel event"><div class="eyebrow">PROTOTYPE ANALOGUE ${i+1}</div><h3>${c[0]} — ${currentPlace.city}</h3><div class="eventStats"><div><span>Observed</span><b>${c[1]} mm/h</b></div><div><span>Predicted</span><b>${c[2]} mm/h</b></div><div><span>Lead</span><b>${c[3]} h</b></div></div></div>`).join("");
+}
+
+function refreshXai(r){
+  const conf=Number(r.confidence||80),rel=Math.max(45,Math.min(97,Math.round(conf)));
+  setText("xaiConfidence",conf.toFixed(1)+"%");setText("xaiPredictionTitle",r.risk==="HIGH"?"HIGH-IMPACT RAINFALL":r.risk+" RAINFALL RISK");setText("xaiLocation",`${currentPlace.label} · ${document.getElementById("window")?.value||"Next 3 Hours"}`);
+  setText("xaiReliabilityTitle",rel>=80?"High confidence":rel>=65?"Moderate confidence":"Low confidence");setBar("xaiReliabilityBar",rel);setText("xaiReliabilityFoot",rel+"% input-quality score · simulated");
+  const factors=[
+    ["Atmospheric moisture",Math.round(r.humidity*.38),"Moisture availability"],
+    ["Cloud characteristics",Math.round(r.cloud*.34),"Cloud development signal"],
+    ["Rainfall intensity",Math.round(Math.min(99,r.rain/1.2)*.30),"Current rainfall forcing"],
+    ["Wind pattern",Math.round(Math.min(99,r.wind/80*100)*.12),"Moisture transport"],
+    ["Elevation",Math.round(Math.min(99,r.elevation/30)*.08),"Terrain influence"],
+    ["Temperature profile",Math.round(Math.max(5,100-Math.abs(r.temp-25)*7)*.07),"Convective environment"]
+  ];
+  const total=factors.reduce((s,x)=>s+x[1],0)||1;
+  const normalized=factors.map(x=>[x[0],Math.round(x[1]/total*100),x[2]]);
+  const xf=document.getElementById("xaiFactors");if(xf)xf.innerHTML=normalized.map(f=>`<div class="factor"><div class="factorTop"><span>${f[0]}</span><b>${f[1]}%</b></div><div class="track"><i style="width:${f[1]}%"></i></div><div style="font-size:8px;color:#5e748a;margin-top:4px">${f[2]}</div></div>`).join("");
+  const top=normalized.slice().sort((a,b)=>b[1]-a[1]).slice(0,2);
+  const ex=document.getElementById("xaiExplanation");if(ex)ex.innerHTML=`For <b>${currentPlace.label}</b>, the prototype model's strongest contributing signals are <b>${top[0][0]}</b> (${top[0][1]}%) and <b>${top[1][0]}</b> (${top[1][1]}%). Current rainfall is <b>${Math.round(r.rain)} mm/h</b> with estimated risk probability <b>${Math.round(r.prob)}%</b>. Production mode will replace these proxy attributions with actual SHAP/Grad-CAM values from the trained model.`;
+}
+
+function refreshAllLocationFeatures(r){
+  currentPredictionResult=r;setCurrentPlaceFromSelection();
+  refreshMapsForPlace();refreshLocationAlerts(r);refreshHistorical(r);refreshXai(r);resetSimulation();
+}
+
+// Hook the existing prediction engine without rewriting it.
+const __oldUpdateUniqueFeatures=updateUniqueFeatures;
+updateUniqueFeatures=function(r){__oldUpdateUniqueFeatures(r);refreshAllLocationFeatures(r)};
+
+// Make initialization safe even when Leaflet CDN is unavailable.
+const __oldMakeMap=makeMap;
+makeMap=function(id){
+  if(typeof L==="undefined"){renderVisualMap(id);return {invalidateSize:()=>renderVisualMap(id),setView:()=>renderVisualMap(id)}}
+  return __oldMakeMap(id);
+};
+const __oldInitDashMap=initDashMap; initDashMap=function(){try{return __oldInitDashMap()}catch(e){renderVisualMap("dashMap")}};
+const __oldInitFullMap=initFullMap; initFullMap=function(){try{return __oldInitFullMap()}catch(e){renderVisualMap("fullMap")}};
+
+// Rebind navigation entry points so each feature always refreshes for the current place.
+const __oldGo=go; go=function(view){__oldGo(view);setTimeout(()=>{if(currentPredictionResult){if(view==="map")refreshMapsForPlace();if(view==="historical")refreshHistorical(currentPredictionResult);if(view==="xai")refreshXai(currentPredictionResult);if(view==="simulation")simUpdate();if(view==="alerts")refreshLocationAlerts(currentPredictionResult)}},120)};window.go=go;
+
+// Keep the selected place after country/state/city changes and re-run every dependent feature.
+const __oldApplySelected=applySelected;applySelected=async function(prefix){await __oldApplySelected(prefix);setCurrentPlaceFromSelection();if(selectedRegion?.lat&&selectedRegion?.lng){currentPlace.lat=selectedRegion.lat;currentPlace.lng=selectedRegion.lng;}if(currentPredictionResult)refreshAllLocationFeatures(currentPredictionResult)};
+
+// Initialize controls and ensure the first prediction also populates every dependent view.
+renderAlerts("dashAlerts");renderAlerts("allAlerts");renderXai();renderLayers();
+try{initDashMap()}catch(e){renderVisualMap("dashMap")}
+
+// ===== LOCATION SELECTOR WIRING =====
+// Keep both the Prediction selector and the global selector synchronized.
+// This was accidentally lost in the previous single-source patch.
+function wireLocationSelectors(){
+  const pairs=["pred","global"];
+  pairs.forEach(prefix=>{
+    const country=document.getElementById(prefix+"Country");
+    const state=document.getElementById(prefix+"State");
+    const city=document.getElementById(prefix+"City");
+    if(!country||!state||!city)return;
+
+    country.addEventListener("change",async()=>{
+      city.disabled=true;
+      optionize(city,[],"Select state / region first");
+      await loadStates(prefix);
+    });
+
+    state.addEventListener("change",async()=>{
+      city.disabled=true;
+      optionize(city,[],"Loading cities / places…");
+      await loadCities(prefix);
+    });
+
+    city.addEventListener("change",async()=>{
+      if(!country.value||!state.value||!city.value)return;
+      const countryName=countryNameFromCode(country.value);
+      const stateName=state.options[state.selectedIndex]?.textContent||state.value;
+      const cityName=city.options[city.selectedIndex]?.textContent||city.value;
+
+      // Mirror the same selection into the other selector.
+      const other=prefix==="pred"?"global":"pred";
+      const oc=document.getElementById(other+"Country");
+      const os=document.getElementById(other+"State");
+      const oy=document.getElementById(other+"City");
+      if(oc)oc.value=country.value;
+
+      // Do not make the user's selection depend on geocoding.
+      const label=`${cityName}, ${stateName}, ${countryName}`;
+      const selected=document.getElementById("selectedLocation");
+      const hero=document.getElementById("heroLocation");
+      if(selected)selected.textContent=label;
+      if(hero)hero.textContent=label;
+
+      if(os){
+        const match=[...os.options].find(o=>o.value===state.value||o.textContent===stateName);
+        if(match)os.value=match.value;
+      }
+      if(oy){
+        const match=[...oy.options].find(o=>o.value===city.value||o.textContent===cityName);
+        if(match)oy.value=match.value;
+      }
+
+      await applySelected(prefix);
+    });
+  });
+}
+
+initCountryLists();
+wireLocationSelectors();
+setPredictionInputs(getRiskForPlace(12.9716,77.5946));
+
+
+/* ===== VARSHAA-X Differentiation Engine ===== */
+function setText(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+function setBar(id,v){const e=document.getElementById(id);if(e)e.style.width=Math.max(0,Math.min(100,v))+"%";}
+function updateUniqueFeatures(result){
+  if(!result)return;
+  const {rain,humidity,cloud,temp,wind,elevation,prob,risk,confidence,peak}=result;
+  const terrain=Math.round(Math.min(99,28+(elevation/3000)*42+((wind%20)*.8)));
+  const infra=Math.round(Math.min(99,35+prob*.42));
+  const pop=Math.round(Math.min(99,30+prob*.5));
+  const impact=Math.round(Math.min(99,prob*.52+terrain*.18+infra*.17+pop*.13));
+  const lead=Math.max(12,Math.round(125-prob*1.08));
+  const drain=Math.round(Math.min(99,rain*.62+humidity*.22+terrain*.16));
+  const roads=Math.round(Math.min(99,drain*.68+impact*.32));
+  const exposure=Math.round(Math.min(99,pop*.65+roads*.35));
+
+  setText("impactIndex",impact);
+  setText("impactLabel",impact>=80?"EXTREME LOCAL IMPACT":impact>=60?"HIGH LOCAL IMPACT":"MODERATE LOCAL IMPACT");
+  setText("leadTime",lead);
+  setText("drainStress",drain+"%");
+  setText("roadImpact",roads+"%");
+  setText("popImpact",exposure+"%");
+  setText("mapRainRisk",prob+"%");
+  setText("mapImpactRisk",impact+"/100");
+  setText("mapReliability",confidence+"%");
+  setText("simRainNode",rain);
+  setText("simSoil",Math.round(Math.min(99,humidity*.55+rain*.3)));
+  setText("simDrain",drain+"%");
+  setText("simAccess",roads+"%");
+
+  const failScore=Math.round(Math.min(96,100-confidence+(Math.abs(prob-72)<8?6:0)));
+  setText("failureRadar",failScore>40?"WATCH":"LOW");
+  setText("failureReason",failScore>40?"Model disagreement or unusual conditions could reduce reliability.":"Inputs are within the normal prototype operating range.");
+
+  setText("xRain",Math.round(prob*.72)+"%");
+  setText("xTerrain",terrain+"%");
+  setText("xInfra",infra+"%");
+  setText("xPop",pop+"%");
+  setBar("xRainBar",prob*.72);setBar("xTerrainBar",terrain);setBar("xInfraBar",infra);setBar("xPopBar",pop);
+
+  const cnn=Math.round(clamp(prob+(humidity-70)*.08,-0,99));
+  const xgb=Math.round(clamp(prob-(cloud-70)*.06,1,99));
+  const lstm=Math.round(clamp(prob+(rain-60)*.05,1,99));
+  const transformer=Math.round(clamp((cnn+xgb+lstm)/3+(wind>60?-4:2),1,99));
+  [["cnn",cnn],["xgb",xgb],["lstm",lstm],["tr",transformer]].forEach(([id,v])=>{setBar(id+"Bar",v);setText(id+"Val",v+"%");});
+  const spread=Math.max(cnn,xgb,lstm,transformer)-Math.min(cnn,xgb,lstm,transformer);
+  setText("disagreementNote",spread>18?"⚠ High model disagreement — treat this prediction cautiously.":"Model consensus is relatively stable in this scenario.");
+
+  const reliability=Math.round(Math.max(45,Math.min(97,confidence-spread*.35)));
+  setText("reliabilityScore",reliability);
+  setText("reliabilityLabel",reliability>=80?"HIGH RELIABILITY":reliability>=65?"MODERATE RELIABILITY":"LOW RELIABILITY");
+  setText("reliabilityReason",reliability<65?"⚠ Unusual input combination or model disagreement detected.":"Inputs are reasonably consistent with the prototype model's expected range.");
+  const ring=document.getElementById("uncertaintyRing");if(ring)ring.style.setProperty("--p",reliability+"%");
+  setText("uncertaintyValue",reliability+"%");
+
+  const signals=[
+    ["Rainfall regime",Math.round(Math.min(99,rain/1.2))],
+    ["Atmospheric moisture",humidity],
+    ["Cloud structure",cloud],
+    ["Terrain exposure",terrain]
+  ];
+  const fs=document.getElementById("failureSignals");
+  if(fs)fs.innerHTML=signals.map(x=>`<div class="fingerprintItem"><span>${x[0]}</span><b>${x[1]}%</b></div>`).join("");
+
+  const fingerprint=[
+    ["Rainfall intensity",Math.round(Math.min(99,rain/1.2))],
+    ["Moisture profile",humidity],
+    ["Cloud signature",cloud],
+    ["Wind regime",Math.round(Math.min(99,wind/80*100))]
+  ];
+  const fp=document.getElementById("rainFingerprint");
+  if(fp)fp.innerHTML=fingerprint.map(x=>`<div class="fingerprintItem"><span>${x[0]}</span><b>${x[1]}% match strength</b><div class="miniBar"><i style="width:${x[1]}%"></i></div></div>`).join("");
+  setText("historicalMatch",`Closest analogue: a ${risk.toLowerCase()}-impact monsoon pattern. Estimated similarity ${(Math.round((70+humidity*.2+cloud*.1)%25)+70)}%. Historical event matching is a prototype analogue, not an official attribution.`);
+
+  const histMax=Math.round(Math.max(peak+12,rain*1.22));
+  setText("histMax",histMax+" mm/h");
+  setText("histSimilar",Math.round(2+(humidity+cloud)%5));
+  setText("histReturn",impact>=85?"~10-year":"~2–5-year");
+  setText("climateMemoryText",`For the selected location, the current scenario is compared against prototype historical fingerprints. The estimated analogue suggests ${risk.toLowerCase()} impact conditions with ${lead} minutes of warning lead time.`);
+
+  const actions=buildActions(risk,impact,drain,roads,lead);
+  const al=document.getElementById("actionList");if(al)al.innerHTML=actions.map((a,i)=>`<div class="actionItem"><div class="num">0${i+1}</div><span>${a}</span></div>`).join("");
+  const aal=document.getElementById("alertActionList");if(aal)aal.innerHTML=actions.slice(0,3).map((a,i)=>`<div class="actionItem"><div class="num">0${i+1}</div><span>${a}</span></div>`).join("");
+}
+function buildActions(risk,impact,drain,roads,lead){
+  const a=[];
+  if(drain>=70)a.push("Pre-position drainage response teams in the highest-stress zones.");
+  else a.push("Continue drainage monitoring and inspect known low-lying points.");
+  if(roads>=65)a.push("Prepare road diversion messaging and inspect vulnerable underpasses.");
+  else a.push("Monitor major road segments for early waterlogging.");
+  if(impact>=75)a.push("Check readiness of hospitals, schools and other critical facilities.");
+  else a.push("Keep critical facilities on watch and verify emergency contacts.");
+  a.push(`Use the ${lead}-minute lead-time window for the next operational check.`);
+  if(risk==="HIGH")a.push("Escalate to the emergency control room and issue a localized warning.");
+  else a.push("Keep the location under watch until the probability trend falls.");
+  return a;
+}
+function getCurrentLocationLabel(){
+  const shown=document.getElementById("selectedLocation")?.textContent?.trim();
+  if(shown && !/select a location|select a state/i.test(shown)) return shown;
+  const pc=document.getElementById("predCountry"),ps=document.getElementById("predState"),pcy=document.getElementById("predCity");
+  if(pc?.value&&ps?.value&&pcy?.value)return `${pcy.options[pcy.selectedIndex]?.textContent||pcy.value}, ${ps.options[ps.selectedIndex]?.textContent||ps.value}, ${countryNameFromCode(pc.value)}`;
+  return "the selected region";
+}
+function askVarshaa(){
+ const input=document.getElementById("commanderInput"),out=document.getElementById("commanderAnswer"); if(!input||!out)return;
+ const q=input.value.trim().toLowerCase(), location=getCurrentLocationLabel();
+ const base=Math.max(1,Number(document.getElementById("inRain")?.value)||42), currentProb=Number(document.getElementById("calcProb")?.textContent)||55;
+ const m=q.match(/(\d+(?:\.\d+)?)\s*mm(?:\/h)?/), rain=m?Number(m[1]):base, factor=rain/base;
+ const scenarioProb=Math.round(Math.max(1,Math.min(99,currentProb*.58+factor*25)));
+ const impact=Math.round(Math.max(1,Math.min(99,scenarioProb*.55+factor*22)));
+ const lead=Math.max(10,Math.round(125-scenarioProb*1.08));
+ const advice=impact>=80?"Escalate to high-priority monitoring, pre-position drainage resources and prepare a localized warning.":impact>=60?"Increase drainage and road monitoring, verify critical-facility readiness and prepare a localized advisory.":"Continue monitoring low-lying points and keep the response team ready for a change in rainfall.";
+ out.innerHTML=`<b>VARSHAA decision brief — ${location}</b><br>Scenario: <b>${rain} mm/h</b>.<br>Estimated rainfall probability: <b>${scenarioProb}%</b> · Local Impact Index: <b>${impact}/100</b> · Lead time: <b>${lead} min</b>.<br><b>Recommended response:</b> ${advice}<br><small>Prototype decision-support scenario; not an operational emergency instruction.</small>`;
+}
+function setMode(mode){
+ document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("sel",b.dataset.mode===mode));
+ const citizen=mode==="citizen", location=getCurrentLocationLabel(), prob=Number(document.getElementById("calcProb")?.textContent)||55;
+ setText("modeTitle",citizen?"Citizen mode":"Government mode");
+ const content=document.getElementById("modeContent");
+ if(content)content.innerHTML=citizen?`<b>${location}</b><br>Current prototype rainfall risk: <b>${prob}%</b>. Avoid low-lying roads, underpasses and river-edge areas if conditions deteriorate. Follow local authority instructions.`:`<b>${location}</b><br>Operational priority: drainage deployment, road monitoring, critical-facility readiness and localized warning escalation.`;
+}
+document.getElementById("refreshActions")?.addEventListener("click",()=>{runPrediction();setMode(document.querySelector("[data-mode].sel")?.dataset.mode||"government");const o=document.getElementById("commanderAnswer");if(o)o.textContent=`Analysis refreshed for ${getCurrentLocationLabel()}.`;});
+document.getElementById("commanderAsk")?.addEventListener("click",askVarshaa);
+document.getElementById("commanderInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();askVarshaa();}});
+document.querySelectorAll("[data-mode]").forEach(btn=>btn.addEventListener("click",()=>setMode(btn.dataset.mode)));
+
+
+// Synchronize all initial dashboard modules to the same prediction state.
+try { runPrediction(); } catch(e) { console.warn("Initial VARSHAA sync:", e); }
+</script>
+</body>
+</html>
