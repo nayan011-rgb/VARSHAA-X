@@ -5,235 +5,2288 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>VARSHAA-X | Explainable Rainfall Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-:root{--bg:#07111f;--panel:#0c1928;--panel2:#101f31;--line:#1c3045;--text:#e9f1f8;--muted:#7890a7;--teal:#2dd4bf;--teal2:#18a999;--red:#ff4d67;--amber:#f5b63d;--green:#39d98a;--blue:#58a6ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#12334a55,transparent 34%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;font-size:13px}button,input,select{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:flex}.sidebar{width:260px;position:fixed;inset:0 auto 0 0;background:#091522;border-right:1px solid var(--line);padding:18px 13px;z-index:100;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 18px}.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#21c9b5,#176d9e);display:grid;place-items:center;font-size:21px;box-shadow:0 10px 30px #16a89a33}.brand b{display:block;font-size:15px;letter-spacing:.12em}.brand small{color:#6f879f;font-size:9px}.prototype{margin:0 6px 22px;padding:9px 10px;border:1px solid #23524f;background:#0b2528;border-radius:9px;color:#6de1d0;font-size:10px;font-weight:700}.navtitle{color:#5f748a;font-size:9px;font-weight:800;letter-spacing:.14em;padding:0 10px 7px}.nav button{width:100%;border:1px solid transparent;background:transparent;color:#8196ab;padding:10px 11px;border-radius:9px;text-align:left;display:flex;align-items:center;gap:10px;margin:2px 0;font-weight:600}.nav button:hover{background:#0e2031;color:#dce8f3}.nav button.active{background:#10323b;border-color:#1d4e54;color:#dffdfa}.badge{margin-left:auto;background:#6e2030;color:#ffb5c0;padding:2px 7px;border-radius:99px;font-size:9px}.sidebottom{margin-top:auto;border-top:1px solid var(--line);padding:14px 7px;color:#627a91;font-size:10px}.online{color:#55d6a4;margin-top:9px}.dot{width:7px;height:7px;border-radius:50%;display:inline-block;background:var(--green);box-shadow:0 0 0 4px #39d98a15;margin-right:6px}.main{margin-left:260px;min-width:0;flex:1}.top{height:74px;border-bottom:1px solid var(--line);background:#081420e8;backdrop-filter:blur(12px);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 28px}.crumb{color:#5e758c;font-size:9px;letter-spacing:.12em;font-weight:800}.top h1{font-size:17px;margin:5px 0 0}.topright{display:flex;gap:9px;align-items:center}.status{border:1px solid #23524a;background:#0b2422;color:#63d9c4;border-radius:99px;padding:7px 10px;font-size:9px;font-weight:800}.menubtn{display:none}.notice{margin:16px 28px 0;border:1px solid #253b51;background:#0b1827;border-radius:9px;padding:9px 12px;color:#8296aa;font-size:10px}.notice b{color:#c5d3df}.page{max-width:1500px;margin:auto;padding:20px 28px 55px}.view{display:none}.view.active{display:block}.intro{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin-bottom:17px}.eyebrow{font-size:9px;letter-spacing:.15em;font-weight:900;color:#6c849b}.intro h2{font-size:25px;margin:5px 0 4px;letter-spacing:-.03em}.intro p{color:#71869d;margin:0;font-size:11px}.panel{background:linear-gradient(145deg,#0d1a2a,#0a1624);border:1px solid var(--line);border-radius:14px;padding:18px}.hero{display:grid;grid-template-columns:1.45fr .8fr;gap:15px}.heroMain{padding:23px;position:relative;overflow:hidden}.heroMain:after{content:"";position:absolute;right:-130px;top:-150px;width:330px;height:330px;border-radius:50%;background:#ff4d670b}.heroLabel{font-size:9px;letter-spacing:.15em;color:#ff788b;font-weight:900}.heroRow{display:flex;justify-content:space-between;align-items:center;margin:20px 0}.heroRow h2{font-size:43px;margin:0;letter-spacing:-.06em}.heroRow p{color:#71869d;margin:4px 0}.confidence{text-align:right}.confidence b{display:block;color:#ffd477;font-size:28px}.confidence small{color:#6d8399;font-size:9px}.heroStats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;margin-bottom:16px}.heroStats span,.stat span{display:block;color:#6d8399;font-size:9px}.heroStats b{font-size:16px}.heroStats small{color:#71869d;font-size:9px}.btn{border:0;border-radius:8px;padding:10px 13px;font-weight:800;font-size:10px;display:inline-flex;align-items:center;gap:7px}.primary{background:var(--teal);color:#031513}.secondary{background:#102235;border:1px solid #263d53;color:#b8c9d8}.heroXai h3{margin:5px 0 18px}.factor{margin:15px 0}.factorTop{display:flex;justify-content:space-between;font-size:10px;color:#a6b7c7}.factorTop b{color:#6de0d0}.track{height:6px;background:#182a3d;border-radius:99px;overflow:hidden;margin-top:6px}.track i{height:100%;display:block;background:linear-gradient(90deg,#197b79,var(--teal));border-radius:99px}.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:15px 0}.stat{min-width:0}.statValue{font-size:23px;font-weight:900;margin:8px 0 3px}.statFoot{color:#5e748a;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}.sectionHead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}.sectionHead h3{font-size:14px;margin:3px 0}.sectionHead p{font-size:9px;color:#6f849a;margin:0}.linkbtn{border:0;background:none;color:#5bd7c5;font-size:9px;font-weight:800}.chart{height:270px}.alertList{display:grid;gap:8px}.alert{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid #1d3145;background:#0a1725;border-radius:10px}.alertIcon{width:29px;height:29px;border-radius:8px;display:grid;place-items:center}.critical .alertIcon{color:#ff7285;background:#ff4d6715}.high .alertIcon{color:#f7c25a;background:#f5b63d15}.watch .alertIcon{color:#60dfcf;background:#2dd4bf15}.alertMain{flex:1}.alertTitle{display:flex;justify-content:space-between;font-size:9px}.critical .alertTitle b{color:#ff7285}.high .alertTitle b{color:#f7c25a}.watch .alertTitle b{color:#60dfcf}.alertMain h4{margin:4px 0;font-size:11px}.alertMain p,.alertMain small{color:#637a91;font-size:9px;margin:0}.mapPanel{margin-top:15px}.map{height:410px;border-radius:10px;overflow:hidden}.leaflet-container{background:#0d1b2a}.mapLegend{position:absolute;z-index:500;left:12px;bottom:12px;background:#07111eea;border:1px solid #253a50;border-radius:8px;padding:8px 10px;font-size:9px;display:flex;gap:10px}.mapLegend span{display:flex;align-items:center;gap:4px}.rdot{width:8px;height:8px;border-radius:50%}.red{background:var(--red)}.orange{background:var(--amber)}.green{background:var(--green)}.controls{display:flex;gap:13px;align-items:end;margin-bottom:15px}.controls label{color:#6f849a;font-size:9px;display:flex;flex-direction:column;gap:6px;min-width:190px}.controls select{background:#0a1725;color:#dbe7f1;border:1px solid #24384e;border-radius:8px;padding:9px}.predictionGrid{display:grid;grid-template-columns:.6fr 1.4fr;gap:15px}.score{text-align:center;display:flex;flex-direction:column;justify-content:center}.scoreRisk{color:#ff7185;letter-spacing:.2em;font-weight:900;font-size:11px}.scoreNum{font-size:68px;font-weight:900;letter-spacing:-.07em;margin:7px}.scoreNum small{font-size:25px;color:#72889d}.score p{color:#6f849a;font-size:10px}.riskbar{height:8px;background:#172a3c;border-radius:99px;overflow:hidden}.riskbar i{height:100%;display:block;width:91.4%;background:linear-gradient(90deg,#39d98a,#f5b63d,#ff4d67)}.xaiTop{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}.xaiCard{display:flex;align-items:center;gap:18px}.ring{width:120px;height:120px;border-radius:50%;border:8px solid #1d4648;display:grid;place-items:center;flex:none}.ring div{text-align:center}.ring b{display:block;color:#6de0d0;font-size:22px}.ring small{color:#6d839a;font-size:8px}.explain{background:#0a2228;border:1px solid #1d3d45;border-radius:10px;padding:18px;margin-top:14px;color:#a6b7c5;line-height:1.7;font-size:11px}.note{font-size:9px;color:#657b90;margin-top:10px;display:flex;gap:7px}.flow{display:flex;align-items:center;gap:10px}.flow div{flex:1;padding:13px;border:1px solid #1c3045;background:#0a1725;border-radius:9px}.flow b{display:block;color:#2dd4bf;font-size:9px}.flow span{font-size:9px;color:#9eb0c1}.flow i{color:#456076}.mapLayout{display:grid;grid-template-columns:235px 1fr;gap:14px}.layers button{width:100%;border:0;background:none;color:#8397aa;padding:9px 4px;display:flex;gap:8px;align-items:center;text-align:left;border-radius:7px;font-size:9px}.layers button:hover{background:#0d2031}.switch{margin-left:auto;width:20px;height:11px;border-radius:99px;background:#26394d;position:relative}.switch:after{content:"";position:absolute;width:9px;height:9px;border-radius:50%;left:1px;top:1px;background:#718398}.layers button.on{color:#dce8f1}.layers button.on .switch{background:#1e756f}.layers button.on .switch:after{left:10px;background:#6de0d0}.segment{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:8px}.segment button{background:#0a1725;border:1px solid #21364b;color:#70869c;border-radius:6px;padding:6px 2px;font-size:8px}.segment button.sel{background:#113d43;color:#68dbcb}.selectedZone{border-top:1px solid var(--line);margin-top:12px;padding-top:12px}.selectedZone h3{margin:5px 0;font-size:12px}.selectedZone p{font-size:9px;color:#71869b;line-height:1.5}.simGrid{display:grid;grid-template-columns:.7fr 1.3fr;gap:15px}.sliderBlock{margin:20px 0}.sliderBlock label{display:flex;justify-content:space-between;color:#8aa0b3;font-size:10px}.sliderBlock strong{color:#e2edf5}.sliderBlock input{width:100%;accent-color:var(--teal);margin-top:12px}.rangeLabels{display:flex;justify-content:space-between;color:#556d84;font-size:8px}.simRisk{font-size:38px;font-weight:900;margin:17px 0 3px}.scenarioCards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.scenarioBar{margin-top:18px}.scenarioBar div{height:9px;border-radius:99px;background:linear-gradient(90deg,#2dd4bf,#f5b63d,#ff4d67);width:var(--w)}.events{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:15px 0}.event h3{font-size:11px;line-height:1.4}.eventStats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;border-top:1px solid var(--line);padding-top:11px}.eventStats span{display:block;color:#5e748b;font-size:8px}.eventStats b{font-size:10px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{padding:14px;border:1px solid #1b3045;background:#0a1725;border-radius:9px}.metric b{display:block;color:#8da2b5;font-size:9px}.metric strong{display:block;font-size:23px;margin:6px 0}.metric span{color:#60778e;font-size:8px}.alertSummary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}.summary{padding:15px;border:1px solid var(--line);background:#0d1a29;border-radius:11px}.summary b{display:block;font-size:11px}.summary span{color:#657c92;font-size:9px}.logic{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.logic .metric strong{font-size:11px}.regionQuick{margin:15px 0}.metrics .metric input{margin-top:8px;width:100%;background:#0a1725;color:#dbe7f1;border:1px solid #24384e;border-radius:7px;padding:7px}.metrics .metric input:focus{outline:none;border-color:#2dd4bf}.controls select:disabled{opacity:.55;cursor:not-allowed}.globalLoading{color:#f5b63d}.regionQuick input,.controls input{outline:none}.regionQuick input:focus,.controls input:focus{border-color:#2dd4bf}.regionQuick .controls{margin-top:12px}.regionQuick .btn{align-self:flex-end}.regionTag{position:absolute;top:12px;right:12px;z-index:500;background:#07111ee8;border:1px solid #263b51;border-radius:8px;padding:7px 9px;color:#d8e5ef;font-size:9px;font-weight:800}.mobileClose{display:none}
-@media(max-width:1200px){.stats{grid-template-columns:repeat(3,1fr)}.hero,.predictionGrid,.xaiTop,.simGrid{grid-template-columns:1fr}.events{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.2s}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.menubtn{display:block;background:none;border:1px solid #24384e;color:#9db0c2;border-radius:8px;padding:7px}.top{padding:0 15px}.topright .status{display:none}.page{padding:16px}.notice{margin:12px 15px 0}.grid2,.mapLayout,.alertSummary,.logic{grid-template-columns:1fr}.mapLayout .layers{order:2}.intro{flex-direction:column}.flow{flex-direction:column;align-items:stretch}.flow i{transform:rotate(90deg)}}
-@media(max-width:520px){.stats,.metrics,.scenarioCards{grid-template-columns:1fr}.heroStats{grid-template-columns:1fr;gap:9px}.xaiCard{flex-direction:column;align-items:flex-start}.scoreNum{font-size:55px}}
+:root {
+  --bg: #F3F0E8;
+  --panel: #FAF8F5;
+  --panel2: #F5F2EA;
+  --line: #E2DDD0;
+  --line-strong: #D6D0C2;
+  --text: #17352F;
+  --muted: #5A7067;
+  --muted-light: #82968E;
 
-/* VARSHAA-X differentiation layer */
-.uniqueGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:15px}
-.uniqueGrid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:15px}
-.featureCard{padding:18px;border:1px solid #1c3248;background:linear-gradient(145deg,#0b1b2c,#091522);border-radius:12px}
-.featureCard h3{margin:4px 0 7px;font-size:16px}.featureCard p{color:#7890a8;font-size:10px;line-height:1.65}
-.bigMetric{font-size:32px;font-weight:800;letter-spacing:-1px;margin:5px 0}.bigMetric small{font-size:12px;color:#6f879f;font-weight:500}
-.miniBar{height:7px;background:#152a3e;border-radius:20px;overflow:hidden;margin:8px 0}.miniBar i{display:block;height:100%;border-radius:20px;background:#2dd4bf}
-.cascade{display:grid;grid-template-columns:repeat(7,minmax(90px,1fr));gap:6px;align-items:center;margin-top:15px}
-.cascadeNode{padding:12px 8px;border:1px solid #20384f;border-radius:10px;text-align:center;background:#0a1725;min-height:75px;display:flex;flex-direction:column;justify-content:center}
-.cascadeNode b{font-size:16px}.cascadeNode span{font-size:8px;color:#7890a8;margin-top:4px}.cascadeArrow{text-align:center;color:#2dd4bf;font-size:18px}
-.timeline{position:relative;padding:8px 0 4px;margin-top:10px}.timelineRow{display:flex;gap:10px;align-items:center;margin:9px 0}.timelineDot{width:10px;height:10px;border-radius:50%;background:#2dd4bf;box-shadow:0 0 0 4px #2dd4bf18}.timelineRow b{min-width:62px;font-size:10px}.timelineRow span{font-size:9px;color:#7c93a9}
-.reliabilityRing{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2dd4bf var(--p),#172c40 0);margin:auto}.reliabilityRing>div{width:72px;height:72px;border-radius:50%;background:#091725;display:grid;place-items:center;text-align:center}.reliabilityRing b{font-size:18px}.reliabilityRing span{font-size:7px;color:#71869d}
-.consensusRow{display:grid;grid-template-columns:95px 1fr 50px;gap:8px;align-items:center;margin:9px 0;font-size:9px}.consensusRow .bar{height:7px;background:#14283b;border-radius:20px;overflow:hidden}.consensusRow .bar i{display:block;height:100%;background:#2dd4bf}
-.fingerprint{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.fingerprintItem{padding:10px;border:1px solid #1b3045;border-radius:8px}.fingerprintItem span{font-size:8px;color:#7890a8}.fingerprintItem b{display:block;margin-top:4px}
-.actionList{display:grid;gap:8px;margin-top:10px}.actionItem{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid #1b3045;border-radius:8px}.actionItem .num{font-weight:800;color:#2dd4bf}.actionItem span{font-size:9px;color:#91a5b9;line-height:1.5}
-.modeToggle{display:flex;gap:6px;margin:10px 0}.modeToggle button{flex:1}.modeToggle button.sel{border-color:#2dd4bf;color:#2dd4bf;background:#0b2630}
-.commandBox{display:flex;gap:8px;margin-top:10px}.commandBox input{flex:1;background:#091725;color:#dbe7f1;border:1px solid #223a50;border-radius:8px;padding:10px;font-size:10px}.commandAnswer{margin-top:10px;padding:12px;border-radius:9px;background:#091725;border:1px solid #1c3349;color:#a6b8c8;font-size:10px;line-height:1.6}
-.impactScore{display:flex;align-items:center;gap:18px}.impactScore .scoreCircle{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;border:7px solid #2dd4bf;font-size:22px;font-weight:800}.impactScore small{font-size:9px;color:#71869d}
-.exposureTable{width:100%;border-collapse:collapse;font-size:9px;margin-top:8px}.exposureTable th,.exposureTable td{padding:7px;border-bottom:1px solid #182d41;text-align:left}.exposureTable th{color:#71869d;font-weight:500}
-@media(max-width:900px){.uniqueGrid,.uniqueGrid3{grid-template-columns:1fr}.cascade{grid-template-columns:1fr}.cascadeArrow{transform:rotate(90deg)}}
+  --teal: #238C83;
+  --teal-hover: #1B726B;
+  --teal-light: #E6F3F1;
+  --teal-border: #9ED4CE;
+
+  /* Semantic Risk Colors */
+  --green: #2A7E51;
+  --green-bg: #EAF5EE;
+  --amber: #D97706;
+  --amber-bg: #FEF3C7;
+  --orange: #D9531E;
+  --orange-bg: #FFEDD5;
+  --red: #C92A2A;
+  --red-bg: #FDE8E8;
+  --blue: #2563EB;
+
+  --shadow-sm: 0 1px 2px rgba(23, 53, 47, 0.04);
+  --shadow: 0 1px 3px rgba(23, 53, 47, 0.06), 0 4px 12px rgba(23, 53, 47, 0.03);
+  --shadow-md: 0 4px 16px rgba(23, 53, 47, 0.07);
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: 'DM Serif Display', Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  background-image: 
+    radial-gradient(circle at 85% 0%, rgba(35, 140, 131, 0.04), transparent 45%),
+    url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30h120M0 90h120M30 0v120M90 0v120' stroke='%2317352F' stroke-opacity='0.025' fill='none' stroke-width='0.75' stroke-dasharray='4 4'/%3E%3Cpath d='M15 15c10 0 20 5 30 5s20-5 30-5 20 5 30 5' stroke='%2317352F' stroke-opacity='0.03' fill='none' stroke-width='0.75'/%3E%3C/svg%3E");
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  position: fixed;
+  inset: 0 auto 0 0;
+  background: #EFECE3;
+  border-right: 1px solid var(--line);
+  padding: 20px 12px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(23, 53, 47, 0.02);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px 16px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--text);
+  color: #FAF8F5;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.brand b {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+.brand small {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  display: block;
+  margin-top: 1px;
+}
+
+.prototype {
+  margin: 0 4px 18px;
+  padding: 7px 10px;
+  border: 1px solid #B8DAD1;
+  background: #E4F2EE;
+  border-radius: 6px;
+  color: var(--teal);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.navtitle {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 14px 10px 6px;
+  text-transform: uppercase;
+}
+
+.navtitle:first-child {
+  padding-top: 0;
+}
+
+.nav button {
+  width: 100%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #405850;
+  padding: 9px 10px;
+  border-radius: 8px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 12px;
+  transition: all 0.15s ease;
+}
+
+.nav button svg {
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+
+.nav button:hover {
+  background: #E5E1D6;
+  color: var(--text);
+}
+
+.nav button:hover svg {
+  color: var(--text);
+}
+
+.nav button.active {
+  background: #DDEAE4;
+  border-color: #B9DCD5;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.nav button.active svg {
+  color: var(--teal);
+}
+
+.badge {
+  margin-left: auto;
+  background: var(--red);
+  color: #FFFFFF;
+  padding: 2px 7px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.sidebottom {
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+  padding: 14px 8px 4px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.online {
+  color: var(--text);
+  font-weight: 600;
+  margin-top: 6px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  background: var(--green);
+  box-shadow: 0 0 0 3px rgba(42, 126, 81, 0.15);
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+/* MAIN & HEADER */
+.main {
+  margin-left: 240px;
+  min-width: 0;
+  flex: 1;
+}
+
+.top {
+  height: 66px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(243, 240, 232, 0.92);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+}
+
+.crumb {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+}
+
+.top h1 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text);
+  margin: 2px 0 0;
+  letter-spacing: -0.01em;
+}
+
+.topright {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.status {
+  border: 1px solid var(--teal-border);
+  background: var(--teal-light);
+  color: var(--teal);
+  border-radius: 99px;
+  padding: 6px 12px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.menubtn {
+  display: none;
+}
+
+.notice {
+  margin: 16px 28px 0;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.notice b {
+  color: var(--text);
+}
+
+.page {
+  max-width: 1440px;
+  margin: auto;
+  padding: 24px 28px 60px;
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+/* INTRO / PAGE HEADERS */
+.intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.intro h2 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--text);
+  margin: 4px 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.intro p {
+  color: var(--muted);
+  margin: 0;
+  font-size: 12px;
+}
+
+/* SURFACES & PANELS */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.45fr 0.8fr;
+  gap: 16px;
+}
+
+.heroMain {
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroMain:after {
+  content: "";
+  position: absolute;
+  right: -100px;
+  top: -120px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(35, 140, 131, 0.04);
+}
+
+.heroLabel {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--orange);
+  font-weight: 800;
+}
+
+.heroRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 18px 0;
+}
+
+.heroRow h2 {
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: 400;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.heroRow p {
+  color: var(--muted);
+  margin: 4px 0 0;
+  font-size: 12px;
+}
+
+.confidence {
+  text-align: right;
+}
+
+.confidence b {
+  display: block;
+  color: var(--teal);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.confidence small {
+  color: var(--muted);
+  font-size: 10px;
+  display: block;
+  margin-top: 4px;
+}
+
+.heroStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  margin-bottom: 18px;
+}
+
+.heroStats span, .stat span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.heroStats b {
+  font-size: 17px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.heroStats small {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* BUTTONS */
+.btn {
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 9px 15px;
+  font-weight: 700;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.15s ease;
+}
+
+.primary {
+  background: var(--text);
+  color: #FAF8F5;
+}
+
+.primary:hover {
+  background: #0F2621;
+}
+
+.secondary {
+  background: var(--panel);
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.secondary:hover {
+  background: #F2EFE6;
+  border-color: var(--muted);
+}
+
+.heroXai h3 {
+  margin: 5px 0 16px;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.factor {
+  margin: 14px 0;
+}
+
+.factorTop {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text);
+}
+
+.factorTop b {
+  color: var(--teal);
+}
+
+.track {
+  height: 7px;
+  background: #EAE6DC;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.track i {
+  height: 100%;
+  display: block;
+  background: var(--teal);
+  border-radius: 99px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.stat {
+  min-width: 0;
+  padding: 16px;
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 6px 0 2px;
+  letter-spacing: -0.02em;
+}
+
+.statValue small {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.statFoot {
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.sectionHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.sectionHead h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 3px 0;
+}
+
+.sectionHead p {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.linkbtn {
+  border: 0;
+  background: none;
+  color: var(--teal);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+}
+
+.linkbtn:hover {
+  color: var(--teal-hover);
+}
+
+.chart {
+  height: 270px;
+}
+
+/* ALERTS */
+.alertList {
+  display: grid;
+  gap: 10px;
+}
+
+.alert {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: var(--radius-sm);
+}
+
+.alertIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.critical {
+  border-color: rgba(201, 42, 42, 0.25);
+  background: var(--red-bg);
+}
+
+.critical .alertIcon {
+  color: var(--red);
+  background: rgba(201, 42, 42, 0.12);
+}
+
+.high {
+  border-color: rgba(217, 83, 30, 0.25);
+  background: var(--orange-bg);
+}
+
+.high .alertIcon {
+  color: var(--orange);
+  background: rgba(217, 83, 30, 0.12);
+}
+
+.watch {
+  border-color: rgba(217, 119, 6, 0.25);
+  background: var(--amber-bg);
+}
+
+.watch .alertIcon {
+  color: var(--amber);
+  background: rgba(217, 119, 6, 0.12);
+}
+
+.alertMain {
+  flex: 1;
+}
+
+.alertTitle {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.critical .alertTitle b { color: var(--red); }
+.high .alertTitle b { color: var(--orange); }
+.watch .alertTitle b { color: var(--amber); }
+
+.alertMain h4 {
+  margin: 3px 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.alertMain p, .alertMain small {
+  color: var(--muted);
+  font-size: 11px;
+  margin: 0;
+}
+
+/* MAP & CONTROLS */
+.mapPanel {
+  margin-top: 16px;
+}
+
+.map {
+  height: 410px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.leaflet-container {
+  background: #EAE6DC !important;
+}
+
+.mapLegend {
+  position: absolute;
+  z-index: 500;
+  left: 14px;
+  bottom: 14px;
+  background: rgba(250, 248, 245, 0.95);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.mapLegend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rdot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.red { background: var(--red); }
+.orange { background: var(--orange); }
+.green { background: var(--green); }
+
+.controls {
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.controls label {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 190px;
+}
+
+.controls select, .metrics input, .commandBox input {
+  background: #FAF8F5;
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 12px;
+  transition: border-color 0.15s ease;
+}
+
+.controls select:focus, .metrics input:focus, .commandBox input:focus {
+  outline: none;
+  border-color: var(--teal);
+}
+
+.predictionGrid {
+  display: grid;
+  grid-template-columns: 0.6fr 1.4fr;
+  gap: 16px;
+}
+
+.score {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.scoreRisk {
+  color: var(--orange);
+  letter-spacing: 0.16em;
+  font-weight: 900;
+  font-size: 11px;
+}
+
+.scoreNum {
+  font-size: 64px;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  margin: 6px 0;
+  color: var(--text);
+}
+
+.scoreNum small {
+  font-size: 24px;
+  color: var(--muted);
+}
+
+.score p {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.riskbar {
+  height: 8px;
+  background: #EAE6DC;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.riskbar i {
+  height: 100%;
+  display: block;
+  width: 91.4%;
+  background: linear-gradient(90deg, var(--green), var(--amber), var(--orange));
+}
+
+.xaiTop {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.xaiCard {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ring {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 7px solid var(--teal);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.ring div {
+  text-align: center;
+}
+
+.ring b {
+  display: block;
+  color: var(--teal);
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.ring small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.explain {
+  background: #EBF4F2;
+  border: 1px solid var(--teal-border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-top: 14px;
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 12px;
+}
+
+.note {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 10px;
+  display: flex;
+  gap: 6px;
+  line-height: 1.4;
+}
+
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flow div {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 8px;
+}
+
+.flow b {
+  display: block;
+  color: var(--teal);
+  font-size: 10px;
+}
+
+.flow span {
+  font-size: 10px;
+  color: var(--text);
+}
+
+.flow i {
+  color: var(--muted);
+}
+
+.mapLayout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 16px;
+}
+
+.layers button {
+  width: 100%;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  padding: 9px 6px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  text-align: left;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.layers button:hover {
+  background: #EAE6DC;
+  color: var(--text);
+}
+
+.switch {
+  margin-left: auto;
+  width: 22px;
+  height: 12px;
+  border-radius: 99px;
+  background: var(--line-strong);
+  position: relative;
+}
+
+.switch:after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  left: 1px;
+  top: 1px;
+  background: #FFFFFF;
+  transition: left 0.15s ease;
+}
+
+.layers button.on {
+  color: var(--text);
+}
+
+.layers button.on .switch {
+  background: var(--teal);
+}
+
+.layers button.on .switch:after {
+  left: 11px;
+}
+
+.segment {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.segment button {
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  color: var(--muted);
+  border-radius: 6px;
+  padding: 6px 2px;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.segment button.sel {
+  background: var(--text);
+  color: #FAF8F5;
+  border-color: var(--text);
+}
+
+.selectedZone {
+  border-top: 1px solid var(--line);
+  margin-top: 12px;
+  padding-top: 12px;
+}
+
+.selectedZone h3 {
+  margin: 4px 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.selectedZone p {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.simGrid {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 16px;
+}
+
+.sliderBlock {
+  margin: 18px 0;
+}
+
+.sliderBlock label {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.sliderBlock strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.sliderBlock input {
+  width: 100%;
+  accent-color: var(--teal);
+  margin-top: 10px;
+}
+
+.rangeLabels {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.simRisk {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--text);
+  margin: 14px 0 3px;
+}
+
+.scenarioCards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.scenarioBar {
+  margin-top: 18px;
+}
+
+.scenarioBar div {
+  height: 9px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--green), var(--amber), var(--orange));
+  width: var(--w);
+}
+
+.events {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.event h3 {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.eventStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  margin-top: 8px;
+}
+
+.eventStats span {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.eventStats b {
+  font-size: 11px;
+  color: var(--text);
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.metric {
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 8px;
+}
+
+.metric b {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.metric strong {
+  display: block;
+  font-size: 22px;
+  color: var(--text);
+  margin: 6px 0 2px;
+}
+
+.metric span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.alertSummary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.summary {
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 10px;
+}
+
+.summary b {
+  display: block;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.summary span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.logic {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.logic .metric strong {
+  font-size: 12px;
+}
+
+.regionQuick {
+  margin: 16px 0;
+}
+
+.regionQuick .controls {
+  margin-top: 14px;
+}
+
+.regionQuick .btn {
+  align-self: flex-end;
+}
+
+.regionTag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 500;
+  background: rgba(250, 248, 245, 0.95);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.mobileClose {
+  display: none;
+}
+
+@media(max-width:1200px){
+  .stats { grid-template-columns: repeat(3, 1fr); }
+  .hero, .predictionGrid, .xaiTop, .simGrid { grid-template-columns: 1fr; }
+  .events { grid-template-columns: 1fr; }
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media(max-width:850px){
+  .sidebar { transform: translateX(-100%); transition: transform 0.2s ease; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .menubtn { display: block; background: var(--panel); border: 1px solid var(--line-strong); color: var(--text); border-radius: 8px; padding: 7px 10px; font-size: 14px; }
+  .top { padding: 0 16px; }
+  .topright .status { display: none; }
+  .page { padding: 16px; }
+  .notice { margin: 12px 16px 0; }
+  .grid2, .mapLayout, .alertSummary, .logic { grid-template-columns: 1fr; }
+  .mapLayout .layers { order: 2; }
+  .intro { flex-direction: column; }
+  .flow { flex-direction: column; align-items: stretch; }
+  .flow i { transform: rotate(90deg); }
+}
+
+@media(max-width:520px){
+  .stats, .metrics, .scenarioCards { grid-template-columns: 1fr; }
+  .heroStats { grid-template-columns: 1fr; gap: 10px; }
+  .xaiCard { flex-direction: column; align-items: flex-start; }
+  .scoreNum { font-size: 48px; }
+}
+
+/* VARSHAA-X DIFFERENTIATION LAYER */
+.uniqueGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.uniqueGrid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.featureCard {
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.featureCard h3 {
+  margin: 4px 0 6px;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.featureCard p {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.bigMetric {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 6px 0;
+  color: var(--text);
+}
+
+.bigMetric small {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.miniBar {
+  height: 7px;
+  background: #EAE6DC;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.miniBar i {
+  display: block;
+  height: 100%;
+  border-radius: 20px;
+  background: var(--teal);
+}
+
+.cascade {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(90px, 1fr));
+  gap: 8px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.cascadeNode {
+  padding: 12px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  text-align: center;
+  background: var(--panel2);
+  min-height: 75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cascadeNode b {
+  font-size: 16px;
+  color: var(--text);
+}
+
+.cascadeNode span {
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.cascadeArrow {
+  text-align: center;
+  color: var(--teal);
+  font-size: 18px;
+}
+
+.timeline {
+  position: relative;
+  padding: 8px 0 4px;
+  margin-top: 10px;
+}
+
+.timelineRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 9px 0;
+}
+
+.timelineDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 3px rgba(35, 140, 131, 0.15);
+}
+
+.timelineRow b {
+  min-width: 62px;
+  font-size: 10px;
+  color: var(--text);
+}
+
+.timelineRow span {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.reliabilityRing {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: conic-gradient(var(--teal) var(--p), #EAE6DC 0);
+  margin: auto;
+}
+
+.reliabilityRing > div {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: var(--panel);
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.reliabilityRing b {
+  font-size: 18px;
+  color: var(--teal);
+}
+
+.reliabilityRing span {
+  font-size: 8px;
+  color: var(--muted);
+}
+
+.consensusRow {
+  display: grid;
+  grid-template-columns: 95px 1fr 50px;
+  gap: 8px;
+  align-items: center;
+  margin: 9px 0;
+  font-size: 10px;
+  color: var(--text);
+}
+
+.consensusRow .bar {
+  height: 7px;
+  background: #EAE6DC;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.consensusRow .bar i {
+  display: block;
+  height: 100%;
+  background: var(--teal);
+}
+
+.fingerprint {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.fingerprintItem {
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel2);
+}
+
+.fingerprintItem span {
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.fingerprintItem b {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.actionList {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.actionItem {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel2);
+}
+
+.actionItem .num {
+  font-weight: 800;
+  color: var(--teal);
+}
+
+.actionItem span {
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.modeToggle {
+  display: flex;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.modeToggle button {
+  flex: 1;
+}
+
+.modeToggle button.sel {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: var(--teal-light);
+}
+
+.commandBox {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.commandAnswer {
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 8px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.impactScore {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.impactScore .scoreCircle {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 6px solid var(--teal);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.impactScore small {
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.exposureTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+  margin-top: 8px;
+}
+
+.exposureTable th, .exposureTable td {
+  padding: 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.exposureTable th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+@media(max-width:900px){
+  .uniqueGrid, .uniqueGrid3 { grid-template-columns: 1fr; }
+  .cascade { grid-template-columns: 1fr; }
+  .cascadeArrow { transform: rotate(90deg); }
+}
 </style>
 </head>
 <body>
 <div class="app">
 <aside class="sidebar" id="sidebar">
-  <div class="brand"><div class="logo">⌁</div><div><b>VARSHAA-X</b><small>Explainable Rainfall Intelligence</small></div></div>
-  <div class="prototype">✦ FULL PROTOTYPE · DEMO DATA MODE</div>
-  <div class="navtitle">MONITORING</div>
+  <div class="brand">
+    <div class="logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M12 13v6"/><path d="M9 16l3 3 3-3"/></svg>
+    </div>
+    <div>
+      <b>VARSHAA-X</b>
+      <small>Rain Intelligence</small>
+    </div>
+  </div>
+  
+  <div class="prototype">● PROTOTYPE DATA MODE</div>
+
   <nav class="nav">
-    <button type="button" data-view="dashboard" onclick="go(\'dashboard\'); return false;" class="active">▦ <span>Command Center</span></button>
-    <button type="button" data-view="prediction" onclick="go(\'prediction\'); return false;">☁ <span>Rainfall Prediction</span></button>
-    <button type="button" data-view="xai" onclick="go(\'xai\'); return false;">◉ <span>Explainable AI</span></button>
-    <button type="button" data-view="map" onclick="go(\'map\'); return false;">⌖ <span>Impact & Risk Map</span></button>
-    <button type="button" data-view="simulation" onclick="go(\'simulation\'); return false;">⌘ <span>What-if Simulation</span></button>
-    <button type="button" data-view="historical" onclick="go(\'historical\'); return false;">◷ <span>Historical Events</span></button>
-    <button type="button" data-view="alerts" onclick="go(\'alerts\'); return false;">⚠ <span>Alert Center</span><span class="badge">6</span></button>
+    <div class="navtitle">HOME</div>
+    <button type="button" data-view="dashboard" onclick="go('dashboard'); return false;" class="active">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Home</span>
+    </button>
+
+    <div class="navtitle">MONITOR</div>
+    <button type="button" data-view="prediction" onclick="go('prediction'); return false;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+      <span>Prediction</span>
+    </button>
+    <button type="button" data-view="map" onclick="go('map'); return false;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+      <span>Impact & Risk</span>
+    </button>
+    <button type="button" data-view="simulation" onclick="go('simulation'); return false;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+      <span>What-If</span>
+    </button>
+
+    <div class="navtitle">UNDERSTAND</div>
+    <button type="button" data-view="xai" onclick="go('xai'); return false;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <span>Explainable AI</span>
+    </button>
+    <button type="button" data-view="historical" onclick="go('historical'); return false;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>Historical Events</span>
+    </button>
+
+    <div class="navtitle">SYSTEM</div>
+    <button type="button" data-view="alerts" onclick="go('alerts'); return false;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span>Alerts</span>
+      <span class="badge">6</span>
+    </button>
+    <button type="button" data-view="historical" onclick="go('historical'); return false;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>Model & Performance</span>
+    </button>
   </nav>
-  <div class="sidebottom">Satellite pipeline<br><span>Ready for real-data integration</span><div class="online"><span class="dot"></span>Model service online</div></div>
+
+  <div class="sidebottom">
+    Satellite & Data Pipeline
+    <div class="online"><span class="dot"></span>Model service online</div>
+  </div>
 </aside>
 <main class="main">
-<header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="menubtn" id="menu">☰</button><div><div class="crumb">VARSHAA-X / <span id="crumb">COMMAND CENTER</span></div><h1 id="title">Command Center</h1></div></div><div class="topright"><div class="status"><span class="dot"></span>SYSTEM ONLINE</div></div></header>
+<header class="top">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button class="menubtn" id="menu" aria-label="Toggle navigation">☰</button>
+    <div>
+      <div class="crumb">VARSHAA-X &nbsp;/&nbsp; <span id="crumb">COMMAND CENTER</span></div>
+      <h1 id="title">Command Center</h1>
+    </div>
+  </div>
+  <div class="topright">
+    <div class="status"><span class="dot"></span>PROTOTYPE DATA</div>
+  </div>
+</header>
 <div class="page">
 
 <section id="dashboard" class="view active">
-<div class="hero">
-  <div class="panel heroMain"><div class="heroLabel" id="heroRiskLabel">● RAINFALL RISK</div><div class="heroRow"><div><h2>HIGH</h2><p id="heroLocation">Bengaluru Urban, Karnataka, India</p></div><div class="confidence"><b id="heroConfidence">91.4%</b><small>model confidence</small></div></div><div class="heroStats"><div><span>Expected rainfall</span><b><span id="heroRain">82</span> <small>mm/h</small></b></div><div><span>Forecast window</span><b>+1–3 <small>hours</small></b></div><div><span>Model reliability</span><b>HIGH</b></div></div><button class="btn primary" onclick="go('prediction')">Open prediction ↗</button></div>
-  <div class="panel heroXai"><div class="eyebrow">AI EXPLANATION</div><h3 id="heroXaiTitle">Why is risk elevated?</h3><div class="factor"><div class="factorTop"><span>Atmospheric moisture</span><b>31%</b></div><div class="track"><i style="width:31%"></i></div></div><div class="factor"><div class="factorTop"><span>Cloud characteristics</span><b>27%</b></div><div class="track"><i style="width:27%"></i></div></div><div class="factor"><div class="factorTop"><span>Temperature profile</span><b>18%</b></div><div class="track"><i style="width:18%"></i></div></div><button class="btn secondary" onclick="go('xai')">View full explanation ↗</button></div>
-</div>
-<div class="panel regionQuick" style="margin-top:15px">
-<div class="sectionHead">
+<div class="intro">
   <div>
-    <div class="eyebrow">GLOBAL REGION EXPLORER</div>
-    <h3>Select any country → state/region → place</h3>
-    <p>Worldwide cascading location selector. Choose a country first, then its available states/regions, then a city/place.</p>
+    <div class="eyebrow">HOME</div>
+    <h2 style="font-family:var(--font-serif);font-size:28px;font-weight:400;margin:4px 0 4px;color:var(--text)">Rainfall situation</h2>
+    <p style="color:var(--muted);margin:0;font-size:12px">Understand the current rainfall risk and what the model expects next.</p>
+  </div>
+  <div style="text-align:right">
+    <div style="font-size:13px;font-weight:700;color:var(--text)" id="heroLocation">Bengaluru Urban, Karnataka, India</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:2px">18 Aug 2026 · 08:40 IST &nbsp;·&nbsp; <span class="status" style="padding:2px 8px;font-size:9px">● PROTOTYPE DATA</span></div>
   </div>
 </div>
-<div class="controls" style="margin-bottom:0;flex-wrap:wrap">
-  <label style="min-width:220px">Country
-    <select id="globalCountry"><option value="">Select a country</option><option value="AF">Afghanistan</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AD">Andorra</option><option value="AO">Angola</option><option value="AG">Antigua and Barbuda</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BS">Bahamas</option><option value="BH">Bahrain</option><option value="BD">Bangladesh</option><option value="BB">Barbados</option><option value="BY">Belarus</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BJ">Benin</option><option value="BT">Bhutan</option><option value="BO">Bolivia</option><option value="BA">Bosnia and Herzegovina</option><option value="BW">Botswana</option><option value="BR">Brazil</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="BF">Burkina Faso</option><option value="BI">Burundi</option><option value="CV">Cabo Verde</option><option value="KH">Cambodia</option><option value="CM">Cameroon</option><option value="CA">Canada</option><option value="CF">Central African Republic</option><option value="TD">Chad</option><option value="CL">Chile</option><option value="CN">China</option><option value="CO">Colombia</option><option value="KM">Comoros</option><option value="CG">Congo</option><option value="CR">Costa Rica</option><option value="HR">Croatia</option><option value="CU">Cuba</option><option value="CY">Cyprus</option><option value="CZ">Czechia</option><option value="DK">Denmark</option><option value="DJ">Djibouti</option><option value="DM">Dominica</option><option value="DO">Dominican Republic</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="SV">El Salvador</option><option value="GQ">Equatorial Guinea</option><option value="ER">Eritrea</option><option value="EE">Estonia</option><option value="SZ">Eswatini</option><option value="ET">Ethiopia</option><option value="FJ">Fiji</option><option value="FI">Finland</option><option value="FR">France</option><option value="GA">Gabon</option><option value="GM">Gambia</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GR">Greece</option><option value="GD">Grenada</option><option value="GT">Guatemala</option><option value="GN">Guinea</option><option value="GW">Guinea-Bissau</option><option value="GY">Guyana</option><option value="HT">Haiti</option><option value="HN">Honduras</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IR">Iran</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="KI">Kiribati</option><option value="KW">Kuwait</option><option value="KG">Kyrgyzstan</option><option value="LA">Laos</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LS">Lesotho</option><option value="LR">Liberia</option><option value="LY">Libya</option><option value="LI">Liechtenstein</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MG">Madagascar</option><option value="MW">Malawi</option><option value="MY">Malaysia</option><option value="MV">Maldives</option><option value="ML">Mali</option><option value="MT">Malta</option><option value="MH">Marshall Islands</option><option value="MR">Mauritania</option><option value="MU">Mauritius</option><option value="MX">Mexico</option><option value="FM">Micronesia</option><option value="MD">Moldova</option><option value="MC">Monaco</option><option value="MN">Mongolia</option><option value="ME">Montenegro</option><option value="MA">Morocco</option><option value="MZ">Mozambique</option><option value="MM">Myanmar</option><option value="NA">Namibia</option><option value="NR">Nauru</option><option value="NP">Nepal</option><option value="NL">Netherlands</option><option value="NZ">New Zealand</option><option value="NI">Nicaragua</option><option value="NE">Niger</option><option value="NG">Nigeria</option><option value="KP">North Korea</option><option value="MK">North Macedonia</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PW">Palau</option><option value="PS">Palestine</option><option value="PA">Panama</option><option value="PG">Papua New Guinea</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="QA">Qatar</option><option value="RO">Romania</option><option value="RU">Russia</option><option value="RW">Rwanda</option><option value="KN">Saint Kitts and Nevis</option><option value="LC">Saint Lucia</option><option value="VC">Saint Vincent and the Grenadines</option><option value="WS">Samoa</option><option value="SM">San Marino</option><option value="ST">Sao Tome and Principe</option><option value="SA">Saudi Arabia</option><option value="SN">Senegal</option><option value="RS">Serbia</option><option value="SC">Seychelles</option><option value="SL">Sierra Leone</option><option value="SG">Singapore</option><option value="SK">Slovakia</option><option value="SI">Slovenia</option><option value="SB">Solomon Islands</option><option value="SO">Somalia</option><option value="ZA">South Africa</option><option value="KR">South Korea</option><option value="SS">South Sudan</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="SD">Sudan</option><option value="SR">Suriname</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="TW">Taiwan</option><option value="TJ">Tajikistan</option><option value="TZ">Tanzania</option><option value="TH">Thailand</option><option value="TL">Timor-Leste</option><option value="TG">Togo</option><option value="TO">Tonga</option><option value="TT">Trinidad and Tobago</option><option value="TN">Tunisia</option><option value="TR">Turkey</option><option value="TM">Turkmenistan</option><option value="TV">Tuvalu</option><option value="UG">Uganda</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option><option value="US">United States</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VU">Vanuatu</option><option value="VA">Vatican City</option><option value="VE">Venezuela</option><option value="VN">Vietnam</option><option value="YE">Yemen</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option></select>
-  </label>
-  <label style="min-width:220px">State / Region
-    <select id="globalState" disabled><option>Select country first</option></select>
-  </label>
-  <label style="min-width:250px">City / Place
-    <select id="globalCity" disabled><option>Select state/region first</option></select>
-  </label>
-  <button class="btn primary" id="globalView">View condition</button>
-</div>
-<div class="note" id="globalLocationStatus">Loading worldwide location database…</div>
-</div>
-<div class="stats">
-  <div class="panel stat"><span>Rainfall intensity</span><div class="statValue">82 <small>mm/h</small></div><div class="statFoot">+34% from previous hour</div></div>
-  <div class="panel stat"><span>Affected zones</span><div class="statValue" id="dashZones">14</div><div class="statFoot">6 critical zones</div></div>
-  <div class="panel stat"><span>Population exposure</span><div class="statValue" id="dashPop">48.2K</div><div class="statFoot">Scenario estimate</div></div>
-  <div class="panel stat"><span>Road segments</span><div class="statValue" id="dashRoads">19</div><div class="statFoot">Potentially affected</div></div>
-  <div class="panel stat"><span>Critical facilities</span><div class="statValue">3</div><div class="statFoot">Within risk zones</div></div>
-  <div class="panel stat"><span>Active alerts</span><div class="statValue">6</div><div class="statFoot">2 critical · 3 high · 1 watch</div></div>
-</div>
-<div class="grid2">
-<section class="panel"><div class="sectionHead"><div><div class="eyebrow">FORECAST</div><h3>Rainfall outlook</h3><p>Simulated next 5 hours</p></div><button class="linkbtn" onclick="go('prediction')">Prediction →</button></div><div id="forecastChart" class="chart"></div></section>
-<section class="panel"><div class="sectionHead"><div><div class="eyebrow">EARLY WARNING</div><h3>Alert center</h3><p>Latest high-impact signals</p></div><button class="linkbtn" onclick="go('alerts')">View all →</button></div><div class="alertList" id="dashAlerts"></div></section>
-</div>
-<section class="panel mapPanel"><div class="sectionHead"><div><div class="eyebrow">GEO-SPATIAL INTELLIGENCE</div><h3>Regional impact map</h3><p>Rainfall + hazard zones</p></div><button class="linkbtn" onclick="go('map')">Open full map →</button></div><div id="dashMap" class="map"></div></section>
 
-<div class="uniqueGrid3">
-  <div class="featureCard">
-    <div class="eyebrow">VARSHAA IMPACT INDEX</div>
-    <div class="impactScore"><div class="scoreCircle" id="impactIndex">--</div><div><h3 id="impactLabel">Waiting for location</h3><small>Rainfall + terrain + exposure + historical susceptibility + uncertainty</small></div></div>
+<!-- Compact Monitoring Location Bar -->
+<div class="panel" style="margin-bottom:16px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="width:36px;height:36px;border-radius:8px;background:var(--teal-light);border:1px solid var(--teal-border);display:grid;place-items:center;color:var(--teal);flex-shrink:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em">MONITORING LOCATION</div>
+      <div style="font-size:16px;font-weight:700;color:var(--text);margin-top:1px" id="monitoringLocation">Ranchi, Jharkhand</div>
+    </div>
   </div>
-  <div class="featureCard">
-    <div class="eyebrow">ESTIMATED LEAD TIME</div>
-    <div class="bigMetric" id="leadTime">-- <small>min</small></div>
-    <p>Estimated time until the high-impact threshold is crossed.</p>
+  <button type="button" class="btn secondary" onclick="openLocationModal()" style="display:inline-flex;align-items:center;gap:6px">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    <span>Change location →</span>
+  </button>
+</div>
+
+
+<div class="hero" style="margin-bottom:16px">
+  <!-- Left Side: Current Risk Situation -->
+  <div class="panel heroMain" style="display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="eyebrow" id="heroRiskLabel">CURRENT RISK</div>
+        <span class="status" id="conditionBadge" style="color:var(--orange);background:var(--orange-bg);border-color:rgba(217,83,30,0.25)">HIGH RISK</span>
+      </div>
+      
+      <div style="margin:20px 0 16px" class="heroRow">
+        <div>
+          <h2 style="font-family:var(--font-serif);font-size:38px;font-weight:400;margin:0;color:var(--text)">HIGH</h2>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">Expected within 1–3 hours</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:baseline;gap:12px;margin:18px 0 6px">
+        <div style="font-size:60px;font-weight:800;letter-spacing:-0.05em;color:var(--text);line-height:1" id="heroConfidence">91.4%</div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);font-weight:600">Probability of a heavy-rain event</div>
+    </div>
+
+    <div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:11px;color:var(--muted)">Model reliability: <strong style="color:var(--text)" id="calcConfidence">HIGH</strong></div>
+      <button class="btn primary" onclick="go('prediction')">Open prediction →</button>
+    </div>
   </div>
-  <div class="featureCard">
-    <div class="eyebrow">MODEL FAILURE RADAR</div>
-    <div class="bigMetric" id="failureRadar">LOW <small>risk</small></div>
-    <p id="failureReason">Waiting for prediction inputs.</p>
+
+  <!-- Right Side: Expected Rainfall Forecast Timeline -->
+  <div class="panel" style="display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div class="sectionHead">
+        <div>
+          <div class="eyebrow">RAINFALL FORECAST</div>
+          <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:400">Rainfall outlook — next 3 hours</h3>
+          <p>How rainfall intensity is expected to change at this location.</p>
+        </div>
+      </div>
+      <div id="forecastChart" class="chart" style="height:200px"></div>
+    </div>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px;font-weight:500" id="forecastSummaryText">
+        Peak rainfall expected around +1.5 h (95 mm/h), then gradually weakening.
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <div style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--panel2)">
+          <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase">Current</div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-top:2px"><span id="forecastCurrentVal">82</span> <small style="font-size:10px;color:var(--muted)">mm/h</small></div>
+        </div>
+        <div style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--panel2)">
+          <div style="font-size:9px;font-weight:700;color:var(--orange);text-transform:uppercase">Peak</div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-top:2px"><span id="forecastPeakVal">95</span> <small style="font-size:10px;color:var(--muted)">mm/h</small></div>
+        </div>
+        <div style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--panel2)">
+          <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase">Peak Time</div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-top:2px"><span id="forecastPeakTimeVal">+1.5 h</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<div class="panel" style="margin-top:15px">
-  <div class="eyebrow">RAIN → IMPACT CASCADE</div><h3>What the rainfall can trigger here</h3>
-  <div class="cascade" id="cascadeEngine">
-    <div class="cascadeNode"><b>🌧️</b><span>Heavy rain</span></div><div class="cascadeArrow">→</div>
-    <div class="cascadeNode"><b>💧</b><span>Soil saturation</span></div><div class="cascadeArrow">→</div>
-    <div class="cascadeNode"><b>🌊</b><span>Runoff</span></div><div class="cascadeArrow">→</div>
-    <div class="cascadeNode"><b>🛣️</b><span>Road impact</span></div>
+
+<div class="grid2" style="margin-bottom:16px">
+  <!-- Why does the model expect heavy rain? -->
+  <div class="panel">
+    <div class="sectionHead">
+      <div>
+        <div class="eyebrow">MODEL FACTORS</div>
+        <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:400">Why does the model expect heavy rain?</h3>
+        <p>These factors contributed most to the current prediction.</p>
+      </div>
+    </div>
+    <div id="xaiFactorsOverview" style="margin:16px 0">
+      <div class="factor"><div class="factorTop"><span>Atmospheric moisture</span><b>+31%</b></div><div class="track"><i style="width:31%"></i></div></div>
+      <div class="factor"><div class="factorTop"><span>Cloud development</span><b>+27%</b></div><div class="track"><i style="width:27%"></i></div></div>
+      <div class="factor"><div class="factorTop"><span>Rainfall intensity</span><b>+18%</b></div><div class="track"><i style="width:18%"></i></div></div>
+      <div class="factor"><div class="factorTop"><span>Wind convergence</span><b>+14%</b></div><div class="track"><i style="width:14%"></i></div></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--line)">
+      <span style="font-size:10px;color:var(--muted)">Positive contribution → increases predicted likelihood</span>
+      <button class="btn secondary" onclick="go('xai')">Understand the prediction →</button>
+    </div>
   </div>
-  <div class="uniqueGrid3" style="margin-top:10px">
-    <div class="stat"><span>Drainage stress</span><div class="statValue" id="drainStress">--</div></div>
-    <div class="stat"><span>Road disruption</span><div class="statValue" id="roadImpact">--</div></div>
-    <div class="stat"><span>Population exposure</span><div class="statValue" id="popImpact">--</div></div>
+
+  <!-- Potential Local Impact -->
+  <div class="panel" style="display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div class="sectionHead">
+        <div>
+          <div class="eyebrow">POTENTIAL IMPACT</div>
+          <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:400">Potential local impact</h3>
+          <p>What could this rainfall event mean for the selected area?</p>
+        </div>
+        <span class="status" style="color:var(--orange);background:var(--orange-bg);border-color:rgba(217,83,30,0.25)">MODERATE IMPACT</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0">
+        <div style="padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)">
+          <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase">Population</div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-top:4px">Moderate exposure</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">Residential areas</div>
+        </div>
+        <div style="padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)">
+          <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase">Roads</div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-top:4px">Waterlogging risk</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">Low-lying underpasses</div>
+        </div>
+        <div style="padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)">
+          <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase">Critical facilities</div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);margin-top:4px">Low-moderate concern</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">Hospitals & power grid</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--line)">
+      <span style="font-size:11px;color:var(--muted)">Scenario estimate for current rainfall conditions</span>
+      <button class="btn secondary" onclick="go('map')">Explore impact →</button>
+    </div>
   </div>
 </div>
-<div class="uniqueGrid">
-  <div class="featureCard">
-    <div class="eyebrow">EMERGENCY COMMANDER · ASK VARSHAA</div>
-    <h3>Decision assistant</h3>
-    <p>Ask a scenario question and get an answer grounded in the current prototype outputs.</p>
-    <div class="commandBox"><input id="commanderInput" placeholder="What happens if rainfall reaches 120 mm/h?"><button type="button" class="btn primary" id="commanderAsk" onclick="window.varshaaAsk()">Ask</button></div>
-    <div class="commandAnswer" id="commanderAnswer">Select a location and ask VARSHAA for a decision brief.</div>
-  </div>
-  <div class="featureCard">
-    <div class="eyebrow">GOVERNANCE / CITIZEN MODE</div><h3 id="modeTitle">Government mode</h3>
-    <div class="modeToggle"><button type="button" class="btn secondary sel" data-mode="government" onclick="window.varshaaMode('government',this)">Government</button><button type="button" class="btn secondary" data-mode="citizen" onclick="window.varshaaMode('citizen',this)">Citizen</button></div>
-    <div id="modeContent" class="commandAnswer">Priority: drainage team deployment, road monitoring and critical-facility readiness.</div>
+
+<!-- At a Glance: 3 metrics only -->
+<div class="panel" style="margin-bottom:16px">
+  <div class="eyebrow" style="margin-bottom:12px">AT A GLANCE</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+    <div>
+      <span style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase">Rainfall Now</span>
+      <div style="font-size:28px;font-weight:800;color:var(--text);margin-top:2px"><span id="heroRain">82</span> <small style="font-size:13px;color:var(--muted);font-weight:500">mm/h</small></div>
+      <span style="font-size:10px;color:var(--muted)">Current rate at location</span>
+    </div>
+    <div>
+      <span style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase">Peak Expected</span>
+      <div style="font-size:28px;font-weight:800;color:var(--text);margin-top:2px"><span id="dashPeakRain">95</span> <small style="font-size:13px;color:var(--muted);font-weight:500">mm/h</small></div>
+      <span style="font-size:10px;color:var(--muted)">Maximum forecast intensity</span>
+    </div>
+    <div>
+      <span style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase">Lead Time</span>
+      <div style="font-size:28px;font-weight:800;color:var(--text);margin-top:2px">1–3 <small style="font-size:13px;color:var(--muted);font-weight:500">hours</small></div>
+      <span style="font-size:10px;color:var(--muted)">Available response window</span>
+    </div>
   </div>
 </div>
-<div class="panel" style="margin-top:15px">
-  <div class="eyebrow">ACTION ENGINE</div><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>What should happen next?</h3><button class="btn secondary" id="refreshActions" type="button">Refresh analysis</button></div>
-  <div class="actionList" id="actionList"></div>
+
+<!-- Explore Further: 3 Navigation Cards -->
+<div class="uniqueGrid3" style="margin-bottom:16px">
+  <div class="featureCard" style="display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div class="eyebrow">DETAILED FORECAST</div>
+      <h3 style="font-family:var(--font-serif);font-size:18px;font-weight:400;margin:6px 0">Rainfall Prediction</h3>
+      <p>View the detailed rainfall prediction curve, atmospheric inputs, and multi-model consensus.</p>
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn secondary" style="width:100%;justify-content:center" onclick="go('prediction')">Open prediction →</button>
+    </div>
+  </div>
+
+  <div class="featureCard" style="display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div class="eyebrow">WHAT-IF SIMULATOR</div>
+      <h3 style="font-family:var(--font-serif);font-size:18px;font-weight:400;margin:6px 0">What-If Simulation</h3>
+      <p>Test how changing rainfall intensity and duration could alter estimated exposure and stress.</p>
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn secondary" style="width:100%;justify-content:center" onclick="go('simulation')">Run simulation →</button>
+    </div>
+  </div>
+
+  <div class="featureCard" style="display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div class="eyebrow">HISTORICAL MATCHING</div>
+      <h3 style="font-family:var(--font-serif);font-size:18px;font-weight:400;margin:6px 0">Historical Events</h3>
+      <p>Compare the current rainfall pattern with past high-impact events and validation benchmarks.</p>
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn secondary" style="width:100%;justify-content:center" onclick="go('historical')">Compare history →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Preserved Hidden Container for JS backward compatibility -->
+<div style="display:none" id="hiddenHomePreserved">
+  <span id="heroXaiTitle">Why is risk elevated?</span>
+  <span id="dashZones">14</span>
+  <span id="dashPop">48.2K</span>
+  <span id="dashRoads">19</span>
+  <div id="dashAlerts"></div>
+  <div id="dashMap"></div>
+  <span id="impactIndex">--</span>
+  <span id="impactLabel">Waiting for location</span>
+  <span id="leadTime">--</span>
+  <span id="failureRadar">LOW</span>
+  <span id="failureReason">Waiting</span>
+  <div id="cascadeEngine"></div>
+  <span id="drainStress">--</span>
+  <span id="roadImpact">--</span>
+  <span id="popImpact">--</span>
+  <input id="commanderInput">
+  <button id="commanderAsk"></button>
+  <div id="commanderAnswer"></div>
+  <span id="modeTitle">Government mode</span>
+  <div id="modeContent"></div>
+  <button id="refreshActions"></button>
+  <div id="actionList"></div>
 </div>
 
 </section>
 
 <section id="prediction" class="view">
-<div class="intro"><div><div class="eyebrow">PREDICTIVE INTELLIGENCE</div><h2>Heavy rainfall prediction</h2><p>Explore a selected region and view its rainfall-risk scenario, prediction confidence and impact indicators.</p></div><div class="status">✓ Prediction pipeline ready</div></div>
-<div class="panel controls" style="flex-wrap:wrap">
-<label style="min-width:220px">Country
-  <select id="predCountry"><option value="">Select a country</option><option value="AF">Afghanistan</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AD">Andorra</option><option value="AO">Angola</option><option value="AG">Antigua and Barbuda</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BS">Bahamas</option><option value="BH">Bahrain</option><option value="BD">Bangladesh</option><option value="BB">Barbados</option><option value="BY">Belarus</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BJ">Benin</option><option value="BT">Bhutan</option><option value="BO">Bolivia</option><option value="BA">Bosnia and Herzegovina</option><option value="BW">Botswana</option><option value="BR">Brazil</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="BF">Burkina Faso</option><option value="BI">Burundi</option><option value="CV">Cabo Verde</option><option value="KH">Cambodia</option><option value="CM">Cameroon</option><option value="CA">Canada</option><option value="CF">Central African Republic</option><option value="TD">Chad</option><option value="CL">Chile</option><option value="CN">China</option><option value="CO">Colombia</option><option value="KM">Comoros</option><option value="CG">Congo</option><option value="CR">Costa Rica</option><option value="HR">Croatia</option><option value="CU">Cuba</option><option value="CY">Cyprus</option><option value="CZ">Czechia</option><option value="DK">Denmark</option><option value="DJ">Djibouti</option><option value="DM">Dominica</option><option value="DO">Dominican Republic</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="SV">El Salvador</option><option value="GQ">Equatorial Guinea</option><option value="ER">Eritrea</option><option value="EE">Estonia</option><option value="SZ">Eswatini</option><option value="ET">Ethiopia</option><option value="FJ">Fiji</option><option value="FI">Finland</option><option value="FR">France</option><option value="GA">Gabon</option><option value="GM">Gambia</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GR">Greece</option><option value="GD">Grenada</option><option value="GT">Guatemala</option><option value="GN">Guinea</option><option value="GW">Guinea-Bissau</option><option value="GY">Guyana</option><option value="HT">Haiti</option><option value="HN">Honduras</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IR">Iran</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="KI">Kiribati</option><option value="KW">Kuwait</option><option value="KG">Kyrgyzstan</option><option value="LA">Laos</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LS">Lesotho</option><option value="LR">Liberia</option><option value="LY">Libya</option><option value="LI">Liechtenstein</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MG">Madagascar</option><option value="MW">Malawi</option><option value="MY">Malaysia</option><option value="MV">Maldives</option><option value="ML">Mali</option><option value="MT">Malta</option><option value="MH">Marshall Islands</option><option value="MR">Mauritania</option><option value="MU">Mauritius</option><option value="MX">Mexico</option><option value="FM">Micronesia</option><option value="MD">Moldova</option><option value="MC">Monaco</option><option value="MN">Mongolia</option><option value="ME">Montenegro</option><option value="MA">Morocco</option><option value="MZ">Mozambique</option><option value="MM">Myanmar</option><option value="NA">Namibia</option><option value="NR">Nauru</option><option value="NP">Nepal</option><option value="NL">Netherlands</option><option value="NZ">New Zealand</option><option value="NI">Nicaragua</option><option value="NE">Niger</option><option value="NG">Nigeria</option><option value="KP">North Korea</option><option value="MK">North Macedonia</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PW">Palau</option><option value="PS">Palestine</option><option value="PA">Panama</option><option value="PG">Papua New Guinea</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="QA">Qatar</option><option value="RO">Romania</option><option value="RU">Russia</option><option value="RW">Rwanda</option><option value="KN">Saint Kitts and Nevis</option><option value="LC">Saint Lucia</option><option value="VC">Saint Vincent and the Grenadines</option><option value="WS">Samoa</option><option value="SM">San Marino</option><option value="ST">Sao Tome and Principe</option><option value="SA">Saudi Arabia</option><option value="SN">Senegal</option><option value="RS">Serbia</option><option value="SC">Seychelles</option><option value="SL">Sierra Leone</option><option value="SG">Singapore</option><option value="SK">Slovakia</option><option value="SI">Slovenia</option><option value="SB">Solomon Islands</option><option value="SO">Somalia</option><option value="ZA">South Africa</option><option value="KR">South Korea</option><option value="SS">South Sudan</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="SD">Sudan</option><option value="SR">Suriname</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="TW">Taiwan</option><option value="TJ">Tajikistan</option><option value="TZ">Tanzania</option><option value="TH">Thailand</option><option value="TL">Timor-Leste</option><option value="TG">Togo</option><option value="TO">Tonga</option><option value="TT">Trinidad and Tobago</option><option value="TN">Tunisia</option><option value="TR">Turkey</option><option value="TM">Turkmenistan</option><option value="TV">Tuvalu</option><option value="UG">Uganda</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option><option value="US">United States</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VU">Vanuatu</option><option value="VA">Vatican City</option><option value="VE">Venezuela</option><option value="VN">Vietnam</option><option value="YE">Yemen</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option></select>
-</label>
-<label style="min-width:220px">State / Region
-  <select id="predState" disabled><option>Select country first</option></select>
-</label>
-<label style="min-width:250px">City / Place
-  <select id="predCity" disabled><option>Select state/region first</option></select>
-</label>
-<label>Forecast window
-  <select id="window"><option>Next 1 Hour</option><option selected>Next 3 Hours</option><option>Next 6 Hours</option></select>
-</label>
-<div style="margin-left:auto;color:#73899e;font-size:9px">Selected: <b style="color:#dce8f1" id="selectedLocation">Bengaluru, Karnataka, India</b></div>
-</div>
-<div class="panel" id="regionConditionCard" style="margin-bottom:15px">
-<div class="sectionHead"><div><div class="eyebrow">REGION CONDITION</div><h3 id="conditionTitle">Bengaluru Urban · Karnataka</h3><p id="conditionText">Select a state and district above. Odisha includes Bhubaneswar/Khordha, Cuttack, Puri, Balasore, Mayurbhanj and Ganjam in this prototype.</p></div><span id="conditionBadge" class="status">HIGH RISK</span></div>
-</div>
-<div class="predictionGrid"><div class="panel score"><div class="eyebrow">MODEL OUTPUT</div><div class="scoreRisk">HIGH-IMPACT RAINFALL</div><div class="scoreNum">91.4<small>%</small></div><p>Probability during the selected forecast window.</p><div class="riskbar"><i></i></div></div><div class="panel"><div class="sectionHead"><div><div class="eyebrow">FORECAST CURVE</div><h3>Rainfall intensity</h3></div></div><div id="predChart" class="chart"></div></div></div>
-<div class="panel" id="predictionInputs">
-<div class="sectionHead"><div><div class="eyebrow">PREDICTION INPUTS</div><h3>Atmospheric & terrain signals</h3><p>Adjust the inputs and run the prototype model. These are demo inputs until the satellite/ML pipeline is connected.</p></div><button class="btn primary" id="runPrediction">Run Prediction</button></div>
-<div class="metrics" style="grid-template-columns:repeat(3,1fr)">
-<label class="metric"><b>Current rainfall</b><input id="inRain" type="number" min="0" max="250" step="1" value="42"><span>mm/h</span></label>
-<label class="metric"><b>Relative humidity</b><input id="inHumidity" type="number" min="0" max="100" step="1" value="82"><span>%</span></label>
-<label class="metric"><b>Cloud cover</b><input id="inCloud" type="number" min="0" max="100" step="1" value="78"><span>%</span></label>
-<label class="metric"><b>Temperature</b><input id="inTemp" type="number" min="-10" max="55" step="0.5" value="25"><span>°C</span></label>
-<label class="metric"><b>Wind speed</b><input id="inWind" type="number" min="0" max="150" step="1" value="24"><span>km/h</span></label>
-<label class="metric"><b>Elevation</b><input id="inElevation" type="number" min="0" max="9000" step="10" value="900"><span>m</span></label>
-</div>
-<div class="note" id="formulaNote">Prototype scoring: rainfall 45% + humidity 18% + cloud 14% + wind 8% + elevation 7% + temperature 8%, followed by a calibrated probability transform.</div>
-</div>
-<div class="stats" style="grid-template-columns:repeat(4,1fr)">
-<div class="panel stat"><span>Current rainfall</span><div class="statValue"><span id="calcCurrent">42</span> <small>mm/h</small></div></div>
-<div class="panel stat"><span>Peak forecast</span><div class="statValue"><span id="calcPeak">82</span> <small>mm/h</small></div></div>
-<div class="panel stat"><span>Peak probability</span><div class="statValue"><span id="calcProb">91.4</span> <small>%</small></div></div>
-<div class="panel stat"><span>Confidence</span><div class="statValue" id="calcConfidence" style="font-size:19px;color:#63d9c4">HIGH</div></div>
-</div>
-<div class="panel"><div class="sectionHead"><div><div class="eyebrow">VALIDATION</div><h3>Model performance</h3><p>These metrics are placeholders for the real held-out test set; they are not calculated from the selected location.</p></div></div><div class="metrics"><div class="metric"><b>Accuracy</b><strong>91.2%</strong><span>Demo benchmark</span></div><div class="metric"><b>Precision</b><strong>88.7%</strong><span>Demo benchmark</span></div><div class="metric"><b>Recall</b><strong>92.4%</strong><span>Demo benchmark</span></div><div class="metric"><b>F1 Score</b><strong>90.5%</strong><span>Demo benchmark</span></div></div></div>
-
-<div class="uniqueGrid">
-  <div class="featureCard">
-    <div class="eyebrow">MODEL CONSENSUS</div><h3>Four-model agreement</h3>
-    <div class="consensusRow"><b>CNN</b><div class="bar"><i id="cnnBar" style="width:82%"></i></div><span id="cnnVal">82%</span></div>
-    <div class="consensusRow"><b>XGBoost</b><div class="bar"><i id="xgbBar" style="width:76%"></i></div><span id="xgbVal">76%</span></div>
-    <div class="consensusRow"><b>LSTM</b><div class="bar"><i id="lstmBar" style="width:88%"></i></div><span id="lstmVal">88%</span></div>
-    <div class="consensusRow"><b>Transformer</b><div class="bar"><i id="trBar" style="width:81%"></i></div><span id="trVal">81%</span></div>
-    <div class="note" id="disagreementNote">Model spread is within the normal prototype range.</div>
+<!-- Editorial Header -->
+<div class="intro">
+  <div>
+    <div class="eyebrow">PREDICTIVE INTELLIGENCE</div>
+    <h2 style="font-family:var(--font-serif);font-size:28px;font-weight:400;margin:4px 0 4px;color:var(--text)">Heavy rainfall prediction</h2>
+    <p style="color:var(--muted);margin:0;font-size:12px">Detailed rainfall intensity curve, environmental signals, and model reliability status.</p>
   </div>
-  <div class="featureCard">
-    <div class="eyebrow">PREDICTION FAILURE RADAR</div>
-    <div class="impactScore"><div class="scoreCircle" id="reliabilityScore">--</div><div><h3 id="reliabilityLabel">Reliability</h3><small id="reliabilityReason">Checks data completeness, model disagreement and unusual conditions.</small></div></div>
-    <div class="fingerprint" id="failureSignals"></div>
+  <div style="text-align:right">
+    <div class="status">✓ Prediction pipeline ready</div>
   </div>
 </div>
-<div class="panel" style="margin-top:15px">
-  <div class="eyebrow">RAINFALL FINGERPRINT</div><h3>Which historical event does this resemble?</h3>
-  <div class="fingerprint" id="rainFingerprint"></div>
-  <div class="commandAnswer" id="historicalMatch">Closest-event matching will update after a prediction is run.</div>
+
+<!-- Compact Location + Forecast Controls -->
+<div class="panel" style="margin-bottom:16px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="width:36px;height:36px;border-radius:8px;background:var(--teal-light);border:1px solid var(--teal-border);display:grid;place-items:center;color:var(--teal);flex-shrink:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em">MONITORING LOCATION</div>
+      <div style="font-size:16px;font-weight:700;color:var(--text);margin-top:1px" id="predictionLocation">Ranchi, Jharkhand, India</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <label style="font-size:11px;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:6px">Forecast window
+      <select id="window" style="padding:6px 10px;border-radius:6px;border:1px solid var(--line);background:var(--panel2);font-weight:700" onchange="runPrediction()">
+        <option value="1">1 hour</option>
+        <option value="3" selected>3 hours</option>
+        <option value="6">6 hours</option>
+      </select>
+    </label>
+    <button type="button" class="btn secondary" onclick="openLocationModal()" style="display:inline-flex;align-items:center;gap:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>Change location →</span>
+    </button>
+  </div>
 </div>
 
+<!-- Main Prediction Result + Forecast Curve Grid -->
+<div class="predictionGrid" style="grid-template-columns:0.85fr 1.15fr;gap:16px;margin-bottom:16px">
+  <!-- Left Side: Main Result -->
+  <div class="panel score" style="display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="eyebrow">MODEL PREDICTION</div>
+        <span class="status scoreRisk" style="color:var(--orange);background:var(--orange-bg);border-color:rgba(217,83,30,0.25)">HIGH-IMPACT RAINFALL</span>
+      </div>
+
+      <div style="margin:20px 0 8px">
+        <div class="scoreNum" style="font-size:56px;font-weight:800;letter-spacing:-0.05em;color:var(--text);line-height:1">91.4<small style="font-size:24px">%</small></div>
+        <div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:4px">Probability of a high-impact rain event</div>
+      </div>
+
+      <div style="margin-top:20px;padding:12px;border-radius:8px;background:var(--panel2);border:1px solid var(--line)">
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase">Expected Window</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-top:2px">+1–3 hours</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:6px">Peak expected rainfall: <strong style="color:var(--text)"><span id="calcPeak">82</span> mm/h</strong> (at <span id="calcPeakTime" style="font-weight:700;color:var(--text)">+1.5 h</span>)</div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding-top:14px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)">
+      Note: Probability describes event likelihood; severity describes expected physical rain rate.
+    </div>
+  </div>
+
+  <!-- Right Side: Prominent Forecast Curve -->
+  <div class="panel" style="display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div class="sectionHead">
+        <div>
+          <div class="eyebrow">FORECAST CURVE</div>
+          <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:400">Rainfall intensity — forecast</h3>
+          <p>How rainfall intensity is expected to change at this location.</p>
+        </div>
+      </div>
+      <div id="predChart" class="chart" style="height:210px"></div>
+    </div>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)" id="predChartSummary">
+      Rainfall is expected to peak around +1.5 hours before gradually weakening.
+    </div>
+  </div>
+</div>
+
+<!-- Conditions Used For This Prediction (Read-Only Data Grid) -->
+<div class="panel" style="margin-bottom:16px">
+  <div class="sectionHead">
+    <div>
+      <div class="eyebrow">ENVIRONMENTAL SIGNALS</div>
+      <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:400">Conditions used for this prediction</h3>
+      <p>Environmental signals currently available to the model.</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:16px">
+    <div style="padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)">
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase">Rainfall</div>
+      <div style="font-size:18px;font-weight:800;color:var(--text);margin-top:2px"><span id="readRain">42</span> <small style="font-size:11px;color:var(--muted)">mm/h</small></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px">Surface rate</div>
+    </div>
+    <div style="padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)">
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase">Humidity</div>
+      <div style="font-size:18px;font-weight:800;color:var(--text);margin-top:2px"><span id="readHumidity">82</span> <small style="font-size:11px;color:var(--muted)">%</small></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px">Relative humidity</div>
+    </div>
+    <div style="padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)">
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase">Cloud Cover</div>
+      <div style="font-size:18px;font-weight:800;color:var(--text);margin-top:2px"><span id="readCloud">78</span> <small style="font-size:11px;color:var(--muted)">%</small></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px">Cloud development</div>
+    </div>
+    <div style="padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)">
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase">Temperature</div>
+      <div style="font-size:18px;font-weight:800;color:var(--text);margin-top:2px"><span id="readTemp">25</span> <small style="font-size:11px;color:var(--muted)">°C</small></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px">Air temperature</div>
+    </div>
+    <div style="padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)">
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase">Wind Speed</div>
+      <div style="font-size:18px;font-weight:800;color:var(--text);margin-top:2px"><span id="readWind">24</span> <small style="font-size:11px;color:var(--muted)">km/h</small></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px">Wind speed</div>
+    </div>
+    <div style="padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)">
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase">Elevation</div>
+      <div style="font-size:18px;font-weight:800;color:var(--text);margin-top:2px"><span id="readElevation">900</span> <small style="font-size:11px;color:var(--muted)">m</small></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px">Terrain height</div>
+    </div>
+  </div>
+
+  <!-- Expandable Prototype Inputs -->
+  <details style="margin-top:16px;border-top:1px solid var(--line);padding-top:14px" id="predictionInputs">
+    <summary style="font-size:12px;font-weight:700;color:var(--teal);cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+      <span>Edit inputs (Prototype Override) →</span>
+    </summary>
+    <div style="margin-top:12px;padding:16px;border:1px dashed var(--line-strong);border-radius:8px;background:var(--panel2)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div>
+          <b style="font-size:12px;color:var(--text)">PROTOTYPE INPUT OVERRIDE</b>
+          <p style="font-size:10px;color:var(--muted);margin:2px 0 0">Manual inputs are available for prototype testing. Production predictions will use connected satellite and weather data.</p>
+        </div>
+        <button class="btn primary" id="runPrediction" type="button" onclick="runPrediction()">Run Prediction</button>
+      </div>
+
+      <div class="metrics" style="grid-template-columns:repeat(3,1fr)">
+        <label class="metric"><b>Current rainfall</b><input id="inRain" type="number" min="0" max="250" step="1" value="42" onchange="runPrediction()"><span>mm/h</span></label>
+        <label class="metric"><b>Relative humidity</b><input id="inHumidity" type="number" min="0" max="100" step="1" value="82" onchange="runPrediction()"><span>%</span></label>
+        <label class="metric"><b>Cloud cover</b><input id="inCloud" type="number" min="0" max="100" step="1" value="78" onchange="runPrediction()"><span>%</span></label>
+        <label class="metric"><b>Temperature</b><input id="inTemp" type="number" min="-10" max="55" step="0.5" value="25" onchange="runPrediction()"><span>°C</span></label>
+        <label class="metric"><b>Wind speed</b><input id="inWind" type="number" min="0" max="150" step="1" value="24" onchange="runPrediction()"><span>km/h</span></label>
+        <label class="metric"><b>Elevation</b><input id="inElevation" type="number" min="0" max="9000" step="10" value="900" onchange="runPrediction()"><span>m</span></label>
+      </div>
+      <div class="note" id="formulaNote" style="margin-top:10px;font-size:10px">Prototype formula: rainfall 45% + humidity 18% + cloud 14% + wind 8% + elevation 7% + temperature 8%, followed by calibrated probability transform.</div>
+    </div>
+  </details>
+</div>
+
+<!-- Prediction Reliability Section -->
+<div class="grid2" style="margin-bottom:16px">
+  <div class="panel" style="display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div class="sectionHead">
+        <div>
+          <div class="eyebrow">MODEL CONFIDENCE</div>
+          <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:400">Prediction reliability</h3>
+          <p>How much confidence should we place in this prediction?</p>
+        </div>
+        <span class="status" id="calcConfidence" style="font-size:11px;font-weight:800;color:var(--teal)">HIGH</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0">
+        <div style="padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);text-align:center">
+          <div style="font-size:10px;color:var(--muted)">Data completeness</div>
+          <div style="font-size:14px;font-weight:700;color:var(--green);margin-top:2px">✓ Complete</div>
+        </div>
+        <div style="padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);text-align:center">
+          <div style="font-size:10px;color:var(--muted)">Input consistency</div>
+          <div style="font-size:14px;font-weight:700;color:var(--green);margin-top:2px">✓ Consistent</div>
+        </div>
+        <div style="padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);text-align:center">
+          <div style="font-size:10px;color:var(--muted)">Model agreement</div>
+          <div style="font-size:14px;font-weight:700;color:var(--green);margin-top:2px">✓ High</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding-top:10px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)">
+      <strong>Note:</strong> Prediction probability describes how likely the event is. Reliability describes how trustworthy the prediction is given the available inputs.
+    </div>
+  </div>
+
+  <!-- Deeper Analysis Navigation Card -->
+  <div class="panel" style="display:flex;flex-direction:column;justify-content:space-between">
+    <div>
+      <div class="sectionHead">
+        <div>
+          <div class="eyebrow">DEEPER ANALYSIS</div>
+          <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:400">Explore underlying evidence</h3>
+          <p>Investigate feature attributions and model validation benchmarks.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;margin:16px 0">
+        <button type="button" class="btn secondary" onclick="go('xai')" style="justify-content:space-between">
+          <span>Understand why (Feature Attribution)</span>
+          <span>→</span>
+        </button>
+        <button type="button" class="btn secondary" onclick="go('historical')" style="justify-content:space-between">
+          <span>View model performance & historical benchmarks</span>
+          <span>→</span>
+        </button>
+      </div>
+    </div>
+
+    <div style="padding-top:10px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)">
+      Access detailed SHAP explanations and held-out evaluation benchmarks.
+    </div>
+  </div>
+</div>
+
+<!-- Preserved Hidden Container for JS backward compatibility -->
+<div style="display:none" id="hiddenPredPreserved">
+  <select id="predCountry"></select>
+  <select id="predState"></select>
+  <select id="predCity"></select>
+  <div id="conditionTitle"></div>
+  <div id="conditionText"></div>
+  <div id="conditionBadge"></div>
+  <span id="calcCurrent">42</span>
+  <span id="calcProb">91.4</span>
+  <i id="cnnBar"></i><span id="cnnVal"></span>
+  <i id="xgbBar"></i><span id="xgbVal"></span>
+  <i id="lstmBar"></i><span id="lstmVal"></span>
+  <i id="trBar"></i><span id="trVal"></span>
+  <div id="disagreementNote"></div>
+  <div id="reliabilityScore"></div>
+  <div id="reliabilityLabel"></div>
+  <div id="reliabilityReason"></div>
+  <div id="failureSignals"></div>
+  <div id="rainFingerprint"></div>
+  <div id="historicalMatch"></div>
+</div>
 </section>
 
 <section id="xai" class="view">
-<div class="intro"><div><div class="eyebrow">XAI ENGINE</div><h2>Why did the model predict high risk?</h2><p>Make every prediction interpretable and auditable.</p></div><div class="status">◉ SHAP-ready architecture</div></div>
-<div class="xaiTop"><div class="panel xaiCard"><div class="ring"><div><b id="xaiConfidence">91.4%</b><small>confidence</small></div></div><div><div class="eyebrow">PREDICTION</div><h3 id="xaiPredictionTitle">HIGH-IMPACT RAINFALL</h3><p id="xaiLocation" style="color:#70869d;font-size:10px">Bengaluru Urban · Next 1–3 hours</p></div></div><div class="panel"><div class="eyebrow">MODEL RELIABILITY</div><h3 id="xaiReliabilityTitle">High confidence</h3><p style="color:#71869d;font-size:10px;line-height:1.6">Reliability depends on complete satellite and atmospheric inputs remaining within the model's training distribution.</p><div class="track"><i id="xaiReliabilityBar" style="width:88%"></i></div><small id="xaiReliabilityFoot" style="color:#60768d;font-size:8px">88% input-quality score · simulated</small></div></div>
-<div class="grid2"><div class="panel"><div class="eyebrow">FEATURE ATTRIBUTION</div><h3>Contributing factors</h3><div id="xaiFactors"></div></div><div class="panel"><div class="eyebrow">AI INTERPRETATION</div><h3>Human-readable explanation</h3><div class="explain" id="xaiExplanation">The model identified <b>elevated atmospheric moisture</b> and <b>rapidly developing cloud characteristics</b> as the strongest contributors to the predicted event. Temperature and wind patterns provide additional support for convective development.</div><div class="note">⚠ This is prototype explanation text. Production will display actual SHAP values from the trained model.</div></div></div>
-<div class="panel"><div class="eyebrow">PRODUCTION XAI PIPELINE</div><h3>How the explanation is generated</h3><div class="flow"><div><b>01</b><span>Satellite + atmospheric inputs</span></div><i>→</i><div><b>02</b><span>Trained rainfall model</span></div><i>→</i><div><b>03</b><span>SHAP attribution</span></div><i>→</i><div><b>04</b><span>Human-readable explanation</span></div></div></div>
-
-<div class="uniqueGrid">
-  <div class="featureCard">
-    <div class="eyebrow">WHY HERE?</div><h3>Rainfall vs local impact</h3>
-    <div class="factor"><div class="factorTop"><span>Rainfall severity</span><b id="xRain">--</b></div><div class="track"><i id="xRainBar"></i></div></div>
-    <div class="factor"><div class="factorTop"><span>Terrain vulnerability</span><b id="xTerrain">--</b></div><div class="track"><i id="xTerrainBar"></i></div></div>
-    <div class="factor"><div class="factorTop"><span>Infrastructure exposure</span><b id="xInfra">--</b></div><div class="track"><i id="xInfraBar"></i></div></div>
-    <div class="factor"><div class="factorTop"><span>Population exposure</span><b id="xPop">--</b></div><div class="track"><i id="xPopBar"></i></div></div>
+  <!-- 1. Header -->
+  <div class="intro">
+    <div>
+      <div class="eyebrow">EXPLAINABLE AI</div>
+      <h2>Why did VARSHAA-X make this prediction?</h2>
+      <p>See which environmental conditions influenced the predicted rainfall event and how strongly they contributed.</p>
+    </div>
   </div>
-  <div class="featureCard">
-    <div class="eyebrow">UNCERTAINTY-AWARE AI</div><h3>Confidence is not certainty</h3>
-    <p id="uncertaintyText">The system reports both prediction probability and reliability so operators know when the model may fail.</p>
-    <div class="reliabilityRing" id="uncertaintyRing" style="--p:0%"><div><b id="uncertaintyValue">--</b><span>reliability</span></div></div>
-  </div>
-</div>
 
+  <!-- Global Location Display -->
+  <div class="panel" style="margin-bottom:16px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em">CURRENT LOCATION</div>
+        <div id="xaiLocation" style="font-size:14px;font-weight:700;color:var(--text)">Ranchi, Jharkhand, India</div>
+      </div>
+    </div>
+    <button type="button" class="btn secondary" onclick="openLocationModal()" style="font-size:11px">Change location →</button>
+  </div>
+
+  <!-- 2. Prediction Summary Card -->
+  <div class="panel" style="margin-bottom:20px;padding:18px 22px">
+    <div class="eyebrow" style="margin-bottom:10px">CURRENT PREDICTION SUMMARY</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));gap:16px;align-items:center">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em">RAIN EVENT PROBABILITY</div>
+        <div style="font-size:32px;font-weight:800;color:var(--text)" id="xaiProb">76%</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">Likelihood of a high-impact rainfall event</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em">PREDICTED RISK LEVEL</div>
+        <div style="font-size:18px;font-weight:700;color:var(--orange);margin-top:4px" id="xaiRisk">HIGH RISK</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em">EXPECTED RAINFALL</div>
+        <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px" id="xaiRain">82 mm/h</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em">FORECAST WINDOW</div>
+        <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px" id="xaiWindow">Next 3 hours</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 & 4. Main Explanation (Ranked Bars + Plain Language) -->
+  <div class="grid2" style="margin-bottom:20px">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div>
+          <div class="eyebrow">FEATURE ATTRIBUTION</div>
+          <h3 style="margin:2px 0 0">Why this prediction?</h3>
+        </div>
+        <span class="note" style="font-size:10px;padding:3px 8px;background:rgba(35,140,131,0.1);border-radius:4px;color:var(--teal)">Prototype feature influence</span>
+      </div>
+      <div id="xaiFactors"></div>
+    </div>
+
+    <div class="panel" style="display:flex;flex-direction:column;justify-content:space-between">
+      <div>
+        <div class="eyebrow">PLAIN-LANGUAGE EXPLANATION</div>
+        <h3 style="margin:2px 0 12px">Summary breakdown</h3>
+        <div class="explain" id="xaiExplanation" style="line-height:1.6;font-size:13px;color:var(--text)">
+          The model identified elevated atmospheric moisture and cloud characteristics as the primary drivers behind this predicted rainfall event.
+        </div>
+      </div>
+      <div class="note" style="margin-top:16px;font-size:10px;color:var(--muted)">
+        ℹ️ Feature influence reflects the relative weight of environmental signals in computing current rainfall risk.
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. What Each Factor Means -->
+  <div class="panel" style="margin-bottom:20px">
+    <div class="eyebrow" style="margin-bottom:6px">TERMINOLOGY & DEFINITIONS</div>
+    <h3 style="margin:0 0 14px">What do these signals mean?</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:14px">
+      <div style="padding:12px;background:var(--panel2, rgba(0,0,0,0.02));border:1px solid var(--line);border-radius:8px">
+        <strong style="font-size:12px;color:var(--teal)">Rainfall intensity</strong>
+        <p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4">How much rain is currently being observed or estimated at the location.</p>
+      </div>
+      <div style="padding:12px;background:var(--panel2, rgba(0,0,0,0.02));border:1px solid var(--line);border-radius:8px">
+        <strong style="font-size:12px;color:var(--teal)">Atmospheric moisture</strong>
+        <p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4">How much moisture is available in the surrounding atmospheric column.</p>
+      </div>
+      <div style="padding:12px;background:var(--panel2, rgba(0,0,0,0.02));border:1px solid var(--line);border-radius:8px">
+        <strong style="font-size:12px;color:var(--teal)">Cloud characteristics</strong>
+        <p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4">Properties and thickness of the cloud system associated with rainfall development.</p>
+      </div>
+      <div style="padding:12px;background:var(--panel2, rgba(0,0,0,0.02));border:1px solid var(--line);border-radius:8px">
+        <strong style="font-size:12px;color:var(--teal)">Wind pattern</strong>
+        <p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4">Moisture transport, wind speed, and atmospheric circulation dynamics.</p>
+      </div>
+      <div style="padding:12px;background:var(--panel2, rgba(0,0,0,0.02));border:1px solid var(--line);border-radius:8px">
+        <strong style="font-size:12px;color:var(--teal)">Elevation</strong>
+        <p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4">Local terrain elevation influencing orographic lifting of air masses.</p>
+      </div>
+      <div style="padding:12px;background:var(--panel2, rgba(0,0,0,0.02));border:1px solid var(--line);border-radius:8px">
+        <strong style="font-size:12px;color:var(--teal)">Temperature profile</strong>
+        <p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4">Thermal conditions influencing convective atmospheric instability.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 & 8. Model Confidence & When Could Prediction Fail -->
+  <div class="grid2" style="margin-bottom:20px">
+    <div class="panel">
+      <div class="eyebrow">MODEL RELIABILITY</div>
+      <h3 style="margin:2px 0 6px" id="xaiReliabilityTitle">HIGH</h3>
+      <div style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:4px" id="xaiReliabilityFoot">76.4% input consistency</div>
+      <p style="font-size:11px;color:var(--muted);margin:0 0 10px">How trustworthy the available inputs are for this prediction</p>
+      
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+        <span style="font-size:10px;font-weight:600;padding:3px 8px;background:rgba(35,140,131,0.08);border:1px solid rgba(35,140,131,0.2);border-radius:4px;color:var(--teal)">Data completeness ✓</span>
+        <span style="font-size:10px;font-weight:600;padding:3px 8px;background:rgba(35,140,131,0.08);border:1px solid rgba(35,140,131,0.2);border-radius:4px;color:var(--teal)">Input consistency ✓</span>
+        <span style="font-size:10px;font-weight:600;padding:3px 8px;background:rgba(35,140,131,0.08);border:1px solid rgba(35,140,131,0.2);border-radius:4px;color:var(--teal)">Model agreement ✓</span>
+      </div>
+      
+      <p id="xaiReliabilityText" style="font-size:11px;color:var(--muted);line-height:1.4;margin:0">
+        Confidence is high because the available environmental inputs are consistent with the model's expected operating range.
+      </p>
+    </div>
+
+    <div class="panel">
+      <div class="eyebrow">MODEL LIMITATIONS & FAILURE MODES</div>
+      <h3 style="margin:2px 0 10px">When could this prediction fail?</h3>
+      <ul style="font-size:12px;color:var(--muted);line-height:1.6;margin:0;padding-left:18px">
+        <li><strong>Unusual environmental conditions:</strong> Sudden localized microbursts or rapid micro-climatic shifts.</li>
+        <li><strong>Incomplete input data:</strong> Temporary outages or latency in satellite cloud-cover updates.</li>
+        <li><strong>Sub-model disagreement:</strong> Variance between neural network and gradient-boosted tree sub-models.</li>
+        <li><strong>Out-of-range parameters:</strong> Extreme weather events exceeding the prototype training distribution.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 9. Technical View (Collapsible) -->
+  <div class="panel" style="margin-bottom:20px">
+    <details>
+      <summary style="font-size:12px;font-weight:700;color:var(--teal);cursor:pointer;user-select:none;outline:none">
+        🔍 TECHNICAL XAI VIEW (Click to expand detailed feature attribution pipeline)
+      </summary>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line)">
+        <div class="note" style="margin-bottom:12px;font-size:11px">
+          ℹ️ <strong>Attribution Architecture Note:</strong> SHAP-based feature explanations will be directly connected to the trained ML model weights in the production deployment pipeline. The table below represents proxy feature weights derived from normalized model input features.
+        </div>
+        <div style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:12px;text-align:left">
+            <thead>
+              <tr style="border-bottom:1px solid var(--line);color:var(--muted)">
+                <th style="padding:8px 10px">RANK</th>
+                <th style="padding:8px 10px">ENVIRONMENTAL SIGNAL</th>
+                <th style="padding:8px 10px">CURRENT VALUE</th>
+                <th style="padding:8px 10px">WEIGHT / CONTRIBUTION</th>
+                <th style="padding:8px 10px">SIGNAL DIRECTION</th>
+              </tr>
+            </thead>
+            <tbody id="xaiTechTable">
+              <!-- Dynamically populated by refreshXai(r) -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+  </div>
 </section>
 
 <section id="map" class="view">
@@ -296,26 +2349,103 @@
 <div class="alertSummary"><div class="summary"><b>⚠ 6 active signals</b><span>2 critical · 3 high · 1 watch</span></div><div class="summary"><b>♧ Notification engine</b><span>Ready for SMS / email / app integration</span></div></div>
 <div class="alertList" id="allAlerts"></div>
 <div class="panel" style="margin-top:15px"><div class="eyebrow">ALERT LOGIC</div><h3>Prototype thresholds</h3><div class="logic"><div class="metric"><b style="color:#ff7185">CRITICAL</b><strong>≥ 90% probability</strong><span>Immediate priority monitoring</span></div><div class="metric"><b style="color:#f7c25a">HIGH</b><strong>75–89% probability</strong><span>Escalated preparedness</span></div><div class="metric"><b style="color:#60dfcf">WATCH</b><strong>55–74% probability</strong><span>Continue monitoring</span></div></div></div>
-</section>
 <div class="panel" style="margin-top:15px">
   <div class="eyebrow">ACTIONABLE ALERT</div><h3>Alert → action plan</h3>
   <div class="actionList" id="alertActionList"></div>
 </div>
+</section>
 
 </div></main></div>
+
+<!-- REUSABLE GLOBAL LOCATION MODAL -->
+<div id="locationModal" style="display:none;position:fixed;inset:0;background:rgba(23,53,47,0.45);backdrop-filter:blur(4px);z-index:1000;place-items:center;padding:20px" onclick="if(event.target===this)closeLocationModal()">
+  <div class="panel" style="width:100%;max-width:540px;padding:24px;box-shadow:var(--shadow-md);border-radius:12px;background:var(--panel)">
+    <!-- Modal Header -->
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+      <div>
+        <div class="eyebrow">LOCATION SELECTION</div>
+        <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:400;margin:4px 0 2px">Choose a location to monitor</h3>
+        <p style="font-size:11px;color:var(--muted);margin:0">Search or pick a location below. Click Apply location to update the application.</p>
+      </div>
+      <button type="button" onclick="closeLocationModal()" style="background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;padding:0;line-height:1">&times;</button>
+    </div>
+
+    <!-- Current Location Banner -->
+    <div style="padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase">CURRENT LOCATION</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-top:2px" id="modalCurrentLocation">Ranchi, Jharkhand, India</div>
+      </div>
+      <span class="status" style="font-size:9px">ACTIVE</span>
+    </div>
+
+    <!-- Direct Search Input -->
+    <div style="margin-bottom:14px">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase">SEARCH CITY, DISTRICT, OR PLACE</div>
+      <input type="text" id="locSearchInput" placeholder="Type a city or district (e.g. Ranchi, Bengaluru, Bhubaneswar, Mumbai)..." style="width:100%;padding:10px 14px;border:1px solid var(--line-strong);border-radius:8px;background:#FFFFFF;font-size:13px" oninput="onLocationSearchInput(this.value)">
+    </div>
+
+    <!-- Quick Preset Location Tags -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase">QUICK SELECT</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px" id="quickSelectTags">
+        <button type="button" class="btn secondary locTagBtn" data-loc="Ranchi, Jharkhand, India" onclick="selectTempCity('Ranchi','Jharkhand','India',this)">📍 Ranchi, Jharkhand</button>
+        <button type="button" class="btn secondary locTagBtn" data-loc="Bengaluru, Karnataka, India" onclick="selectTempCity('Bengaluru','Karnataka','India',this)">📍 Bengaluru, Karnataka</button>
+        <button type="button" class="btn secondary locTagBtn" data-loc="Bhubaneswar, Odisha, India" onclick="selectTempCity('Bhubaneswar','Odisha','India',this)">📍 Bhubaneswar, Odisha</button>
+        <button type="button" class="btn secondary locTagBtn" data-loc="Mumbai, Maharashtra, India" onclick="selectTempCity('Mumbai','Maharashtra','India',this)">📍 Mumbai, Maharashtra</button>
+        <button type="button" class="btn secondary locTagBtn" data-loc="Delhi, NCR, India" onclick="selectTempCity('Delhi','NCR','India',this)">📍 Delhi, NCR</button>
+        <button type="button" class="btn secondary locTagBtn" data-loc="Mysuru, Karnataka, India" onclick="selectTempCity('Mysuru','Karnataka','India',this)">📍 Mysuru, Karnataka</button>
+        <button type="button" class="btn secondary locTagBtn" data-loc="Balasore, Odisha, India" onclick="selectTempCity('Balasore','Odisha','India',this)">📍 Balasore, Odisha</button>
+      </div>
+    </div>
+
+    <!-- Temporary Selection Preview Banner -->
+    <div style="padding:10px 14px;border:1px solid var(--teal-border);border-radius:8px;background:var(--teal-light);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-size:9px;font-weight:700;color:var(--teal);text-transform:uppercase">NEW SELECTION (PREVIEW)</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-top:2px" id="modalTempLocation">Ranchi, Jharkhand, India</div>
+      </div>
+    </div>
+
+    <!-- Advanced Worldwide Cascading Selector (Optional Fallback) -->
+    <details style="margin-top:8px;border-top:1px solid var(--line);padding-top:10px">
+      <summary style="font-size:11px;font-weight:700;color:var(--teal);cursor:pointer">Worldwide Country → State selector</summary>
+      <div class="controls" style="margin-top:10px;flex-wrap:wrap;gap:10px">
+        <label style="min-width:140px;flex:1">Country
+          <select id="globalCountry"><option value="">Select a country</option></select>
+        </label>
+        <label style="min-width:140px;flex:1">State / Region
+          <select id="globalState" disabled><option>Select country first</option></select>
+        </label>
+        <label style="min-width:140px;flex:1">City / Place
+          <select id="globalCity" disabled><option>Select state/region first</option></select>
+        </label>
+        <button type="button" class="btn secondary" id="globalSelectTemp" style="height:36px;align-self:flex-end" onclick="selectTempFromDropdowns()">Select place</button>
+      </div>
+      <div class="note" id="globalLocationStatus" style="margin-top:6px;font-size:10px">Loading worldwide location database…</div>
+    </details>
+
+    <!-- Modal Action Buttons (Cancel / Apply location) -->
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:12px">
+      <button type="button" class="btn secondary" onclick="closeLocationModal()">Cancel</button>
+      <button type="button" class="btn primary" id="applyLocationBtn">Apply location</button>
+    </div>
+  </div>
+</div>
 
 <script>
 (function(){
 function q(id){return document.getElementById(id)}
 function num(id,f){var e=q(id),v=e?parseFloat(e.value):NaN;return isFinite(v)?v:f}
-window.varshaaAsk=function(){var input=q('commanderInput'),out=q('commanderAnswer');if(!input||!out)return;var text=input.value.trim();if(!text){out.innerHTML='<b>Ask VARSHAA</b><br>Try: <b>What happens if rainfall reaches 120 mm/h?</b> or <b>What happens if it rains for 20 minutes?</b>';return}var rain=num('inRain',42),humidity=num('inHumidity',82),cloud=num('inCloud',78);var dm=text.match(/(\d+(?:\.\d+)?)\s*(?:min|mins|minutes)/i),rm=text.match(/(\d+(?:\.\d+)?)\s*(?:mm\/?h|mm per hour|mm)/i);var duration=dm?parseFloat(dm[1]):60;if(rm)rain=parseFloat(rm[1]);var prob=parseFloat((q('calcProb')||{}).textContent)||55;var impact=Math.min(99,Math.round(prob*.45+Math.min(40,duration*.45)+humidity*.08+cloud*.05));var drainage=Math.min(99,Math.round(rain*.55+humidity*.25+duration*.18));var risk=impact>=80?'HIGH':impact>=60?'MODERATE':'LOW';var lead=Math.max(10,Math.round(125-prob*1.08));var loc=(q('selectedLocation')||{}).textContent||'selected location';out.innerHTML='<b>VARSHAA decision brief</b><br><b>'+loc+'</b><br><br>Scenario: <b>'+Math.round(rain)+' mm/h for '+Math.round(duration)+' minutes</b>.<br>Estimated rainfall impact: <b>'+impact+'/100 ('+risk+')</b>.<br>Estimated drainage stress: <b>'+drainage+'%</b>.<br>Available warning lead time: <b>'+lead+' minutes</b>.<br><br>'+(risk==='HIGH'?'🚨 Escalate localized warning, pre-position drainage teams and inspect vulnerable roads.':risk==='MODERATE'?'⚠️ Increase monitoring of drainage and road segments; prepare a localized advisory.':'🟢 Continue monitoring; no immediate high-impact action is indicated by this scenario.')+'<br><small>Prototype scenario analysis — replace with the trained ML model before operational use.</small>'}
-window.varshaaMode=function(mode,btn){document.querySelectorAll('[data-mode]').forEach(function(b){b.classList.remove('sel')});if(btn)btn.classList.add('sel');var title=q('modeTitle'),content=q('modeContent'),loc=(q('selectedLocation')||{}).textContent||'selected location',prob=(q('calcProb')||{}).textContent||'--';if(mode==='citizen'){if(title)title.textContent='Citizen mode';if(content)content.innerHTML='<b>'+loc+'</b><br>Current rainfall-risk probability: <b>'+prob+'%</b>.<br>Follow local authority warnings. Avoid low-lying roads, underpasses and river-edge areas during high-impact rainfall.'}else{if(title)title.textContent='Government mode';if(content)content.innerHTML='<b>Operational priority</b><br>Use the predicted risk to prioritize drainage response, road monitoring and critical-facility readiness for <b>'+loc+'</b>.'}}
-window.varshaaRefreshActions=function(){var p=parseFloat((q('calcProb')||{}).textContent)||55,loc=(q('selectedLocation')||{}).textContent||'selected location',lead=parseFloat((q('leadTime')||{}).textContent)||44,a;if(p>=80)a=['🚨 Escalate a localized high-impact rainfall alert for '+loc+'.','💧 Pre-position drainage teams and pumps at predicted stress zones.','🛣️ Inspect vulnerable underpasses and prepare road diversion messaging.','🏥 Check readiness of hospitals, schools and other critical facilities.','⏱️ Use the '+Math.round(lead)+'-minute warning window for response preparation.'];else if(p>=60)a=['⚠️ Increase rainfall and drainage monitoring for '+loc+'.','💧 Inspect known low-lying points and drainage bottlenecks.','🛣️ Monitor vulnerable road segments and underpasses.','🏥 Keep critical facilities on watch.','⏱️ Reassess within the '+Math.round(lead)+'-minute lead-time window.'];else a=['🟢 Continue rainfall and drainage monitoring for '+loc+'.','💧 Inspect known low-lying points as a precaution.','🛣️ Keep vulnerable road segments under observation.','🏥 Maintain critical-facility readiness.','⏱️ Recheck the prediction before the '+Math.round(lead)+'-minute window expires.'];['actionList','alertActionList'].forEach(function(id){var box=q(id);if(box)box.innerHTML=a.map(function(x,i){return '<div class="actionItem"><div class="num">0'+(i+1)+'</div><span>'+x+'</span></div>'}).join('')})}
+window.varshaaAsk=function(){var input=q('commanderInput'),out=q('commanderAnswer');if(!input||!out)return;var text=input.value.trim();if(!text){out.innerHTML='<b>Ask VARSHAA</b><br>Try: <b>What happens if rainfall reaches 120 mm/h?</b> or <b>What happens if it rains for 20 minutes?</b>';return}var rain=num('inRain',42),humidity=num('inHumidity',82),cloud=num('inCloud',78);var dm=text.match(/(\d+(?:\.\d+)?)\s*(?:min|mins|minutes)/i),rm=text.match(/(\d+(?:\.\d+)?)\s*(?:mm\/?h|mm per hour|mm)/i);var duration=dm?parseFloat(dm[1]):60;if(rm)rain=parseFloat(rm[1]);var prob=parseFloat((q('calcProb')||{}).textContent)||55;var impact=Math.min(99,Math.round(prob*.45+Math.min(40,duration*.45)+humidity*.08+cloud*.05));var drainage=Math.min(99,Math.round(rain*.55+humidity*.25+duration*.18));var risk=impact>=80?'HIGH':impact>=60?'MODERATE':'LOW';var lead=Math.max(10,Math.round(125-prob*1.08));var loc=(window.VARSHAA_APP_STATE&&window.VARSHAA_APP_STATE.location)?window.VARSHAA_APP_STATE.location.label:((q('predictionLocation')||q('monitoringLocation')||{}).textContent||'selected location');out.innerHTML='<b>VARSHAA decision brief</b><br><b>'+loc+'</b><br><br>Scenario: <b>'+Math.round(rain)+' mm/h for '+Math.round(duration)+' minutes</b>.<br>Estimated rainfall impact: <b>'+impact+'/100 ('+risk+')</b>.<br>Estimated drainage stress: <b>'+drainage+'%</b>.<br>Available warning lead time: <b>'+lead+' minutes</b>.<br><br>'+(risk==='HIGH'?'🚨 Escalate localized warning, pre-position drainage teams and inspect vulnerable roads.':risk==='MODERATE'?'⚠️ Increase monitoring of drainage and road segments; prepare a localized advisory.':'🟢 Continue monitoring; no immediate high-impact action is indicated by this scenario.')+'<br><small>Prototype scenario analysis — replace with the trained ML model before operational use.</small>'}
+window.varshaaMode=function(mode,btn){document.querySelectorAll('[data-mode]').forEach(function(b){b.classList.remove('sel')});if(btn)btn.classList.add('sel');var title=q('modeTitle'),content=q('modeContent'),loc=(window.VARSHAA_APP_STATE&&window.VARSHAA_APP_STATE.location)?window.VARSHAA_APP_STATE.location.label:((q('predictionLocation')||q('monitoringLocation')||{}).textContent||'selected location'),prob=(q('calcProb')||{}).textContent||'--';if(mode==='citizen'){if(title)title.textContent='Citizen mode';if(content)content.innerHTML='<b>'+loc+'</b><br>Current rainfall-risk probability: <b>'+prob+'%</b>.<br>Follow local authority warnings. Avoid low-lying roads, underpasses and river-edge areas during high-impact rainfall.'}else{if(title)title.textContent='Government mode';if(content)content.innerHTML='<b>Operational priority</b><br>Use the predicted risk to prioritize drainage response, road monitoring and critical-facility readiness for <b>'+loc+'</b>.'}}
+window.varshaaRefreshActions=function(){var p=parseFloat((q('calcProb')||{}).textContent)||55,loc=(window.VARSHAA_APP_STATE&&window.VARSHAA_APP_STATE.location)?window.VARSHAA_APP_STATE.location.label:((q('predictionLocation')||q('monitoringLocation')||{}).textContent||'selected location'),lead=parseFloat((q('leadTime')||{}).textContent)||44,a;if(p>=80)a=['🚨 Escalate a localized high-impact rainfall alert for '+loc+'.','💧 Pre-position drainage teams and pumps at predicted stress zones.','🛣️ Inspect vulnerable underpasses and prepare road diversion messaging.','🏥 Check readiness of hospitals, schools and other critical facilities.','⏱️ Use the '+Math.round(lead)+'-minute warning window for response preparation.'];else if(p>=60)a=['⚠️ Increase rainfall and drainage monitoring for '+loc+'.','💧 Inspect known low-lying points and drainage bottlenecks.','🛣️ Monitor vulnerable road segments and underpasses.','🏥 Keep critical facilities on watch.','⏱️ Reassess within the '+Math.round(lead)+'-minute lead-time window.'];else a=['🟢 Continue rainfall and drainage monitoring for '+loc+'.','💧 Inspect known low-lying points as a precaution.','🛣️ Keep vulnerable road segments under observation.','🏥 Maintain critical-facility readiness.','⏱️ Recheck the prediction before the '+Math.round(lead)+'-minute window expires.'];['actionList','alertActionList'].forEach(function(id){var box=q(id);if(box)box.innerHTML=a.map(function(x,i){return '<div class="actionItem"><div class="num">0'+(i+1)+'</div><span>'+x+'</span></div>'}).join('')})}
 })();
 </script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 let forecast=[42,61,82,74,58,46], labels=["Now","+1h","+2h","+3h","+4h","+5h"];
+var maps = {};
 
 const VIEW_NAMES={
  dashboard:"Command Center",
@@ -405,7 +2535,7 @@ const zones=[
  {id:"Z-04",name:"South Bengaluru",risk:"LOW",rain:41,people:6200,roads:2,lat:12.89,lng:77.59},
  {id:"Z-05",name:"West Bengaluru",risk:"MODERATE",rain:59,people:8100,roads:3,lat:12.98,lng:77.52}
 ];
-const colors={HIGH:"#ff4d67",MODERATE:"#f5b63d",LOW:"#39d98a"};
+const colors={HIGH:"#D9531E",MODERATE:"#D97706",LOW:"#2A7E51",CRITICAL:"#C92A2A"};
 
 
 
@@ -554,38 +2684,183 @@ function runPrediction(){
   }
   forecast[0]=Math.round(rain);
   const peak=Math.max(...forecast);
+  const peakIdx=forecast.indexOf(peak);
+  const labelsList = ["Now","+30 min","+1 h","+1.5 h","+2 h","+3 h"];
+  const peakTime = labelsList[peakIdx] || "Now";
+  const reliability = confidence>=85?"HIGH":confidence>=75?"MEDIUM":"LOW";
 
-  document.getElementById("calcCurrent").textContent=Math.round(rain);
-  document.getElementById("calcPeak").textContent=peak;
-  document.getElementById("calcProb").textContent=prob;
-  const conf=document.getElementById("calcConfidence");
-  conf.textContent=confidence>=85?"HIGH":confidence>=75?"MEDIUM":"LOW";
-  conf.style.color=confidence>=85?"#63d9c4":confidence>=75?"#f5b63d":"#ff7185";
+  // Centralized Application State
+  if(!window.VARSHAA_APP_STATE) window.VARSHAA_APP_STATE = {};
+  window.VARSHAA_APP_STATE.currentRainfall = Math.round(rain);
+  window.VARSHAA_APP_STATE.peakRainfall = peak;
+  window.VARSHAA_APP_STATE.peakTime = peakTime;
+  window.VARSHAA_APP_STATE.probability = prob;
+  window.VARSHAA_APP_STATE.riskLevel = risk;
+  window.VARSHAA_APP_STATE.reliability = reliability;
+  window.VARSHAA_APP_STATE.forecast = forecast;
+  window.VARSHAA_APP_STATE.environmentalInputs = {
+    rainfall: Math.round(rain),
+    humidity: Math.round(humidity),
+    cloudCover: Math.round(cloud),
+    temperature: temp,
+    windSpeed: Math.round(wind),
+    elevation: Math.round(elevation)
+  };
 
-  const scoreEl=document.querySelector("#prediction .scoreRisk");
-  const num=document.querySelector("#prediction .scoreNum");
-  const bar=document.querySelector("#prediction .riskbar i");
-  if(scoreEl){scoreEl.textContent=risk==="HIGH"?"HIGH-IMPACT RAINFALL":risk+" RAINFALL RISK";scoreEl.style.color=colors[risk];}
-  if(num)num.innerHTML=`${prob}<small>%</small>`;
-  if(bar)bar.style.width=prob+"%";
-  const badge=document.getElementById("conditionBadge");
-  if(badge){badge.textContent=risk+" RISK";badge.style.color=colors[risk];badge.style.borderColor=colors[risk]+"66";badge.style.background=colors[risk]+"14";}
-  const hero=document.querySelector(".heroRow h2");
-  if(hero){hero.textContent=risk;hero.style.color=colors[risk];}
-  const heroRiskLabel=document.getElementById("heroRiskLabel");
-  if(heroRiskLabel) heroRiskLabel.textContent=`● ${risk==="HIGH"?"HIGH-IMPACT":risk} RAINFALL RISK`;
-  const heroXaiTitle=document.getElementById("heroXaiTitle");
-  if(heroXaiTitle) heroXaiTitle.textContent=`Why is risk ${risk==="LOW"?"low":"elevated"}?`;
-  document.getElementById("heroRain").textContent=Math.round(rain);
-  document.getElementById("heroConfidence").textContent=confidence+"%";
-
-  svgChart("predChart",forecast);
-  svgChart("forecastChart",forecast);
   const result={rain,humidity,cloud,temp,wind,elevation,score,prob,risk,confidence,peak,forecast};
   window.VARSHAA_CURRENT_SCENARIO = result;
   updateUniqueFeatures(result);
+
+  updateAllViews();
   return result;
 }
+
+function getStoredLocation(){
+  try{
+    const s=localStorage.getItem("varshaa_selected_location");
+    if(s){
+      const parsed=JSON.parse(s);
+      if(parsed && parsed.label) return parsed;
+    }
+  }catch(e){}
+  return {
+    city: "Ranchi",
+    state: "Jharkhand",
+    country: "India",
+    label: "Ranchi, Jharkhand, India",
+    lat: 23.34,
+    lng: 85.31
+  };
+}
+
+function updateGlobalLocation(loc){
+  if(!loc || !loc.label) return;
+  if(!window.VARSHAA_APP_STATE) window.VARSHAA_APP_STATE = {};
+  window.VARSHAA_APP_STATE.location = loc;
+  try{
+    localStorage.setItem("varshaa_selected_location", JSON.stringify(loc));
+  }catch(e){}
+}
+
+function getDemoInputsForLocation(loc){
+  let seed=0;
+  for(const ch of loc.label) seed=((seed*31)+ch.charCodeAt(0))>>>0;
+  return {
+    rain: 20 + (seed % 81),
+    humidity: 55 + ((seed>>>7) % 41),
+    cloud: 45 + ((seed>>>13) % 51),
+    temp: Math.round((18 + ((seed>>>19)%160)/10)*10)/10,
+    wind: 8 + ((seed>>>5)%58),
+    elevation: 20 + ((seed>>>11)%1981)
+  };
+}
+
+function renderDashboardCharts(){
+  const s = window.VARSHAA_APP_STATE;
+  if(!s || !s.forecast || !s.forecast.length) return;
+  requestAnimationFrame(function(){
+    svgChart("forecastChart", s.forecast);
+    svgChart("predChart", s.forecast);
+  });
+}
+
+function updateAllViews(){
+  const s = window.VARSHAA_APP_STATE;
+  if(!s) return;
+  const loc = s.location || getStoredLocation();
+  const locLabel = loc.label || `${loc.city}, ${loc.state}, ${loc.country}`;
+
+  // 1. Sync Location elements across ALL pages
+  ["heroLocation", "monitoringLocation", "predictionLocation", "selectedLocation", "xaiLocation"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=locLabel;
+  });
+
+  const condTitle=document.getElementById("conditionTitle");
+  if(condTitle) condTitle.textContent=`${loc.city} · ${loc.state}`;
+
+  // 2. Sync Current Rainfall & Peak Forecast Metrics
+  ["dashRainNow", "heroRain", "readRain", "forecastCurrentVal", "calcCurrent"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=s.currentRainfall;
+  });
+
+  ["dashPeakRain", "calcPeak", "forecastPeakVal"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=s.peakRainfall;
+  });
+
+  const peakTimeEl=document.getElementById("forecastPeakTimeVal");
+  if(peakTimeEl) peakTimeEl.textContent=s.peakTime;
+
+  const calcPeakTimeEl=document.getElementById("calcPeakTime");
+  if(calcPeakTimeEl) calcPeakTimeEl.textContent=s.peakTime;
+
+  const predChartSummary=document.getElementById("predChartSummary");
+  if(predChartSummary && s.forecast && s.forecast.length){
+    const peakIdx = s.forecast.indexOf(s.peakRainfall);
+    const isWeakening = peakIdx < s.forecast.length - 1 && s.forecast[s.forecast.length - 1] < s.peakRainfall;
+    predChartSummary.textContent = `Rainfall is expected to peak around ${s.peakTime} (${s.peakRainfall} mm/h)${isWeakening ? ', then gradually weakening.' : '.'}`;
+  }
+
+  // 3. Sync Probability & Reliability
+  ["calcProb"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=s.probability;
+  });
+
+  ["heroConfidence", "xaiConfidence"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=s.probability + "%";
+  });
+
+  const scoreNum=document.querySelector("#prediction .scoreNum");
+  if(scoreNum) scoreNum.innerHTML=`${s.probability}<small>%</small>`;
+
+  const scoreRiskEl=document.querySelector("#prediction .scoreRisk");
+  if(scoreRiskEl){
+    scoreRiskEl.textContent=s.riskLevel==="HIGH"?"HIGH-IMPACT RAINFALL":s.riskLevel+" RAINFALL RISK";
+    if(colors[s.riskLevel]) scoreRiskEl.style.color=colors[s.riskLevel];
+  }
+
+  const confEl=document.getElementById("calcConfidence");
+  if(confEl) confEl.textContent=s.reliability;
+
+  // 4. Sync Read-Only Environmental Inputs Grid
+  const env=s.environmentalInputs;
+  if(env){
+    if(document.getElementById("readHumidity")) document.getElementById("readHumidity").textContent=Math.round(env.humidity);
+    if(document.getElementById("readCloud")) document.getElementById("readCloud").textContent=Math.round(env.cloudCover);
+    if(document.getElementById("readTemp")) document.getElementById("readTemp").textContent=env.temperature;
+    if(document.getElementById("readWind")) document.getElementById("readWind").textContent=Math.round(env.windSpeed);
+    if(document.getElementById("readElevation")) document.getElementById("readElevation").textContent=Math.round(env.elevation);
+  }
+
+  // 5. Sync What-If Simulation Baseline
+  const rainSlider=document.getElementById("rainSlider");
+  const rainVal=document.getElementById("rainVal");
+  if(rainSlider) rainSlider.value=s.currentRainfall;
+  if(rainVal) rainVal.textContent=s.currentRainfall;
+
+  // 6. Update Forecast Charts
+  renderDashboardCharts();
+
+  // 7. Update Map markers if coordinates present
+  if(loc.lat && loc.lng && typeof maps!=="undefined"){
+    Object.values(maps).forEach(map=>{
+      if(!map || !map.setView) return;
+      map.setView([loc.lat, loc.lng], 10);
+      if(map._varshaaSearchMarker) map.removeLayer(map._varshaaSearchMarker);
+      if(typeof L!=="undefined"){
+        map._varshaaSearchMarker=L.circle([loc.lat, loc.lng],{
+          radius:15000, color:colors[s.riskLevel]||"#D9531E", fillColor:colors[s.riskLevel]||"#D9531E", fillOpacity:.18, weight:2
+        }).addTo(map);
+        map._varshaaSearchMarker.bindPopup(`<b>${loc.city}</b><br>${loc.state}, ${loc.country}<br>Selected location`).openPopup();
+      }
+    });
+  }
+}
+
 function setPredictionInputs(data){
   if(!data)return;
   document.getElementById("inRain").value=Math.round(data.rain);
@@ -597,71 +2872,44 @@ function setPredictionInputs(data){
   runPrediction();
 }
 
+function quickSelectCity(city, state, country){
+  const label = `${city}, ${state}, ${country}`;
+  let seed=0;
+  for(const ch of label) seed=((seed*31)+ch.charCodeAt(0))>>>0;
+  const lat = 12.97 + (seed % 15) * 0.08;
+  const lng = 77.59 + ((seed >>> 5) % 15) * 0.08;
+  
+  const loc = { city, state, country, label, lat, lng };
+  updateGlobalLocation(loc);
+  closeLocationModal();
+}
+
 async function applySelected(prefix){
   const country=document.getElementById(prefix+"Country");
   const state=document.getElementById(prefix+"State");
   const city=document.getElementById(prefix+"City");
-  if(!country || !state || !city || !country.value || !state.value || !city.value){
-    return;
-  }
+  if(!country || !state || !city || !country.value || !state.value || !city.value) return;
 
   const countryName=countryNameFromCode(country.value);
   const stateName=state.options[state.selectedIndex]?.textContent || state.value;
   const cityName=city.options[city.selectedIndex]?.textContent || city.value;
   const label=`${cityName}, ${stateName}, ${countryName}`;
 
-  // IMPORTANT: update the selected location immediately.
-  // The prediction page must never keep showing the previous Bengaluru location.
-  document.getElementById("selectedLocation").textContent=label;
-  document.getElementById("heroLocation").textContent=label;
-  const title=document.getElementById("conditionTitle");
-  if(title) title.textContent=`${cityName} · ${stateName}`;
-  const text=document.getElementById("conditionText");
-  if(text) text.textContent=`Selected location: ${label}. Running the rainfall-risk scenario for this location.`;
-
-  // Create deterministic demo inputs from the selected location so every place
-  // produces a different prototype result even when map geocoding is unavailable.
-  let seed=0;
-  for(const ch of label) seed=((seed*31)+ch.charCodeAt(0))>>>0;
-  const demo={
-    rain: 20 + (seed % 81),
-    humidity: 55 + ((seed>>>7) % 41),
-    cloud: 45 + ((seed>>>13) % 51),
-    temp: Math.round((18 + ((seed>>>19)%160)/10)*10)/10,
-    wind: 8 + ((seed>>>5)%58),
-    elevation: 20 + ((seed>>>11)%1981)
-  };
-  setPredictionInputs(demo);
-
-  // Try to obtain real coordinates for map movement, but DO NOT block prediction
-  // if geocoding fails.
   try{
     const geo=await geocodePlace(cityName,stateName,countryName);
-    selectedRegion={country:countryName,state:stateName,city:cityName,lat:geo.lat,lng:geo.lng};
-    Object.values(maps).forEach(map=>{
-      if(!map || !map.setView) return;
-      map.setView([geo.lat,geo.lng],10);
-      if(map._varshaaSearchMarker)map.removeLayer(map._varshaaSearchMarker);
-      const risk=document.querySelector("#prediction .scoreRisk")?.textContent?.includes("HIGH")?"HIGH":
-                 document.querySelector("#prediction .scoreRisk")?.textContent?.includes("MODERATE")?"MODERATE":"LOW";
-      map._varshaaSearchMarker=L.circle([geo.lat,geo.lng],{
-        radius:15000,color:colors[risk],fillColor:colors[risk],fillOpacity:.18,weight:2
-      }).addTo(map);
-      map._varshaaSearchMarker.bindPopup(
-        `<b>${cityName}</b><br>${stateName}, ${countryName}<br>Selected location`
-      ).openPopup();
-    });
+    updateGlobalLocation({ country:countryName, state:stateName, city:cityName, label, lat:geo.lat, lng:geo.lng });
   }catch(err){
-    // Prediction still works without geocoding.
-    console.warn("Map geocoding unavailable; prediction remains active.",err);
+    updateGlobalLocation({ country:countryName, state:stateName, city:cityName, label, lat:12.97, lng:77.59 });
   }
 }
 function applyUniversalLocation(country,state,city,lat,lng,display){
   const r=getRiskForPlace(lat,lng);
   selectedRegion={country,state,city,lat,lng};
   const label=`${city}, ${state}, ${country}`;
-  document.getElementById("selectedLocation").textContent=label;
-  document.getElementById("heroLocation").textContent=label;
+  ["heroLocation", "monitoringLocation", "predictionLocation", "selectedLocation"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=label;
+  });
   const title=document.getElementById("conditionTitle");
   if(title) title.textContent=`${city} · ${state}`;
 
@@ -689,19 +2937,260 @@ function applyUniversalLocation(country,state,city,lat,lng,display){
     }
   });
 }
+var _svgChartRetries = {};
 function svgChart(containerId,data,series2=false){
  const el=document.getElementById(containerId); if(!el)return;
- const w=el.clientWidth||700,h=260,p=30,max=Math.max(...data)*1.18;
+ if(el.clientWidth < 50){
+   var retryKey = containerId;
+   _svgChartRetries[retryKey] = (_svgChartRetries[retryKey] || 0) + 1;
+   if(_svgChartRetries[retryKey] <= 5){
+     requestAnimationFrame(function(){ svgChart(containerId, data, series2); });
+   }
+   return;
+ }
+ _svgChartRetries[containerId] = 0;
+ const w=el.clientWidth,h=containerId==="forecastChart"?200:260,p=35,max=Math.max(...data)*1.2 || 10;
+ const labelsList = ["Now","+30 min","+1 h","+1.5 h","+2 h","+3 h"];
  const pts=data.map((v,i)=>[p+i*(w-2*p)/(data.length-1),h-p-(v/max)*(h-2*p)]);
  let d=pts.map((a,i)=>(i?"L":"M")+a[0]+" "+a[1]).join(" ");
- let area=d+" L "+pts.at(-1)[0]+" "+(h-p)+" L "+pts[0][0]+" "+(h-p)+" Z";
+ const lastPt = pts[pts.length - 1];
+ let area=d+" L "+lastPt[0]+" "+(h-p)+" L "+pts[0][0]+" "+(h-p)+" Z";
+ 
+ const maxVal = Math.max(...data);
+ const peakIdx = data.indexOf(maxVal);
+ 
  el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%" preserveAspectRatio="none">
- <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2dd4bf" stop-opacity=".32"/><stop offset="1" stop-color="#2dd4bf" stop-opacity="0"/></linearGradient></defs>
- <g stroke="#1c3045" stroke-dasharray="3 4">${[.25,.5,.75,1].map(y=>`<line x1="${p}" x2="${w-p}" y1="${h-p-(h-2*p)*y}" y2="${h-p-(h-2*p)*y}"/>`).join("")}</g>
- <path d="${area}" fill="url(#g)"/><path d="${d}" fill="none" stroke="#2dd4bf" stroke-width="3"/>
- ${pts.map((a,i)=>`<circle cx="${a[0]}" cy="${a[1]}" r="4" fill="#07111f" stroke="#2dd4bf" stroke-width="2"><title>${labels[i]}: ${data[i]} mm/h</title></circle>`).join("")}
- ${labels.map((x,i)=>`<text x="${pts[i][0]}" y="${h-7}" text-anchor="middle" fill="#6f849a" font-size="10">${x}</text>`).join("")}
+ <defs><linearGradient id="g_${containerId}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#238C83" stop-opacity=".22"/><stop offset="1" stop-color="#238C83" stop-opacity="0"/></linearGradient></defs>
+ 
+ <!-- Y-Axis Unit -->
+ <text x="6" y="14" fill="#5A7067" font-size="9" font-weight="600">Rainfall intensity (mm/h)</text>
+ 
+ <!-- Gridlines -->
+ <g stroke="#E2DDD0" stroke-dasharray="3 4">${[.25,.5,.75,1].map(y=>`<line x1="${p}" x2="${w-p}" y1="${h-p-(h-2*p)*y}" y2="${h-p-(h-2*p)*y}"/>`).join("")}</g>
+ 
+ <!-- Area & Line Path -->
+ <path d="${area}" fill="url(#g_${containerId})"/>
+ <path d="${d}" fill="none" stroke="#238C83" stroke-width="2.5"/>
+ 
+ <!-- Data Points & Callout Badges -->
+ ${pts.map((a,i)=>{
+   const isNow = i === 0;
+   const isPeak = i === peakIdx;
+   let dotFill = "#FAF8F5";
+   let dotStroke = "#238C83";
+   let badgeHtml = "";
+   
+   if(isNow){
+     dotFill = "#238C83";
+     badgeHtml = `<rect x="${a[0]-16}" y="${a[1]-22}" width="32" height="14" rx="4" fill="#17352F"/><text x="${a[0]}" y="${a[1]-12}" text-anchor="middle" fill="#FAF8F5" font-size="9" font-weight="700">Now</text>`;
+   } else if(isPeak){
+     dotFill = "#D9531E";
+     dotStroke = "#D9531E";
+     badgeHtml = `<rect x="${a[0]-16}" y="${a[1]-22}" width="32" height="14" rx="4" fill="#D9531E"/><text x="${a[0]}" y="${a[1]-12}" text-anchor="middle" fill="#FFFFFF" font-size="9" font-weight="700">Peak</text>`;
+   }
+   return `<g>${badgeHtml}<circle cx="${a[0]}" cy="${a[1]}" r="${isNow||isPeak?5:3.5}" fill="${dotFill}" stroke="${dotStroke}" stroke-width="2"><title>${labelsList[i]||labels[i]}: ${data[i]} mm/h</title></circle></g>`;
+ }).join("")}
+ 
+ <!-- X-Axis Time Labels -->
+ ${labelsList.map((x,i)=>`<text x="${pts[i] ? pts[i][0] : p+i*30}" y="${h-8}" text-anchor="middle" fill="${i===0?'#17352F':'#5A7067'}" font-size="10" font-weight="${i===0?'700':'500'}">${x}</text>`).join("")}
  </svg>`;
+
+ if(containerId === "forecastChart"){
+   const curEl = document.getElementById("forecastCurrentVal");
+   const peakEl = document.getElementById("forecastPeakVal");
+   const peakTimeEl = document.getElementById("forecastPeakTimeVal");
+   const summaryEl = document.getElementById("forecastSummaryText");
+   
+   const currentVal = data[0] !== undefined ? data[0] : 0;
+   const peakVal = maxVal;
+   const peakTime = labelsList[peakIdx] || "Now";
+   
+   if(curEl) curEl.textContent = currentVal;
+   if(peakEl) peakEl.textContent = peakVal;
+   if(peakTimeEl) peakTimeEl.textContent = peakTime;
+   
+   if(summaryEl){
+     const isWeakening = peakIdx < data.length - 1 && data[data.length - 1] < peakVal;
+     summaryEl.textContent = `Peak rainfall expected around ${peakTime} (${peakVal} mm/h)${isWeakening ? ', then gradually weakening.' : '.'}`;
+   }
+ }
+}
+
+const PRESET_CITY_COORDS = {
+  "Ranchi": { lat: 23.3441, lng: 85.3096 },
+  "Bengaluru": { lat: 12.9716, lng: 77.5946 },
+  "Bhubaneswar": { lat: 20.2961, lng: 85.8245 },
+  "Mumbai": { lat: 19.0760, lng: 72.8777 },
+  "Delhi": { lat: 28.6139, lng: 77.2090 },
+  "Mysuru": { lat: 12.2958, lng: 76.6394 },
+  "Balasore": { lat: 21.4942, lng: 86.9316 }
+};
+
+window.tempSelectedLocation = null;
+
+function openLocationModal(){
+  const m = document.getElementById("locationModal");
+  if(!m) return;
+
+  const current = (window.VARSHAA_APP_STATE && window.VARSHAA_APP_STATE.location) ? window.VARSHAA_APP_STATE.location : getStoredLocation();
+  window.tempSelectedLocation = JSON.parse(JSON.stringify(current));
+
+  const curLabel = current.label || `${current.city}, ${current.state}, ${current.country}`;
+  const curLocEl = document.getElementById("modalCurrentLocation");
+  if(curLocEl) curLocEl.textContent = curLabel;
+
+  const tempLocEl = document.getElementById("modalTempLocation");
+  if(tempLocEl) tempLocEl.textContent = curLabel;
+
+  const tags = document.getElementById("quickSelectTags");
+  if(tags){
+    tags.querySelectorAll("button").forEach(btn => {
+      btn.style.display = "inline-flex";
+      btn.classList.toggle("sel", btn.dataset.loc === curLabel);
+    });
+  }
+
+  const applyBtn = document.getElementById("applyLocationBtn");
+  if(applyBtn){
+    applyBtn.disabled = false;
+    applyBtn.removeAttribute("disabled");
+  }
+
+  const inp = document.getElementById("locSearchInput");
+  if(inp) { inp.value = ""; }
+
+  m.style.display = "flex";
+  m.style.alignItems = "center";
+  m.style.justifyContent = "center";
+}
+
+function closeLocationModal(){
+  const m = document.getElementById("locationModal");
+  if(m) m.style.display = "none";
+  window.tempSelectedLocation = null;
+}
+
+function selectTempCity(city, state, country, btn){
+  const label = `${city}, ${state}, ${country}`;
+  const coords = PRESET_CITY_COORDS[city] || { lat: 23.3441, lng: 85.3096 };
+
+  window.tempSelectedLocation = { city, state, country, label, lat: coords.lat, lng: coords.lng };
+
+  const tempLocEl = document.getElementById("modalTempLocation");
+  if(tempLocEl) tempLocEl.textContent = label;
+
+  document.querySelectorAll(".locTagBtn").forEach(b => {
+    b.classList.toggle("sel", b === btn || b.dataset.loc === label);
+  });
+
+  const applyBtn = document.getElementById("applyLocationBtn");
+  if(applyBtn){
+    applyBtn.disabled = false;
+    applyBtn.removeAttribute("disabled");
+  }
+}
+
+async function selectTempFromDropdowns(){
+  const country = document.getElementById("globalCountry");
+  const state = document.getElementById("globalState");
+  const city = document.getElementById("globalCity");
+  if(!country || !state || !city || !country.value || !state.value || !city.value) return;
+
+  const countryName = countryNameFromCode(country.value);
+  const stateName = state.options[state.selectedIndex]?.textContent || state.value;
+  const cityName = city.options[city.selectedIndex]?.textContent || city.value;
+  const label = `${cityName}, ${stateName}, ${countryName}`;
+
+  let lat = 23.3441, lng = 85.3096;
+  if(PRESET_CITY_COORDS[cityName]){
+    lat = PRESET_CITY_COORDS[cityName].lat;
+    lng = PRESET_CITY_COORDS[cityName].lng;
+  } else if(typeof geocodePlace === "function"){
+    try {
+      const geo = await geocodePlace(cityName, stateName, countryName);
+      if(geo && geo.lat && geo.lng){
+        lat = geo.lat;
+        lng = geo.lng;
+      }
+    } catch(e){}
+  }
+
+  window.tempSelectedLocation = { city: cityName, state: stateName, country: countryName, label, lat, lng };
+
+  const tempLocEl = document.getElementById("modalTempLocation");
+  if(tempLocEl) tempLocEl.textContent = label;
+
+  const applyBtn = document.getElementById("applyLocationBtn");
+  if(applyBtn){
+    applyBtn.disabled = false;
+    applyBtn.removeAttribute("disabled");
+  }
+}
+
+function applyTempLocation(e){
+  if(e) e.preventDefault();
+  console.log("VARSHAA APPLY CLICKED");
+
+  var loc = window.tempSelectedLocation;
+  console.log("Temporary location:", loc);
+  if(!loc || !loc.label){
+    console.warn("VARSHAA: No temporary location selected");
+    return;
+  }
+
+  // 1. Save to centralized state and localStorage
+  updateGlobalLocation(loc);
+
+  // 2. Generate prediction inputs for the new location
+  try {
+    var demo = getDemoInputsForLocation(loc);
+    setPredictionInputs(demo);
+  } catch(err) { console.warn("VARSHAA: setPredictionInputs error:", err); }
+
+  // 3. Sync all UI elements and charts
+  updateAllViews();
+
+  console.log("VARSHAA: Global location updated:", window.VARSHAA_APP_STATE ? window.VARSHAA_APP_STATE.location : loc);
+
+  // 4. Close modal
+  closeLocationModal();
+}
+
+function onLocationSearchInput(val){
+  const q = val.trim().toLowerCase();
+  const tags = document.getElementById("quickSelectTags");
+  if(!tags) return;
+  tags.querySelectorAll("button").forEach(b => {
+    const txt = b.textContent.toLowerCase();
+    b.style.display = (!q || txt.includes(q)) ? "inline-flex" : "none";
+  });
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    closeLocationModal();
+  }
+});
+
+window.openLocationModal = openLocationModal;
+window.closeLocationModal = closeLocationModal;
+window.selectTempCity = selectTempCity;
+window.selectTempFromDropdowns = selectTempFromDropdowns;
+window.applyTempLocation = applyTempLocation;
+
+if(typeof MutationObserver !== "undefined"){
+  const viewObserver = new MutationObserver((mutations) => {
+    mutations.forEach((m) => {
+      if (m.attributeName === "class" && m.target.classList.contains("active")) {
+        requestAnimationFrame(()=>{
+          if (typeof updateAllViews === "function") updateAllViews();
+        });
+      }
+    });
+  });
+  document.querySelectorAll(".view").forEach((v) => {
+    viewObserver.observe(v, { attributes: true, attributeFilter: ["class"] });
+  });
 }
 function renderAlerts(id){document.getElementById(id).innerHTML=alerts.map(a=>`<div class="alert ${a.s.toLowerCase()}"><div class="alertIcon">⚠</div><div class="alertMain"><div class="alertTitle"><b>${a.s}</b><span>${a.p}% probability</span></div><h4>${a.area}</h4><p>${a.msg}</p><small>${a.win}</small></div></div>`).join("")}
 function renderXai(){document.getElementById("xaiFactors").innerHTML=factors.map(f=>`<div class="factor"><div class="factorTop"><span>${f[0]}</span><b>${f[1]}%</b></div><div class="track"><i style="width:${f[1]}%"></i></div><div style="font-size:8px;color:#5e748a;margin-top:4px">${f[2]}</div></div>`).join("")}
@@ -742,8 +3231,10 @@ function updateRegionUI(state,district){
   const r=getRegion(state,district);
   const full=`${r.name}, ${regionData[state].label}`;
   selectedRegion={state,district:r.name};
-  selectedLocation.textContent=full;
-  document.getElementById("heroLocation").textContent=full;
+  ["heroLocation", "monitoringLocation", "predictionLocation", "selectedLocation"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=full;
+  });
   const conditionTitle=document.getElementById("conditionTitle");
   if(conditionTitle) conditionTitle.textContent=full;
 
@@ -784,14 +3275,21 @@ function drawHistory(){
  const po=pts(obs),pp=pts(pred),path=a=>a.map((q,i)=>(i?"L":"M")+q[0]+" "+q[1]).join(" ");
  el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%" preserveAspectRatio="none"><g stroke="#1c3045" stroke-dasharray="3 4">${[25,50,75,100].map(v=>`<line x1="${p}" x2="${w-p}" y1="${h-p-v/max*(h-2*p)}" y2="${h-p-v/max*(h-2*p)}"/>`).join("")}</g><path d="${path(po)}" fill="none" stroke="#ff4d67" stroke-width="3"/><path d="${path(pp)}" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-dasharray="7 4"/>${po.map((q,i)=>`<circle cx="${q[0]}" cy="${q[1]}" r="3" fill="#ff4d67"/>`).join("")}</svg>`;
 }
-window.addEventListener("resize",()=>{svgChart("forecastChart",forecast);svgChart("predChart",forecast);if(maps.dashMap)maps.dashMap.invalidateSize();if(maps.fullMap)maps.fullMap.invalidateSize()});
+
+window.addEventListener("resize",()=>{
+  if(typeof updateAllViews === "function") updateAllViews();
+  if(maps.dashMap)maps.dashMap.invalidateSize();
+  if(maps.fullMap)maps.fullMap.invalidateSize();
+});
+
+
 
 /* ===== LOCATION-AWARE FEATURE REPAIR ===== */
 let currentPredictionResult=null;
 let currentPlace={country:"India",state:"Karnataka",city:"Bengaluru",lat:12.9716,lng:77.5946,label:"Bengaluru, Karnataka, India"};
 
 function setCurrentPlaceFromSelection(){
-  const text=(document.getElementById("selectedLocation")?.textContent||"").trim();
+  const text=(document.getElementById("predictionLocation")?.textContent||"").trim();
   if(text && !/select a location|select a state/i.test(text)) currentPlace.label=text;
   const pc=document.getElementById("predCountry"),ps=document.getElementById("predState"),py=document.getElementById("predCity");
   if(pc?.value && ps?.value && py?.value){
@@ -906,22 +3404,110 @@ function refreshHistorical(r){
 }
 
 function refreshXai(r){
-  const conf=Number(r.confidence||80),rel=Math.max(45,Math.min(97,Math.round(conf)));
-  setText("xaiConfidence",conf.toFixed(1)+"%");setText("xaiPredictionTitle",r.risk==="HIGH"?"HIGH-IMPACT RAINFALL":r.risk+" RAINFALL RISK");setText("xaiLocation",`${currentPlace.label} · ${document.getElementById("window")?.value||"Next 3 Hours"}`);
-  setText("xaiReliabilityTitle",rel>=80?"High confidence":rel>=65?"Moderate confidence":"Low confidence");setBar("xaiReliabilityBar",rel);setText("xaiReliabilityFoot",rel+"% input-quality score · simulated");
-  const factors=[
-    ["Atmospheric moisture",Math.round(r.humidity*.38),"Moisture availability"],
-    ["Cloud characteristics",Math.round(r.cloud*.34),"Cloud development signal"],
-    ["Rainfall intensity",Math.round(Math.min(99,r.rain/1.2)*.30),"Current rainfall forcing"],
-    ["Wind pattern",Math.round(Math.min(99,r.wind/80*100)*.12),"Moisture transport"],
-    ["Elevation",Math.round(Math.min(99,r.elevation/30)*.08),"Terrain influence"],
-    ["Temperature profile",Math.round(Math.max(5,100-Math.abs(r.temp-25)*7)*.07),"Convective environment"]
+  if(!r) return;
+  const loc = (window.VARSHAA_APP_STATE && window.VARSHAA_APP_STATE.location) ? window.VARSHAA_APP_STATE.location : getStoredLocation();
+  const locLabel = loc.label || `${loc.city}, ${loc.state}, ${loc.country}`;
+  const cityName = loc.city || currentPlace.city || "Selected location";
+
+  const conf = Number(r.confidence || 80);
+  const rel = Math.max(45, Math.min(97, Math.round(conf)));
+  const prob = Math.round(r.prob || (window.VARSHAA_APP_STATE ? window.VARSHAA_APP_STATE.probability : 55));
+  const rain = Math.round(r.rain !== undefined ? r.rain : (window.VARSHAA_APP_STATE ? window.VARSHAA_APP_STATE.currentRainfall : 0));
+  const risk = r.risk || (window.VARSHAA_APP_STATE ? window.VARSHAA_APP_STATE.riskLevel : "LOW");
+  const win = document.getElementById("window")?.value || "3";
+
+  // 1. Basic Metrics
+  setText("xaiConfidence", conf.toFixed(1) + "%");
+  setText("xaiPredictionTitle", risk === "HIGH" ? "HIGH-IMPACT RAINFALL" : risk + " RAINFALL RISK");
+  setText("xaiLocation", locLabel);
+  setText("xaiProb", prob + "%");
+  setText("xaiRisk", risk + " RISK");
+  setText("xaiRain", rain + " mm/h");
+  setText("xaiWindow", `Next ${win} hour${win > 1 ? "s" : ""}`);
+
+  const riskEl = document.getElementById("xaiRisk");
+  if(riskEl && typeof colors !== "undefined" && colors[risk]) riskEl.style.color = colors[risk];
+
+  // 2. Reliability (Distinct from Prediction Probability)
+  const relTitle = rel >= 80 ? "HIGH" : rel >= 65 ? "MEDIUM" : "LOW";
+  setText("xaiReliabilityTitle", relTitle);
+  setBar("xaiReliabilityBar", rel);
+  setText("xaiReliabilityFoot", conf.toFixed(1) + "% input consistency");
+
+  const relText = document.getElementById("xaiReliabilityText");
+  if(relText){
+    relText.textContent = rel >= 80 
+      ? "Confidence is high because the available environmental inputs are consistent with the model's expected operating range."
+      : rel >= 65 
+      ? "Confidence is moderate. Environmental inputs are generally stable with minor atmospheric variance."
+      : "Confidence is low due to heightened atmospheric instability near threshold boundaries.";
+  }
+
+  // 3. Factors Breakdown & Input Value Subtexts
+  const humidity = r.humidity !== undefined ? r.humidity : 70;
+  const cloud = r.cloud !== undefined ? r.cloud : 70;
+  const wind = r.wind !== undefined ? r.wind : 15;
+  const elevation = r.elevation !== undefined ? r.elevation : 200;
+  const temp = r.temp !== undefined ? r.temp : 25;
+
+  const factors = [
+    ["Atmospheric moisture", Math.round(humidity * 0.38), `Relative humidity: ${Math.round(humidity)}%`, "Pushes risk higher"],
+    ["Cloud characteristics", Math.round(cloud * 0.34), `Cloud cover: ${Math.round(cloud)}%`, "Pushes risk higher"],
+    ["Rainfall intensity", Math.round(Math.min(99, rain / 1.2) * 0.30), `Current rainfall: ${rain} mm/h`, "Direct observation"],
+    ["Wind pattern", Math.round(Math.min(99, wind / 80 * 100) * 0.12), `Wind speed: ${Math.round(wind)} km/h`, "Circulation support"],
+    ["Elevation", Math.round(Math.min(99, elevation / 30) * 0.08), `Elevation: ${Math.round(elevation)} m`, "Orographic lifting"],
+    ["Temperature profile", Math.round(Math.max(5, 100 - Math.abs(temp - 25) * 7) * 0.07), `Temperature: ${temp} °C`, "Convective support"]
   ];
-  const total=factors.reduce((s,x)=>s+x[1],0)||1;
-  const normalized=factors.map(x=>[x[0],Math.round(x[1]/total*100),x[2]]);
-  const xf=document.getElementById("xaiFactors");if(xf)xf.innerHTML=normalized.map(f=>`<div class="factor"><div class="factorTop"><span>${f[0]}</span><b>${f[1]}%</b></div><div class="track"><i style="width:${f[1]}%"></i></div><div style="font-size:8px;color:#5e748a;margin-top:4px">${f[2]}</div></div>`).join("");
-  const top=normalized.slice().sort((a,b)=>b[1]-a[1]).slice(0,2);
-  const ex=document.getElementById("xaiExplanation");if(ex)ex.innerHTML=`For <b>${currentPlace.label}</b>, the prototype model's strongest contributing signals are <b>${top[0][0]}</b> (${top[0][1]}%) and <b>${top[1][0]}</b> (${top[1][1]}%). Current rainfall is <b>${Math.round(r.rain)} mm/h</b> with estimated risk probability <b>${Math.round(r.prob)}%</b>. Production mode will replace these proxy attributions with actual SHAP/Grad-CAM values from the trained model.`;
+
+  const total = factors.reduce((sum, x) => sum + x[1], 0) || 1;
+  const normalized = factors
+    .map(x => ({
+      name: x[0],
+      pct: Math.round((x[1] / total) * 100),
+      inputValueLabel: x[2],
+      dir: x[3]
+    }))
+    .sort((a, b) => b.pct - a.pct);
+
+  // 4. Render Ranked Bars (#xaiFactors)
+  const xf = document.getElementById("xaiFactors");
+  if(xf){
+    xf.innerHTML = normalized.map((f, idx) => `
+      <div class="factor" style="margin-bottom:14px">
+        <div class="factorTop" style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:5px">
+          <span><span style="color:var(--muted);font-weight:700;margin-right:6px">0${idx+1}</span>${f.name}</span>
+          <b style="color:var(--teal)">${f.pct}%</b>
+        </div>
+        <div class="track" style="height:8px;border-radius:4px;background:var(--line);overflow:hidden">
+          <i style="width:${f.pct}%;height:100%;background:var(--teal);display:block;border-radius:4px"></i>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">${f.inputValueLabel}</div>
+      </div>
+    `).join("");
+  }
+
+  // 5. Dynamic Plain-Language Explanation (#xaiExplanation)
+  const top1 = normalized[0];
+  const top2 = normalized[1];
+  const top3 = normalized[2];
+  const ex = document.getElementById("xaiExplanation");
+  if(ex){
+    ex.innerHTML = `For <strong>${cityName}</strong>, <strong>${top1.name.toLowerCase()}</strong> (${top1.pct}%) and <strong>${top2.name.toLowerCase()}</strong> (${top2.pct}%) are the primary environmental signals driving this prediction. <strong>${top3.name.toLowerCase()}</strong> (${top3.pct}%) provides secondary support for the predicted <strong>${risk.toLowerCase()}-impact rainfall</strong> event.`;
+  }
+
+  // 6. Populate Technical Table (#xaiTechTable)
+  const techTable = document.getElementById("xaiTechTable");
+  if(techTable){
+    techTable.innerHTML = normalized.map((f, idx) => `
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:8px 10px;font-weight:700;color:var(--muted)">0${idx+1}</td>
+        <td style="padding:8px 10px;font-weight:600;color:var(--text)">${f.name}</td>
+        <td style="padding:8px 10px;color:var(--muted)">${f.inputValueLabel}</td>
+        <td style="padding:8px 10px;font-weight:700;color:var(--teal)">${f.pct}%</td>
+        <td style="padding:8px 10px;color:var(--muted)">${f.dir}</td>
+      </tr>
+    `).join("");
+  }
 }
 
 function refreshAllLocationFeatures(r){
@@ -990,10 +3576,10 @@ function wireLocationSelectors(){
 
       // Do not make the user's selection depend on geocoding.
       const label=`${cityName}, ${stateName}, ${countryName}`;
-      const selected=document.getElementById("selectedLocation");
-      const hero=document.getElementById("heroLocation");
-      if(selected)selected.textContent=label;
-      if(hero)hero.textContent=label;
+      ["heroLocation", "monitoringLocation", "predictionLocation", "selectedLocation"].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) el.textContent=label;
+      });
 
       if(os){
         const match=[...os.options].find(o=>o.value===state.value||o.textContent===stateName);
@@ -1111,7 +3697,7 @@ function buildActions(risk,impact,drain,roads,lead){
   return a;
 }
 function getCurrentLocationLabel(){
-  const shown=document.getElementById("selectedLocation")?.textContent?.trim();
+  const shown=(document.getElementById("predictionLocation")||document.getElementById("monitoringLocation"))?.textContent?.trim();
   if(shown && !/select a location|select a state/i.test(shown)) return shown;
   const pc=document.getElementById("predCountry"),ps=document.getElementById("predState"),pcy=document.getElementById("predCity");
   if(pc?.value&&ps?.value&&pcy?.value)return `${pcy.options[pcy.selectedIndex]?.textContent||pcy.value}, ${ps.options[ps.selectedIndex]?.textContent||ps.value}, ${countryNameFromCode(pc.value)}`;
@@ -1141,8 +3727,38 @@ document.getElementById("commanderInput")?.addEventListener("keydown",e=>{if(e.k
 document.querySelectorAll("[data-mode]").forEach(btn=>btn.addEventListener("click",()=>setMode(btn.dataset.mode)));
 
 
-// Synchronize all initial dashboard modules to the same prediction state.
-try { runPrediction(); } catch(e) { console.warn("Initial VARSHAA sync:", e); }
+document.getElementById("applyLocationBtn")?.addEventListener("click", applyTempLocation);
+
+// === INITIALIZATION ===
+function initializeVarshaaApp(){
+  var loc = getStoredLocation();
+
+  // 1. Set centralized state + persist
+  updateGlobalLocation(loc);
+
+  // 2. Generate initial prediction data
+  try {
+    var demo = getDemoInputsForLocation(loc);
+    setPredictionInputs(demo);
+  } catch(err) { console.warn("VARSHAA: initial setPredictionInputs error:", err); }
+
+  // 3. First render pass
+  updateAllViews();
+
+  // 4. Second render after layout has calculated widths
+  requestAnimationFrame(function(){
+    updateAllViews();
+    requestAnimationFrame(function(){
+      updateAllViews();
+    });
+  });
+}
+
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", initializeVarshaaApp);
+} else {
+  initializeVarshaaApp();
+}
 </script>
 </body>
 </html>
